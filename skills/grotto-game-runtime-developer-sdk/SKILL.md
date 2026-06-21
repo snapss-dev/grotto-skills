@@ -1,7 +1,7 @@
 ---
 name: grotto-game-runtime-developer-sdk
 description: Core Runtime SDK guide for Grotto-hosted HTML5/WebGL games: trusted player identity, cloud saves, autosave, events, presence, and runtime troubleshooting. Links to specialist skills for token-gated inventory and GitHub-hosted game workflows.
-version: 1.4.0
+version: 1.5.0
 author: Bob AI Mk. I
 license: MIT
 metadata:
@@ -215,6 +215,34 @@ Rules:
 - Use letters, numbers, `_`, and `-` only.
 - Keep slot names under 64 characters.
 - Prefer `default` unless the game has explicit save slots.
+
+## Built-in leaderboards
+
+Grotto keeps a server-authoritative leaderboard per game — no Supabase or custom
+backend required. Submit a score and the server records the player's **best** for
+that board; read the top entries to display a ranking.
+
+```js
+// Submit a score (keeps the player's highest on this board).
+await grotto.submitScore(score, { board: 'default', meta: { level } });
+
+// Read the top entries.
+const { entries } = await grotto.leaderboard({ board: 'default', limit: 10 });
+// entries: [{ rank, wallet, score, meta, updatedAt }, ...]
+renderLeaderboard(entries);
+```
+
+Notes:
+
+- Boards are simple string keys (e.g. `default`, `weekly`, `endless`). Same naming
+  rules as slots.
+- Scores are higher-is-better; only a player's best per board is kept.
+- `submitScore` is shorthand for `grotto.event('score', { score, board, meta })`,
+  so you can also emit raw `score` events if you prefer.
+- Reach for Supabase only for needs the built-in board doesn't cover (server-side
+  score validation, seasons, complex tie-breakers, analytics joins).
+- Degrade gracefully: when the runtime is unavailable, `leaderboard()` returns an
+  empty board and `submitScore` is a no-op, so the game still runs standalone.
 
 ## Trusted player identity
 
