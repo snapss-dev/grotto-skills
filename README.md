@@ -31,6 +31,12 @@ Path: `skills/grotto-hosted-game-github-workflow/SKILL.md`
 
 Use this skill when a Grotto game should be maintained through GitHub PRs, CI tests, hosted Railway/Vercel clients, and a small Grotto iframe wrapper for quick updates and rollback.
 
+### Grotto Studio Game Updates
+
+Path: `skills/grotto-studio-game-updates/SKILL.md`
+
+Use this skill to explain to a creator how to update a game in Grotto Studio so the new version reaches players instantly — iterating with B.O.B., keeping cloud saves intact across updates, and rolling back a bad change.
+
 Public SDK URL:
 
 ```html

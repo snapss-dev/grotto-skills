@@ -7,6 +7,7 @@
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
       "summary": "Core Grotto Runtime SDK guide for trusted identity, cloud saves, autosave, events, presence, and runtime troubleshooting. Links to specialist token-gating and hosted-client workflow skills.",
+      "inject": "Grotto Runtime SDK — the game runs inside a Grotto host that provides trusted identity, cloud saves and events. Wire it, and DEGRADE GRACEFULLY (localStorage / no-ops) when `window.GrottoRuntime` is absent so the game still runs standalone:\n  const grotto = await window.GrottoRuntime?.ready?.({ timeoutMs: 8000 }).catch(() => null);\n  const player = grotto && await grotto.getPlayer();          // { id, displayName, wallet? }\n  const save = grotto ? await grotto.loadSave('default', DEFAULT_STATE) : { state: DEFAULT_STATE };\n  await grotto?.save('default', state);                       // cloud autosave\n  grotto?.event('score', { value });                          // leaderboards / telemetry\nNever ask the client to prove who the player is — identity comes from the host session.",
       "tags": [
         "grotto",
         "html5",
@@ -26,6 +27,7 @@
       "name": "grotto-game-token-gated-inventory",
       "path": "skills/grotto-game-token-gated-inventory/SKILL.md",
       "summary": "Token-gate Grotto game skins, items, levels, and rewards using Runtime SDK identity, associated wallets, and indexer-backed inventory APIs.",
+      "inject": "Token-gated content — gate skins, levels, items or rewards on NFT / ERC-1155 / ERC-721 ownership. Derive identity from the runtime session (never trust the client), resolve the player's associated wallets, and treat entitlements as server-authoritative; the client only reflects the result. Degrade to ungated defaults when the check is unavailable.",
       "tags": [
         "grotto",
         "game-dev",
@@ -43,6 +45,8 @@
       "name": "grotto-hosted-game-github-workflow",
       "path": "skills/grotto-hosted-game-github-workflow/SKILL.md",
       "summary": "Maintain Grotto games with GitHub PRs, CI tests, Railway/Vercel hosted clients, and a small Grotto iframe wrapper for fast updates and rollback.",
+      "inject": "Hosted-game workflow — for games maintained in GitHub: deploy the real client to Railway/Vercel and upload only a tiny root `index.html` wrapper that iframes the hosted URL and forwards `grotto:runtime` postMessages. Enables PR review, CI gates and rollback. Use only when a durable hosted domain exists.",
+      "autoInject": false,
       "tags": [
         "grotto",
         "game-dev",
@@ -54,6 +58,26 @@
         "vercel",
         "iframe",
         "wrapper"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs"
+    },
+    {
+      "name": "grotto-studio-game-updates",
+      "path": "skills/grotto-studio-game-updates/SKILL.md",
+      "summary": "How a creator updates a game in Grotto Studio so the new version reaches players instantly — iterating with B.O.B., keeping cloud saves intact, and rolling back.",
+      "inject": "Updating a live game — in Grotto Studio every change is a new build that becomes the version players load on their next session: no re-upload, no redeploy, instant for the creator. Keep the root `index.html` entry stable, prefer small targeted edits (so updates are fast and rollback-able), and never break a working save format without migrating it.",
+      "tags": [
+        "grotto",
+        "game-dev",
+        "update",
+        "iterate",
+        "publish",
+        "version",
+        "live",
+        "studio",
+        "save-migration",
+        "rollback"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
