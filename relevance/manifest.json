@@ -46,6 +46,7 @@
       "path": "skills/grotto-hosted-game-github-workflow/SKILL.md",
       "summary": "Maintain Grotto games with GitHub PRs, CI tests, Railway/Vercel hosted clients, and a small Grotto iframe wrapper for fast updates and rollback.",
       "inject": "Hosted-game workflow — for games maintained in GitHub: deploy the real client to Railway/Vercel and upload only a tiny root `index.html` wrapper that iframes the hosted URL and forwards `grotto:runtime` postMessages. Enables PR review, CI gates and rollback. Use only when a durable hosted domain exists.",
+      "autoInject": false,
       "tags": [
         "grotto",
         "game-dev",
