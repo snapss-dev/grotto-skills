@@ -81,6 +81,28 @@
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
+    },
+    {
+      "name": "grotto-pixel-art-assets",
+      "path": "skills/grotto-pixel-art-assets/SKILL.md",
+      "summary": "Make game assets cheaply: draw pixel art procedurally in code (free), convert any image to crisp pixel art at runtime (free, zero-dep pixelify), and use cheap AI image generation for sprites/textures when you need raster art.",
+      "inject": "Game assets — make them CHEAP. (1) DEFAULT to drawing pixel art in code: define sprites/tiles as a palette + index grid and paint them to an offscreen canvas (imageSmoothingEnabled=false). Free, deterministic, recolorable, tiny. (2) Convert any raster image to crisp pixel art at runtime with a zero-dep canvas pixelify (hard downscale -> optional palette snap -> nearest-neighbor upscale). (3) For rich raster art, the generate_image tool is cheap and on every tier — pass pixel:true for pixel-art sprites; transparent:true for sprites/items. Keep pixels crisp everywhere: CSS image-rendering:pixelated, ctx.imageSmoothingEnabled=false, Three.js NearestFilter. Bias toward code; use AI images to accent, not carry.",
+      "tags": [
+        "grotto",
+        "game-dev",
+        "pixel-art",
+        "sprite",
+        "texture",
+        "asset",
+        "art",
+        "image",
+        "canvas",
+        "palette",
+        "retro",
+        "procedural"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs"
     }
   ]
 }
