@@ -1,0 +1,4 @@
+interface:
+  display_name: "Core of Gaming"
+  short_description: "Core game-design principles for stronger play"
+  default_prompt: "Use $grotto-core-of-gaming to shape this game around a clear, entertaining challenge and a testable core loop."

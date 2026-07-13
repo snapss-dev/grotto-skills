@@ -24,6 +24,25 @@
       "docs_url": "https://api.enterthegrotto.xyz/docs"
     },
     {
+      "name": "grotto-core-of-gaming",
+      "path": "skills/grotto-core-of-gaming/SKILL.md",
+      "summary": "Core game-design principles for shaping clear challenge, meaningful choices, readable feedback, fair progression, game feel, and a complete entertaining loop.",
+      "inject": "Core of Gaming — build around a clear player fantasy and one primary challenge (execution, perception, reasoning, strategy, risk, social understanding, expression, or discovery). Define 2–4 verbs and a repeatable loop: goal → obstacle → player action/decision → legible consequence → learning → another meaningfully different attempt. Make tradeoffs real; use randomness to create situations, not replace decisions. Teach one idea safely, test it, then combine it. Make failure attributable and fair, with one-action recovery. Use sound, animation, particles, camera, and HUD response to clarify mechanics and reward mastery; polish amplifies the loop, it does not replace it. Put the first meaningful action within about 15–20 seconds, show goal/controls without a tutorial wall, test both success and failure, and prefer one small complete loop over broad unfinished features. Before finishing, playtest dominant strategies, softlocks, idle/rapid input, resize, touch, restart, and whether the Game invites one more try.",
+      "tags": [
+        "grotto",
+        "game-dev",
+        "game-design",
+        "challenge",
+        "core-loop",
+        "difficulty",
+        "game-feel",
+        "playtesting",
+        "brainstorm"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs"
+    },
+    {
       "name": "grotto-game-token-gated-inventory",
       "path": "skills/grotto-game-token-gated-inventory/SKILL.md",
       "summary": "Token-gate Grotto game skins, items, levels, and rewards using Runtime SDK identity, associated wallets, and indexer-backed inventory APIs.",
