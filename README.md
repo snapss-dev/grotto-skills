@@ -6,6 +6,14 @@ This repo is intentionally simple: each skill lives under `skills/<skill-name>/`
 
 ## Included skills
 
+### Core of Gaming
+
+Path: `skills/grotto-core-of-gaming/SKILL.md`
+
+Use this skill when inventing, building, reviewing, or improving a Game. It gives
+B.O.B. and creators one shared foundation for challenge, core loops, meaningful
+choices, game feel, difficulty, failure recovery, and playtesting.
+
 ### Grotto Game Runtime Developer SDK
 
 Path: `skills/grotto-game-runtime-developer-sdk/SKILL.md`
