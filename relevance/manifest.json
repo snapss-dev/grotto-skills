@@ -6,8 +6,8 @@
     {
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
-      "summary": "Core Grotto Runtime SDK guide for trusted identity, cloud saves, autosave, events, presence, and runtime troubleshooting. Links to specialist token-gating and hosted-client workflow skills.",
-      "inject": "Grotto Runtime SDK — the game runs inside a Grotto host that provides trusted identity, cloud saves, events and leaderboards. Wire it, and DEGRADE GRACEFULLY (localStorage / no-ops) when `window.GrottoRuntime` is absent so the game still runs standalone:\n  const grotto = await window.GrottoRuntime?.ready?.({ timeoutMs: 8000 }).catch(() => null);\n  const player = grotto && await grotto.getPlayer();          // { id, displayName, wallet? }\n  const save = grotto ? await grotto.loadSave('default', DEFAULT_STATE) : { state: DEFAULT_STATE };\n  await grotto?.save('default', state);                       // cloud autosave\n  await grotto?.submitScore(score, { board: 'default' });     // ranked leaderboard (server keeps best)\n  const top = await grotto?.leaderboard({ board: 'default', limit: 10 }); // { entries:[{rank,wallet,score}] }\nNever ask the client to prove who the player is — identity comes from the host session. Wire submitScore + leaderboard whenever the game has a score.",
+      "summary": "Core Grotto Runtime SDK guide for trusted identity, bounded cloud sessions, saves, events, capability-gated inventory, and one-use public multiplayer bootstrap tickets.",
+      "inject": "Grotto Runtime SDK — the Grotto host provides trusted identity, cloud saves, events and leaderboards. Wire it, and DEGRADE GRACEFULLY (localStorage / no-ops) when `window.GrottoRuntime` is absent so the game still runs standalone:\n  const grotto = await window.GrottoRuntime?.ready?.({ timeoutMs: 8000 }).catch(() => null);\n  const player = grotto && await grotto.getPlayer();          // trusted host identity\n  const save = grotto ? await grotto.loadSave('default', DEFAULT_STATE) : { state: DEFAULT_STATE };\n  await grotto?.save('default', state);                       // cloud autosave\n  await grotto?.submitScore(score, { board: 'default' });     // server keeps best\n  const top = await grotto?.leaderboard({ board: 'default', limit: 10 });\nNever ask the client to prove identity. `inventory:read` and `multiplayer:join` exist only for exact game IDs enabled by platform policy. Runtime wallet authority is an immutable private launch snapshot, and heartbeats never exceed the 24-hour absolute session lifetime. Multiplayer uses a fresh one-use ticket for every connect/reconnect; `roomId=public` is routing only, not match authorization.",
       "tags": [
         "grotto",
         "html5",
@@ -45,8 +45,8 @@
     {
       "name": "grotto-game-token-gated-inventory",
       "path": "skills/grotto-game-token-gated-inventory/SKILL.md",
-      "summary": "Token-gate Grotto game skins, items, levels, and rewards using Runtime SDK identity, associated wallets, and indexer-backed inventory APIs.",
-      "inject": "Token-gated content — gate skins, levels, items or rewards on NFT / ERC-1155 / ERC-721 ownership. Derive identity from the runtime session (never trust the client), resolve the player's associated wallets, and treat entitlements as server-authoritative; the client only reflects the result. Degrade to ungated defaults when the check is unavailable.",
+      "summary": "Token-gate Grotto game content using capability-gated exact ERC-1155/ERC-721 balances over the immutable verified-wallet launch snapshot.",
+      "inject": "Token-gated content — use `grotto.getInventory()` only when the exact game ID has `inventory:read` enabled by platform policy. The platform checks the immutable private canonical-plus-linked wallet snapshot, applies any per-game contract filter, proves complete pagination, and returns exact decimal-string balances to parse with `BigInt`. Treat missing scope, `503`, invalid data, or `partial !== false` as no gated entitlement; keep only free/default content available. Account-link changes require a new play session. Do not add wallet selectors or trust `checkedAt` as chain-read time; default source staleness is bounded to 45 seconds.",
       "tags": [
         "grotto",
         "game-dev",
@@ -63,8 +63,8 @@
     {
       "name": "grotto-hosted-game-github-workflow",
       "path": "skills/grotto-hosted-game-github-workflow/SKILL.md",
-      "summary": "Maintain Grotto games with GitHub PRs, CI tests, Railway/Vercel hosted clients, and a small Grotto iframe wrapper for fast updates and rollback.",
-      "inject": "Hosted-game workflow — for games maintained in GitHub: deploy the real client to Railway/Vercel and upload only a tiny root `index.html` wrapper that iframes the hosted URL and forwards `grotto:runtime` postMessages. Enables PR review, CI gates and rollback. Use only when a durable hosted domain exists.",
+      "summary": "Maintain Grotto games with GitHub, CI, hosted clients, a secure runtime wrapper, and replay-safe authoritative inventory/multiplayer services.",
+      "inject": "Hosted-game workflow — deploy the real client to Railway/Vercel and upload a tiny root wrapper that forwards `grotto:runtime` only from its parent to the known hosted origin. Coordinate exact per-game inventory/multiplayer allowlists after publication. For realtime, request a fresh ticket on every connect/reconnect, verify the strict Ed25519/version/time/game/public-room profile, atomically consume UUIDv4 `jti` in shared storage, then authorize party/queue/ranked placement server-side. Cache JWKS by `kid`, refresh unknown keys, and support current-plus-overlap public-key rotation. Use only with a durable hosted domain.",
       "autoInject": false,
       "tags": [
         "grotto",
