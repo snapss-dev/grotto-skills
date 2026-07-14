@@ -24,14 +24,14 @@ Use this skill when building Grotto-hosted HTML5 or WebGL games that need:
 - cloud saves and autosave
 - save slots and conflict-safe sync
 - leaderboards and gameplay events
-- presence and future multiplayer hooks
+- presence, session-scoped inventory, and short-lived multiplayer tickets
 - Railway or Supabase-backed custom game services
 
 ### Grotto Game Token-Gated Inventory
 
 Path: `skills/grotto-game-token-gated-inventory/SKILL.md`
 
-Use this skill when a Grotto game needs NFT/ERC1155/ERC721 ownership checks, associated wallet inventory lookup, token-gated skins, game-pass unlocks, asset unlocks, or server-authoritative entitlements.
+Use this skill when a Grotto game needs ERC-1155/ERC-721 ownership checks, session-scoped linked-wallet resolution, token-gated skins, game-pass unlocks, asset unlocks, or server-authoritative entitlements.
 
 ### Grotto Hosted Game GitHub Workflow
 

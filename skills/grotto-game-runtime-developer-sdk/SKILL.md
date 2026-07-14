@@ -1,7 +1,7 @@
 ---
 name: grotto-game-runtime-developer-sdk
-description: Core Runtime SDK guide for Grotto-hosted HTML5/WebGL games: trusted player identity, cloud saves, autosave, events, presence, and runtime troubleshooting. Links to specialist skills for token-gated inventory and GitHub-hosted game workflows.
-version: 1.5.0
+description: Core Runtime SDK guide for Grotto-hosted HTML5/WebGL games: trusted identity, cloud saves, inventory, multiplayer tickets, events, presence, and runtime troubleshooting.
+version: 1.6.0
 author: Bob AI Mk. I
 license: MIT
 metadata:
@@ -12,7 +12,7 @@ metadata:
 
 # Grotto Game Runtime Developer SDK
 
-Use this when creating or upgrading a Grotto-hosted browser game that should know who is playing, save/load reliably, support leaderboards, and later support multiplayer or trusted server-backed events.
+Use this when creating or upgrading a Grotto-hosted browser game that should know who is playing, save/load reliably, resolve inventory, support leaderboards, and join authoritative multiplayer servers.
 
 This works for both **HTML5** and **WebGL** games, including Unity WebGL, Godot web exports, PlayCanvas, Three.js, Babylon.js, and custom browser runtimes.
 
@@ -43,7 +43,8 @@ When a player opens your game from The Grotto:
    - autosave
    - events/analytics
    - presence
-   - future multiplayer room tokens
+   - session-scoped inventory
+   - short-lived multiplayer room tokens
 
 Your game never asks players to paste wallets or sign a second message.
 
@@ -267,7 +268,7 @@ Example response:
     "displayName": "@snaps",
     "avatar": "https://..."
   },
-  "scopes": ["identity:read", "save:read", "save:write"],
+  "scopes": ["identity:read", "save:read", "save:write", "inventory:read", "multiplayer:join"],
   "expiresAt": "2026-04-25T16:00:00.000Z"
 }
 ```
@@ -282,11 +283,14 @@ For NFT/ERC1155/ERC721/game-pass/asset ownership checks, associated wallet inven
 grotto-game-token-gated-inventory
 ```
 
-Runtime SDK provides trusted player identity. The specialist skill explains how to combine that identity with indexer-backed inventory APIs such as:
+Runtime SDK provides trusted player identity and resolves verified linked wallets server-side. The specialist skill explains the normalized inventory response and fail-closed entitlement patterns. Use:
 
-```text
-GET /api/inventory/:wallet?include_erc721=true
+```js
+const inventory = await grotto.getInventory();
 ```
+
+Do not select a wallet in browser code or call the deprecated public wallet inventory route for
+authorization decisions.
 
 ## Events
 
@@ -315,17 +319,19 @@ Avoid putting sensitive data in event payloads.
 
 ## Presence and heartbeat
 
-The SDK should heartbeat automatically while the game is open:
+Keep the runtime session active while the game is open:
 
 ```js
 await grotto.heartbeat();
 ```
 
-For most games, do not call this manually. Let the SDK manage it.
+Call this when the game becomes active and approximately every five minutes. Stop the timer when
+the game closes. A future SDK version may manage the timer automatically, so avoid creating
+duplicate timers when the SDK exposes that behavior.
 
-## Future multiplayer bootstrap
+## Multiplayer bootstrap
 
-When multiplayer is enabled, use the runtime session to request a short-lived room token:
+Use the runtime session to request a short-lived room token:
 
 ```js
 const ticket = await grotto.getMultiplayerToken({ room: 'public' });
@@ -337,7 +343,15 @@ connectToRealtimeServer({
 });
 ```
 
-Never let players self-report multiplayer identity. The multiplayer token should be minted from the trusted runtime session.
+Never let players self-report multiplayer identity. Send the token in the first WebSocket message,
+not the URL. The authoritative server must verify the Ed25519 signature, issuer, exact game
+audience, game ID, room, expiry/not-before time, and `multiplayer:join` scope against:
+
+```text
+GET /api/game-runtime/v1/multiplayer/keys
+```
+
+Tickets expire quickly. Request one immediately before connecting and never log or persist it.
 
 ## Local fallback for development
 
@@ -374,7 +388,7 @@ The hosted player sends your iframe:
     gameId: 'game-123',
     sessionId: 'grs_...',
     expiresAt: '2026-04-25T16:00:00.000Z',
-    scopes: ['identity:read', 'save:read', 'save:write']
+    scopes: ['identity:read', 'save:read', 'save:write', 'inventory:read', 'multiplayer:join']
   }
 }
 ```
@@ -411,6 +425,8 @@ Current runtime route inventory from the live docs manifest:
 
 ```text
 POST   /api/game-runtime/v1/events
+GET    /api/game-runtime/v1/inventory
+GET    /api/game-runtime/v1/multiplayer/keys
 GET    /api/game-runtime/v1/multiplayer/token
 GET    /api/game-runtime/v1/saves/:slot
 PUT    /api/game-runtime/v1/saves/:slot
@@ -474,6 +490,26 @@ Content-Type: application/json
 }
 ```
 
+### Read session-scoped inventory
+
+```http
+GET /api/game-runtime/v1/inventory
+Authorization: Bearer grs_...
+```
+
+Do not add wallet, player, or game selectors. The runtime session owns all three.
+
+### Mint a multiplayer ticket
+
+```http
+GET /api/game-runtime/v1/multiplayer/token?room=public
+Authorization: Bearer grs_...
+```
+
+The returned EdDSA JWT is scoped to the runtime game and selected room and expires after roughly
+one minute. Fetch public verification keys from `/multiplayer/keys`; do not introduce a shared
+secret between games and The Grotto.
+
 ## Save conflict behavior
 
 The API may return `409 SAVE_CONFLICT` if two tabs/devices save simultaneously.
@@ -529,6 +565,8 @@ Before uploading to The Grotto:
 - [ ] Game never stores `grs_*` in exported save files.
 - [ ] Game handles cloud save failure without losing current progress.
 - [ ] Game handles page reload with cloud load.
+- [ ] Inventory is read with `grotto.getInventory()` and fails closed when incomplete.
+- [ ] Multiplayer tickets are requested just before connecting and never enter URLs or logs.
 
 ## Security checklist
 
@@ -538,6 +576,7 @@ Before uploading to The Grotto:
 - [ ] Do not trust localStorage for competitive/monetized outcomes.
 - [ ] Use server-confirmed events for leaderboards or rewards.
 - [ ] Keep authoritative multiplayer state on a trusted server.
+- [ ] Verify multiplayer ticket signature, issuer, audience, game, room, time, and scope.
 
 ## Common mistakes
 
