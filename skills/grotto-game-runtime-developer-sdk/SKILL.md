@@ -1,10 +1,10 @@
 ---
 name: grotto-game-runtime-developer-sdk
-description: Core Runtime SDK guide for Grotto-hosted HTML5/WebGL games: trusted identity, cloud saves, inventory, multiplayer tickets, events, presence, and runtime troubleshooting.
-version: 1.6.0
-author: Bob AI Mk. I
+description: "Core Runtime SDK guide for Grotto-hosted HTML5/WebGL games: trusted identity, bounded sessions, cloud saves, capability-gated inventory, one-use multiplayer bootstrap tickets, events, presence, and runtime troubleshooting."
 license: MIT
 metadata:
+  version: 1.7.0
+  author: Bob AI Mk. I
   hermes:
     tags: [grotto, game-dev, runtime-sdk, cloud-saves, leaderboards, auth, multiplayer, html5, webgl, railway, supabase]
     related_skills: [grotto-html5-game-build-system, grotto-game-api-save-system, grotto-game-token-gated-inventory, grotto-hosted-game-github-workflow]
@@ -35,7 +35,7 @@ When a player opens your game from The Grotto:
 
 1. The Grotto authenticates the player.
 2. The Grotto verifies game access.
-3. The Grotto starts a game-scoped runtime session.
+3. The Grotto snapshots the canonical and verified linked EVM wallets and starts a game-scoped runtime session.
 4. Your game receives a scoped runtime token.
 5. Your game can call Grotto Runtime APIs for:
    - trusted identity
@@ -43,10 +43,25 @@ When a player opens your game from The Grotto:
    - autosave
    - events/analytics
    - presence
-   - session-scoped inventory
-   - short-lived multiplayer room tokens
+   - capability-gated, session-scoped inventory
+   - short-lived public multiplayer bootstrap tickets
 
 Your game never asks players to paste wallets or sign a second message.
+
+`inventory:read` and `multiplayer:join` are optional platform capabilities, not default scopes. The
+exact game ID must be present in the corresponding server-owned allowlist before a new runtime
+session receives either scope. The platform rechecks this policy when a persisted session is
+rehydrated and whenever either capability is used, so removing an opt-in takes effect without
+trusting an old scope. A browser cannot request or add a scope itself.
+
+Runtime sessions have a renewable idle expiry (two hours by default) and an absolute lifetime that
+is hard-capped at 24 hours from launch. Heartbeats, refreshes, service restarts, and database
+rehydration cannot extend the absolute deadline. Request a new play URL when the SDK reports an
+expired session.
+
+The verified-wallet snapshot is immutable for that session and remains private. Linking or
+unlinking a wallet requires a new Grotto launch/runtime session; `/session/me`, inventory, and
+multiplayer responses never expose the linked addresses.
 
 ## Security model
 
@@ -101,6 +116,10 @@ Live Grotto API docs are available at:
 ```text
 https://api.enterthegrotto.xyz/docs
 ```
+
+Read [`references/sdk-contract.md`](references/sdk-contract.md) when generating TypeScript types or
+checking the exact inventory and multiplayer result unions. Start from
+[`templates/minimal-runtime-game.html`](templates/minimal-runtime-game.html) for a small hosted game.
 
 Treat those docs as the reference for current backend routes. When this skill and the live docs disagree, record the drift and update whichever side is stale.
 
@@ -268,22 +287,29 @@ Example response:
     "displayName": "@snaps",
     "avatar": "https://..."
   },
-  "scopes": ["identity:read", "save:read", "save:write", "inventory:read", "multiplayer:join"],
+  "scopes": ["identity:read", "save:read", "save:write", "presence:write", "events:write"],
   "expiresAt": "2026-04-25T16:00:00.000Z"
 }
 ```
 
 Use this for display and personalization. For authoritative progression, still store state through `grotto.save()`.
 
+If platform operators enable inventory or multiplayer for this exact game ID, the corresponding
+`inventory:read` or `multiplayer:join` scope also appears. Treat the received scope list as the
+source of truth; do not assume optional capabilities exist.
+
 ## Advanced: token-gated inventory
 
-For NFT/ERC1155/ERC721/game-pass/asset ownership checks, associated wallet inventory lookup, token-gated skins, and server-authoritative entitlement patterns, use:
+For NFT/ERC1155/ERC721/game-pass/asset ownership checks over the verified launch snapshot,
+token-gated skins, and server-authoritative entitlement patterns, use:
 
 ```text
 grotto-game-token-gated-inventory
 ```
 
-Runtime SDK provides trusted player identity and resolves verified linked wallets server-side. The specialist skill explains the normalized inventory response and fail-closed entitlement patterns. Use:
+Runtime SDK provides trusted player identity and binds the private verified-wallet snapshot
+server-side at launch. The specialist skill explains the normalized inventory response and
+fail-closed entitlement patterns. Use:
 
 ```js
 const inventory = await grotto.getInventory();
@@ -291,6 +317,17 @@ const inventory = await grotto.getInventory();
 
 Do not select a wallet in browser code or call the deprecated public wallet inventory route for
 authorization decisions.
+
+Balances are exact base-unit decimal strings and must be parsed/added with `BigInt`, never
+JavaScript `Number`. Runtime inventory requires complete 500-item pagination and fails the whole
+request when completeness, the wallet snapshot, or the provider is unavailable. Strict reads do
+not serve stale-while-refresh; default source staleness is bounded to 45 seconds. `checkedAt` is
+response time, not guaranteed chain-read time.
+
+Before publishing an inventory-enabled game, coordinate the exact Grotto game ID with the platform
+operator. It must be present in `GAME_RUNTIME_INVENTORY_GAME_IDS`. Operators may also restrict the
+response to approved contracts with `GAME_RUNTIME_INVENTORY_CONTRACTS_JSON`; an empty contract list
+returns no holdings. Missing or malformed capability policy fails closed.
 
 ## Events
 
@@ -327,14 +364,23 @@ await grotto.heartbeat();
 
 Call this when the game becomes active and approximately every five minutes. Stop the timer when
 the game closes. A future SDK version may manage the timer automatically, so avoid creating
-duplicate timers when the SDK exposes that behavior.
+duplicate timers when the SDK exposes that behavior. A heartbeat only renews the idle expiry; it
+never extends the session's 24-hour absolute maximum.
 
 ## Multiplayer bootstrap
 
-Use the runtime session to request a short-lived room token:
+Before publishing multiplayer, coordinate the exact game ID in
+`GAME_RUNTIME_MULTIPLAYER_GAME_IDS`; otherwise new sessions do not receive `multiplayer:join`.
+
+Use the runtime session to request a short-lived, one-connection bootstrap ticket:
 
 ```js
-const ticket = await grotto.getMultiplayerToken({ room: 'public' });
+const ticket = await grotto.getMultiplayerToken();
+
+if (!ticket.available) {
+  showOfflineMultiplayer(ticket.message);
+  return;
+}
 
 connectToRealtimeServer({
   provider: ticket.provider,
@@ -343,15 +389,36 @@ connectToRealtimeServer({
 });
 ```
 
-Never let players self-report multiplayer identity. Send the token in the first WebSocket message,
-not the URL. The authoritative server must verify the Ed25519 signature, issuer, exact game
-audience, game ID, room, expiry/not-before time, and `multiplayer:join` scope against:
+The only valid platform room is `public`. It is an untrusted routing bootstrap, not authorization
+for a party, private room, queue, match, or ranked play. The realtime service must choose and
+authorize those destinations after ticket authentication.
+
+When platform signing is not configured, the SDK returns the stable successful response
+`{ available: false, message: "Multiplayer runtime tokens are not enabled yet." }`. Treat that as
+an optional feature being unavailable, not as an authenticated multiplayer session. Malformed
+signer or rotation configuration remains a generic `503 RUNTIME_MULTIPLAYER_UNAVAILABLE`.
+
+Never let players self-report multiplayer identity. Request a fresh ticket immediately before
+every initial connection and every reconnect. Send it in the first WebSocket message, never a URL,
+log, save, or persistent store. The authoritative server must require exactly three canonical
+unpadded base64url segments, verify the Ed25519 signature with the exact `kid`, require
+`alg=EdDSA` and `typ=JWT`, and validate the trusted configured issuer, game audience, game ID, `version=1`,
+`roomId=public`, integer lifetime (15-300 seconds), bounded clock tolerance (at most 30 seconds),
+canonical lowercase EVM subject, UUIDv4 `jti`, and the exact `multiplayer:join` scope against:
 
 ```text
 GET /api/game-runtime/v1/multiplayer/keys
 ```
 
-Tickets expire quickly. Request one immediately before connecting and never log or persist it.
+Before accepting the socket, atomically consume the `jti` in a shared store through an operation
+equivalent to `SET <issuer>:<jti> 1 NX EX <seconds-to-exp>`. Reject an existing `jti`, and fail
+closed if atomic replay storage is unavailable. A read followed by a write is not safe.
+
+Cache JWKS by `kid` for at most the advertised five minutes and refresh once on an unknown `kid`.
+Grotto publishes the current key plus up to four overlap public keys. Signing deployments require
+a unique, never-reused current `kid`; rotation keeps the previous public key published for a
+conservative ten-minute overlap. Never share the platform private signing key with a game or
+realtime service.
 
 ## Local fallback for development
 
@@ -388,7 +455,7 @@ The hosted player sends your iframe:
     gameId: 'game-123',
     sessionId: 'grs_...',
     expiresAt: '2026-04-25T16:00:00.000Z',
-    scopes: ['identity:read', 'save:read', 'save:write', 'inventory:read', 'multiplayer:join']
+    scopes: ['identity:read', 'save:read', 'save:write', 'presence:write', 'events:write']
   }
 }
 ```
@@ -400,6 +467,9 @@ window.parent.postMessage({ type: 'grotto:runtime:hello' }, '*');
 ```
 
 Creators using the SDK do not need to implement this manually.
+
+Optional `inventory:read` and `multiplayer:join` scopes appear only for games explicitly enabled by
+the platform operator.
 
 ## Advanced: GitHub-hosted game client workflow
 
@@ -502,13 +572,14 @@ Do not add wallet, player, or game selectors. The runtime session owns all three
 ### Mint a multiplayer ticket
 
 ```http
-GET /api/game-runtime/v1/multiplayer/token?room=public
+GET /api/game-runtime/v1/multiplayer/token
 Authorization: Bearer grs_...
 ```
 
-The returned EdDSA JWT is scoped to the runtime game and selected room and expires after roughly
-one minute. Fetch public verification keys from `/multiplayer/keys`; do not introduce a shared
-secret between games and The Grotto.
+Omitting `room` and passing exactly `room=public` are equivalent. Every other room is rejected. The
+returned EdDSA JWT is scoped to the runtime game and fixed untrusted `public` bootstrap context and
+expires after roughly one minute. Fetch public verification keys from `/multiplayer/keys`; do not
+introduce a shared secret between games and The Grotto. Request a new ticket for every reconnect.
 
 ## Save conflict behavior
 
@@ -566,7 +637,8 @@ Before uploading to The Grotto:
 - [ ] Game handles cloud save failure without losing current progress.
 - [ ] Game handles page reload with cloud load.
 - [ ] Inventory is read with `grotto.getInventory()` and fails closed when incomplete.
-- [ ] Multiplayer tickets are requested just before connecting and never enter URLs or logs.
+- [ ] Optional inventory/multiplayer scopes were enabled for the exact published game ID.
+- [ ] Multiplayer tickets are requested just before every connect/reconnect and never enter URLs or logs.
 
 ## Security checklist
 
@@ -576,7 +648,9 @@ Before uploading to The Grotto:
 - [ ] Do not trust localStorage for competitive/monetized outcomes.
 - [ ] Use server-confirmed events for leaderboards or rewards.
 - [ ] Keep authoritative multiplayer state on a trusted server.
-- [ ] Verify multiplayer ticket signature, issuer, audience, game, room, time, and scope.
+- [ ] Treat `roomId=public` only as untrusted routing; authorize party/queue/ranked placement server-side.
+- [ ] Verify the complete strict multiplayer ticket profile and atomically consume each `jti` once.
+- [ ] Refresh JWKS on an unknown `kid` and support current-plus-overlap public keys.
 
 ## Common mistakes
 

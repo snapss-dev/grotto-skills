@@ -24,20 +24,20 @@ Use this skill when building Grotto-hosted HTML5 or WebGL games that need:
 - cloud saves and autosave
 - save slots and conflict-safe sync
 - leaderboards and gameplay events
-- presence, session-scoped inventory, and short-lived multiplayer tickets
+- bounded runtime sessions, capability-gated inventory, and one-use public multiplayer bootstrap tickets
 - Railway or Supabase-backed custom game services
 
 ### Grotto Game Token-Gated Inventory
 
 Path: `skills/grotto-game-token-gated-inventory/SKILL.md`
 
-Use this skill when a Grotto game needs ERC-1155/ERC-721 ownership checks, session-scoped linked-wallet resolution, token-gated skins, game-pass unlocks, asset unlocks, or server-authoritative entitlements.
+Use this skill when a Grotto game needs exact ERC-1155/ERC-721 ownership checks over an immutable verified-wallet launch snapshot, token-gated skins, contract-filtered inventory, game-pass unlocks, or server-authoritative entitlements.
 
 ### Grotto Hosted Game GitHub Workflow
 
 Path: `skills/grotto-hosted-game-github-workflow/SKILL.md`
 
-Use this skill when a Grotto game should be maintained through GitHub PRs, CI tests, hosted Railway/Vercel clients, and a small Grotto iframe wrapper for quick updates and rollback.
+Use this skill when a Grotto game should be maintained through GitHub PRs, CI tests, hosted Railway/Vercel clients, a secure Grotto iframe wrapper, and authoritative inventory or multiplayer services with replay-safe ticket verification.
 
 ### Grotto Studio Game Updates
 
@@ -94,6 +94,8 @@ Open a pull request to add or update a skill. Keep skills creator-facing, practi
 - Redact secrets as `[REDACTED]`.
 - Prefer runnable examples and explicit security notes.
 - Keep Grotto identity/session guidance clear: games should not trust wallet/user IDs supplied by client-side code.
+- Treat optional inventory/multiplayer scopes as explicit per-game platform capabilities.
+- Treat `roomId=public` as routing only and atomically consume each multiplayer ticket `jti` once.
 
 ## PR watch
 
