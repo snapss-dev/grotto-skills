@@ -91,11 +91,21 @@ function walk(dir) {
   });
 }
 
+const repositoryTextExtension = /\.(?:cjs|html|js|json|md|mjs|ya?ml)$/i;
+const javaScriptExtension = /\.(?:cjs|js|mjs)$/i;
+
+export function isRepositoryTextPath(path) {
+  return repositoryTextExtension.test(path);
+}
+
+export function isJavaScriptPath(path) {
+  return javaScriptExtension.test(path);
+}
+
 export function repositoryTextFiles(root = repoRoot) {
-  const extensions = /\.(?:html|js|json|md|ya?ml)$/i;
   return walk(root)
     .filter((path) => !path.includes(`${join(root, ".git")}/`))
-    .filter((path) => extensions.test(path));
+    .filter(isRepositoryTextPath);
 }
 
 export function markdownLinkErrors(path, source) {

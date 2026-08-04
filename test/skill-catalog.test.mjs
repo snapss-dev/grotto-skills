@@ -4,11 +4,23 @@ import test from "node:test";
 import {
   catalogEnd,
   catalogStart,
+  isJavaScriptPath,
+  isRepositoryTextPath,
   parseSkillFrontmatter,
   renderCatalog,
   skillTitle,
   withGeneratedCatalog
 } from "../scripts/skill-catalog.mjs";
+
+test("repository scans all supported JavaScript module extensions", () => {
+  for (const path of ["template.js", "validator.mjs", "config.cjs"]) {
+    assert.equal(isJavaScriptPath(path), true, path);
+    assert.equal(isRepositoryTextPath(path), true, path);
+  }
+
+  assert.equal(isJavaScriptPath("component.ts"), false);
+  assert.equal(isRepositoryTextPath("asset.png"), false);
+});
 
 test("catalog titles preserve developer abbreviations", () => {
   assert.equal(skillTitle("grotto-game-runtime-developer-sdk"), "Grotto Game Runtime Developer SDK");

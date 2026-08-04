@@ -3,6 +3,7 @@ import { join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 
 import {
+  isJavaScriptPath,
   loadJson,
   manifestPath,
   markdownLinkErrors,
@@ -97,7 +98,7 @@ for (const path of repositoryTextFiles()) {
   for (const pattern of secretPatterns) {
     if (pattern.test(source)) failures.push(`${relative(repoRoot, path)} contains a credential-shaped value`);
   }
-  if (path.endsWith(".js")) {
+  if (isJavaScriptPath(path)) {
     const check = spawnSync(process.execPath, ["--check", path], { encoding: "utf8" });
     if (check.status !== 0) failures.push(`${relative(repoRoot, path)} fails node --check: ${check.stderr.trim()}`);
   }
