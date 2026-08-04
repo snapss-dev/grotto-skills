@@ -6,44 +6,45 @@ This repo is intentionally simple: each skill lives under `skills/<skill-name>/`
 
 ## Included skills
 
-### Core of Gaming
-
-Path: `skills/grotto-core-of-gaming/SKILL.md`
-
-Use this skill when inventing, building, reviewing, or improving a Game. It gives
-B.O.B. and creators one shared foundation for challenge, core loops, meaningful
-choices, game feel, difficulty, failure recovery, and playtesting.
+<!-- generated-skill-catalog:start -->
 
 ### Grotto Game Runtime Developer SDK
 
 Path: `skills/grotto-game-runtime-developer-sdk/SKILL.md`
 
-Use this skill when building Grotto-hosted HTML5 or WebGL games that need:
+Core Grotto Runtime SDK guide for trusted identity, bounded cloud sessions, saves, events, capability-gated inventory, and one-use public multiplayer bootstrap tickets.
 
-- trusted Grotto player identity
-- cloud saves and autosave
-- save slots and conflict-safe sync
-- leaderboards and gameplay events
-- bounded runtime sessions, capability-gated inventory, and one-use public multiplayer bootstrap tickets
-- Railway or Supabase-backed custom game services
+### Grotto Core of Gaming
+
+Path: `skills/grotto-core-of-gaming/SKILL.md`
+
+Core game-design principles for shaping clear challenge, meaningful choices, readable feedback, fair progression, game feel, and a complete entertaining loop.
 
 ### Grotto Game Token-Gated Inventory
 
 Path: `skills/grotto-game-token-gated-inventory/SKILL.md`
 
-Use this skill when a Grotto game needs exact ERC-1155/ERC-721 ownership checks over an immutable verified-wallet launch snapshot, token-gated skins, contract-filtered inventory, game-pass unlocks, or server-authoritative entitlements.
+Token-gate Grotto game content using capability-gated exact ERC-1155/ERC-721 balances over the immutable verified-wallet launch snapshot.
 
 ### Grotto Hosted Game GitHub Workflow
 
 Path: `skills/grotto-hosted-game-github-workflow/SKILL.md`
 
-Use this skill when a Grotto game should be maintained through GitHub PRs, CI tests, hosted Railway/Vercel clients, a secure Grotto iframe wrapper, and authoritative inventory or multiplayer services with replay-safe ticket verification.
+Maintain Grotto games with GitHub, CI, hosted clients, a secure runtime wrapper, and replay-safe authoritative inventory/multiplayer services.
 
 ### Grotto Studio Game Updates
 
 Path: `skills/grotto-studio-game-updates/SKILL.md`
 
-Use this skill to explain to a creator how to update a game in Grotto Studio so the new version reaches players instantly — iterating with B.O.B., keeping cloud saves intact across updates, and rolling back a bad change.
+How a creator updates a game in Grotto Studio so the new version reaches players instantly — iterating with B.O.B., keeping cloud saves intact, and rolling back.
+
+### Grotto Pixel Art Assets
+
+Path: `skills/grotto-pixel-art-assets/SKILL.md`
+
+Make game assets cheaply: draw pixel art procedurally in code (free), convert any image to crisp pixel art at runtime (free, zero-dep pixelify), and use cheap AI image generation for sprites/textures when you need raster art.
+
+<!-- generated-skill-catalog:end -->
 
 Public SDK URL:
 
@@ -87,6 +88,11 @@ relevance/
 ## Contributing
 
 Open a pull request to add or update a skill. Keep skills creator-facing, practical, and free of private credentials.
+
+Run `npm test` before opening the PR. The zero-dependency validator checks the
+manifest, generated README catalog, frontmatter, relationships, links, template
+syntax, and credential-shaped values. Run `npm run generate:readme` after adding
+or renaming a manifest entry.
 
 ### Safety rules
 
