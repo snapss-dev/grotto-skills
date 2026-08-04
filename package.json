@@ -1,0 +1,13 @@
+{
+  "name": "grotto-skills",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test && node scripts/validate-skills.mjs",
+    "validate": "node scripts/validate-skills.mjs",
+    "generate:readme": "node scripts/generate-readme.mjs"
+  }
+}

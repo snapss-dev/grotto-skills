@@ -16,6 +16,8 @@
         "runtime-sdk",
         "cloud-saves",
         "leaderboards",
+        "auth",
+        "multiplayer",
         "railway",
         "supabase"
       ],
@@ -55,7 +57,8 @@
         "indexer",
         "nft",
         "erc1155",
-        "erc721"
+        "erc721",
+        "runtime-sdk"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
