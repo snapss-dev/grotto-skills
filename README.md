@@ -20,6 +20,12 @@ Path: `skills/grotto-core-of-gaming/SKILL.md`
 
 Core game-design principles for shaping clear challenge, meaningful choices, readable feedback, fair progression, game feel, and a complete entertaining loop.
 
+### Grotto Cross Device Controls
+
+Path: `skills/grotto-cross-device-controls/SKILL.md`
+
+Design one browser game for desktop and mobile with semantic actions, keyboard/mouse bindings, touch joysticks or direct manipulation, safe-area-aware controls, and reliable input recovery.
+
 ### Grotto Game Token-Gated Inventory
 
 Path: `skills/grotto-game-token-gated-inventory/SKILL.md`

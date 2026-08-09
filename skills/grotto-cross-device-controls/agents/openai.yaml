@@ -1,0 +1,4 @@
+interface:
+  display_name: "Grotto Cross-Device Controls"
+  short_description: "Design one game for desktop and touch controls"
+  default_prompt: "Design responsive desktop and mobile controls for this browser game."
