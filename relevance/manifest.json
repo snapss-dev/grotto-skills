@@ -45,6 +45,27 @@
       "docs_url": "https://api.enterthegrotto.xyz/docs"
     },
     {
+      "name": "grotto-cross-device-controls",
+      "path": "skills/grotto-cross-device-controls/SKILL.md",
+      "summary": "Design one browser game for desktop and mobile with semantic actions, keyboard/mouse bindings, touch joysticks or direct manipulation, safe-area-aware controls, and reliable input recovery.",
+      "inject": "Cross-device controls — build one semantic action model and map both desktop and touch input to it; the simulation must never branch on device type. Choose controls from the game verbs: direct tap/drag for puzzles and cards, one large action target for runners, left/right plus jump for platformers, or a virtual joystick plus contextual action buttons for free movement. Use Pointer Events with pointer capture and independent pointer IDs so movement and action work simultaneously. Put DOM controls in lower safe corners with at least 48px targets, `touch-action:none` only on the play surface/controls, `env(safe-area-inset-*)`, and no critical play/HUD under thumbs. Preserve keyboard/mouse, clear held inputs on cancel/blur/visibility/pause, suspend camera/gameplay behind modals, and test portrait, landscape, resize, multitouch, restart, and a 390x844 viewport. A pointerdown listener alone is not mobile support; the entire primary loop and recovery path must be comfortable on both desktop and touch.",
+      "tags": [
+        "grotto",
+        "game-dev",
+        "controls",
+        "input",
+        "mobile",
+        "touch",
+        "joystick",
+        "keyboard",
+        "pointer",
+        "responsive",
+        "accessibility"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs"
+    },
+    {
       "name": "grotto-game-token-gated-inventory",
       "path": "skills/grotto-game-token-gated-inventory/SKILL.md",
       "summary": "Token-gate Grotto game content using capability-gated exact ERC-1155/ERC-721 balances over the immutable verified-wallet launch snapshot.",
