@@ -1,0 +1,121 @@
+{
+  "grotto-game-runtime-developer-sdk": {
+    "triggers": [
+      "lost progress",
+      "lose progress",
+      "progress refresh",
+      "progress reload",
+      "save conflict",
+      "cloud save",
+      "score board"
+    ]
+  },
+  "grotto-cross-device-controls": {
+    "triggers": [
+      "phone",
+      "finger",
+      "thumb",
+      "stuck movement",
+      "keeps moving",
+      "release button",
+      "portrait",
+      "landscape",
+      "touch controls",
+      "held button",
+      "switch tabs",
+      "thumbs"
+    ]
+  },
+  "grotto-core-of-gaming": {
+    "triggers": [
+      "boring",
+      "too easy",
+      "too hard",
+      "game loop",
+      "meaningful choices",
+      "difficulty curve"
+    ]
+  },
+  "grotto-studio-game-updates": {
+    "triggers": [
+      "existing progress",
+      "existing game",
+      "save migration",
+      "wiping progress",
+      "new version",
+      "roll back"
+    ]
+  },
+  "grotto-game-token-gated-inventory": {
+    "triggers": [
+      "token gated",
+      "owned nft",
+      "erc1155",
+      "erc721"
+    ]
+  },
+  "grotto-hosted-game-github-workflow": {
+    "autoInject": false
+  },
+  "grotto-pixel-art-assets": {
+    "triggers": [
+      "pixel art",
+      "art direction",
+      "visual style",
+      "painted background",
+      "transparent sprite"
+    ]
+  },
+  "grotto-phaser-2d-builder": {
+    "triggers": [
+      "phaser scene",
+      "arcade physics",
+      "platformer movement"
+    ]
+  },
+  "grotto-3d-scene-builder": {
+    "triggers": [
+      "low poly",
+      "3d model",
+      "animated glb",
+      "third person",
+      "first person"
+    ]
+  },
+  "grotto-game-animation": {
+    "triggers": [
+      "walk cycle",
+      "sprite animation",
+      "animation transition",
+      "jittering sprite"
+    ]
+  },
+  "grotto-game-feel-juice": {
+    "triggers": [
+      "satisfying",
+      "sluggish",
+      "unresponsive",
+      "combat feedback",
+      "movement feel",
+      "reduced motion"
+    ]
+  },
+  "grotto-procedural-generation": {
+    "triggers": [
+      "random levels",
+      "unreachable exit",
+      "daily seed",
+      "same seed"
+    ]
+  },
+  "grotto-game-playtest": {
+    "triggers": [
+      "test game",
+      "play test",
+      "memory leak",
+      "frame rate",
+      "long session",
+      "soft lock"
+    ]
+  }
+}

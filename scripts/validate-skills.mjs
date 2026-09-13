@@ -3,6 +3,7 @@ import { join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 
 import {
+  buildManifest,
   isJavaScriptPath,
   loadJson,
   manifestPath,
@@ -20,6 +21,10 @@ const externalSkills = new Set(loadJson(join(repoRoot, "relevance", "external-re
 
 if (!Array.isArray(manifest.skills) || manifest.skills.length === 0) {
   failures.push("relevance/manifest.json must contain a non-empty skills array");
+}
+
+if (JSON.stringify(buildManifest()) !== JSON.stringify(manifest)) {
+  failures.push("Published manifest is stale; run npm run generate:readme");
 }
 
 const manifestNames = new Set();
@@ -50,6 +55,8 @@ for (const skill of manifest.skills ?? []) {
     continue;
   }
   if (frontmatter.name !== skill.name) failures.push(`${skill.path} frontmatter name must be ${skill.name}`);
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(frontmatter.name || "") || frontmatter.name.length > 64) failures.push(skill.path + " has an invalid skill name");
+  if (frontmatter.description?.length > 1024) failures.push(skill.path + " description exceeds 1024 characters");
   if (!frontmatter.description) failures.push(`${skill.path} needs a description`);
   if (!frontmatter.hasVersion) failures.push(`${skill.path} needs a version`);
   if (!frontmatter.hasLicense) failures.push(`${skill.path} needs a license`);
