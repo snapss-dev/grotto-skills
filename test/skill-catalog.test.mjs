@@ -63,6 +63,7 @@ metadata:
     description: "Example skill.",
     tags: ["grotto", "sdk"],
     relatedSkills: ["grotto-other"],
+    version: '1.0.0',
     hasVersion: true,
     hasLicense: true
   });

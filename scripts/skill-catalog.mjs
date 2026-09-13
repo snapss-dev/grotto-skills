@@ -1,5 +1,6 @@
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const repoRoot = fileURLToPath(new URL("../", import.meta.url));
@@ -79,6 +80,7 @@ export function parseSkillFrontmatter(source, sourcePath = "SKILL.md") {
     description: topLevel("description"),
     tags: inlineList("tags"),
     relatedSkills: inlineList("related_skills"),
+    version: frontmatter.match(/^\s*version:\s*["\']?([0-9]+\.[0-9]+\.[0-9]+)["\']?\s*$/m)?.[1] ?? null,
     hasVersion: /^\s*version:\s*\S+/m.test(frontmatter),
     hasLicense: /^license:\s*\S+/m.test(frontmatter)
   };
@@ -91,7 +93,7 @@ function walk(dir) {
   });
 }
 
-const repositoryTextExtension = /\.(?:cjs|html|js|json|md|mjs|ya?ml)$/i;
+const repositoryTextExtension = /\.(?:cjs|css|html|js|json|md|mjs|ts|ya?ml)$/i;
 const javaScriptExtension = /\.(?:cjs|js|mjs)$/i;
 
 export function isRepositoryTextPath(path) {
@@ -121,4 +123,53 @@ export function markdownLinkErrors(path, source) {
     }
   }
   return errors;
+}
+
+// Public catalog and Platform snapshot are derived from the same skill folders.
+export const digest = (text) => createHash("sha256").update(text).digest("hex");
+
+export function skillResources(name, root = repoRoot) {
+  const base = join(root, "skills", name);
+  return Object.fromEntries(walk(base)
+    .filter(path => /\.(md|js|ts|html|css|json)$/.test(path))
+    .map(path => [relative(base, path).split(sep).join("/"), readFileSync(path, "utf8").replaceAll("\r\n", "\n")])
+    .filter(([path]) => path === "SKILL.md" || /^(references|templates)\//.test(path))
+    .sort(([a], [b]) => a.localeCompare(b, "en")));
+}
+
+export function buildManifest(root = repoRoot) {
+  const routing = loadJson(join(root, "relevance", "routing.json"));
+  const names = readdirSync(join(root, "skills"), { withFileTypes: true })
+    .filter(entry => entry.isDirectory()).map(entry => entry.name).sort();
+  for (const name of Object.keys(routing)) {
+    if (!names.includes(name)) throw new Error("Routing names an absent skill: " + name);
+    const route = routing[name];
+    if (!route || typeof route !== "object" || Array.isArray(route)
+      || Object.keys(route).some(key => !["triggers", "autoInject"].includes(key))
+      || (route.autoInject !== undefined && typeof route.autoInject !== "boolean")
+      || (route.triggers !== undefined && (!Array.isArray(route.triggers) || route.triggers.length > 32
+        || route.triggers.some(term => typeof term !== "string" || !term.trim() || term.length > 120)))) {
+      throw new Error("Invalid discovery rules for " + name);
+    }
+  }
+  const skills = names.map(name => {
+    const texts = skillResources(name, root);
+    const front = parseSkillFrontmatter(texts["SKILL.md"], name);
+    if (!front.version) throw new Error(name + " requires a three-part version");
+    const resources = Object.fromEntries(Object.entries(texts).map(([path, text]) => [path, "sha256:" + digest(text)]));
+    return {
+      name, path: "skills/" + name + "/SKILL.md", version: front.version,
+      revision: digest(JSON.stringify(resources)), resources,
+      summary: front.description, inject: front.description, tags: front.tags,
+      ...(routing[name] || {}),
+      public_url: "https://www.enterthegrotto.xyz/skills",
+      docs_url: "https://api.enterthegrotto.xyz/docs",
+      ...(name === "grotto-game-runtime-developer-sdk" ? { sdk_url: "https://api.enterthegrotto.xyz/sdk/grotto-game-runtime.v1.js" } : {}),
+    };
+  });
+  return {
+    name: "grotto-skills", description: "Public Grotto game creator skills.",
+    visibility: "public", schemaVersion: 2,
+    revision: digest(JSON.stringify(skills)), skills,
+  };
 }

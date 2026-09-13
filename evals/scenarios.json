@@ -1,0 +1,67 @@
+[
+  {
+    "id": "seeded-cave",
+    "skill": "grotto-procedural-generation",
+    "request": "Build a small cave exploration game with a key and exit. Support replaying a seed, keyboard and touch, pause and restart.",
+    "observe": [
+      "Seed and generator revision reproduce the world",
+      "Key and exit are actually attainable under game rules",
+      "Generation terminates for difficult seeds",
+      "Primary loop and recovery are playable"
+    ]
+  },
+  {
+    "id": "responsive-control-repair",
+    "skill": "grotto-cross-device-controls",
+    "request": "Movement sometimes stays on after releasing my finger or returning from another tab. Fix it while preserving keyboard controls.",
+    "observe": [
+      "Simultaneous movement and action work",
+      "Cancel, capture loss and backgrounding clear held actions",
+      "Normal movement and keyboard interaction remain usable"
+    ]
+  },
+  {
+    "id": "save-recovery",
+    "skill": "grotto-game-runtime-developer-sdk",
+    "request": "Players sometimes lose progress after refresh or a slow connection. Repair the save integration without refunding spent currency.",
+    "observe": [
+      "Identity and slot are correct",
+      "Late hydration preserves allowed early progress",
+      "Conflicts follow the game economy",
+      "Status claims reflect actual local/cloud persistence"
+    ]
+  },
+  {
+    "id": "animation",
+    "skill": "grotto-game-animation",
+    "request": "Animate a character with idle, walking and a non-looping attack. Keep its feet stable when changing clips and its timing consistent on slower devices.",
+    "observe": [
+      "State changes do not restart a clip every frame",
+      "Looping and one-shot completion work",
+      "Feet, facing and collision stay stable",
+      "Pause and restart clear transient state"
+    ]
+  },
+  {
+    "id": "spatial-model",
+    "skill": "grotto-3d-scene-builder",
+    "request": "Insert an existing animated GLB hero into this game, ground it correctly and connect movement to animation.",
+    "observe": [
+      "Actual available clip names are used",
+      "Controller and visual transforms have clear ownership",
+      "Loading and removal handle failure and late completion",
+      "Collision, camera, animation and scale work together"
+    ]
+  },
+  {
+    "id": "quiet-feedback",
+    "skill": "grotto-game-feel-juice",
+    "request": "Make this quiet puzzle game feel more satisfying. Keep the restrained visual style and respect reduced motion and mute.",
+    "observe": [
+      "The intended style is preserved",
+      "Feedback makes actions and consequences clearer",
+      "No mandatory shake, music or expensive generation",
+      "Recovery and rapid input remain correct"
+    ]
+  }
+]

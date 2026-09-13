@@ -1,13 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
+import { buildManifest, manifestPath, readmePath, withGeneratedCatalog } from "./skill-catalog.mjs";
 
-import {
-  loadJson,
-  manifestPath,
-  readmePath,
-  withGeneratedCatalog
-} from "./skill-catalog.mjs";
-
-const readme = readFileSync(readmePath, "utf8");
-const manifest = loadJson(manifestPath);
-writeFileSync(readmePath, withGeneratedCatalog(readme, manifest));
-console.log(`Generated README catalog for ${manifest.skills.length} skills.`);
+const manifest = buildManifest();
+writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+writeFileSync(readmePath, withGeneratedCatalog(readFileSync(readmePath, "utf8"), manifest));
+console.log("Generated catalog: " + manifest.skills.length + " skills, revision " + manifest.revision);

@@ -1,35 +1,56 @@
 {
   "name": "grotto-skills",
-  "description": "Public Grotto developer skills for HTML5/WebGL game creators.",
+  "description": "Public Grotto game creator skills.",
   "visibility": "public",
+  "schemaVersion": 2,
+  "revision": "b97bafa801cc6b1c0d28d0ce14c5fa63563bffbb47d5bfccfe02f6bc4aa4cd56",
   "skills": [
     {
-      "name": "grotto-game-runtime-developer-sdk",
-      "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
-      "summary": "Core Grotto Runtime SDK guide for trusted identity, bounded cloud sessions, saves, events, capability-gated inventory, and one-use public multiplayer bootstrap tickets.",
-      "inject": "Grotto Runtime SDK — the Grotto host provides trusted identity, cloud saves, events and leaderboards. Wire it, and DEGRADE GRACEFULLY (localStorage / no-ops) when `window.GrottoRuntime` is absent so the game still runs standalone:\n  const grotto = await window.GrottoRuntime?.ready?.({ timeoutMs: 8000 }).catch(() => null);\n  const player = grotto && await grotto.getPlayer();          // trusted host identity\n  const save = grotto ? await grotto.loadSave('default', DEFAULT_STATE) : { state: DEFAULT_STATE };\n  await grotto?.save('default', state);                       // cloud autosave\n  await grotto?.submitScore(score, { board: 'default' });     // server keeps best\n  const top = await grotto?.leaderboard({ board: 'default', limit: 10 });\nNever ask the client to prove identity. `inventory:read` and `multiplayer:join` exist only for exact game IDs enabled by platform policy. Runtime wallet authority is an immutable private launch snapshot, and heartbeats never exceed the 24-hour absolute session lifetime. Multiplayer uses a fresh one-use ticket for every connect/reconnect; `roomId=public` is routing only, not match authorization.",
+      "name": "grotto-3d-scene-builder",
+      "path": "skills/grotto-3d-scene-builder/SKILL.md",
+      "version": "1.0.0",
+      "revision": "4703c37aa53e829137aa0535d3e65fe912e9292ce45d4669a4c00351164e3834",
+      "resources": {
+        "references/models-and-animation.md": "sha256:58b11859b4c777ccd198e744b7f92985188d71f9b156f60a882518e9bd45d592",
+        "references/scene-and-performance.md": "sha256:7043d9fe586dc9b31e1df695f745e3d46a593d005bcb04c2d46eb060573a3750",
+        "SKILL.md": "sha256:d269bf4989974eb4d325859e2dfd702873fe3c83c49ddeea57fd46d79cec11c8"
+      },
+      "summary": "Build or improve a Three.js game, place animated GLB models, connect physics, or diagnose rendering cost.",
+      "inject": "Build or improve a Three.js game, place animated GLB models, connect physics, or diagnose rendering cost.",
       "tags": [
-        "grotto",
-        "html5",
-        "webgl",
-        "game-dev",
-        "runtime-sdk",
-        "cloud-saves",
-        "leaderboards",
-        "auth",
-        "multiplayer",
-        "railway",
-        "supabase"
+        "3d",
+        "threejs",
+        "three",
+        "glb",
+        "rapier",
+        "mesh",
+        "low-poly",
+        "webgl"
+      ],
+      "triggers": [
+        "low poly",
+        "3d model",
+        "animated glb",
+        "third person",
+        "first person"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
-      "sdk_url": "https://api.enterthegrotto.xyz/sdk/grotto-game-runtime.v1.js",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
     },
     {
       "name": "grotto-core-of-gaming",
       "path": "skills/grotto-core-of-gaming/SKILL.md",
-      "summary": "Core game-design principles for shaping clear challenge, meaningful choices, readable feedback, fair progression, game feel, and a complete entertaining loop.",
-      "inject": "Core of Gaming — build around a clear player fantasy and one primary challenge (execution, perception, reasoning, strategy, risk, social understanding, expression, or discovery). Define 2–4 verbs and a repeatable loop: goal → obstacle → player action/decision → legible consequence → learning → another meaningfully different attempt. Make tradeoffs real; use randomness to create situations, not replace decisions. Teach one idea safely, test it, then combine it. Make failure attributable and fair, with one-action recovery. Use sound, animation, particles, camera, and HUD response to clarify mechanics and reward mastery; polish amplifies the loop, it does not replace it. Put the first meaningful action within about 15–20 seconds, show goal/controls without a tutorial wall, test both success and failure, and prefer one small complete loop over broad unfinished features. Before finishing, playtest dominant strategies, softlocks, idle/rapid input, resize, touch, restart, and whether the Game invites one more try.",
+      "version": "1.2.0",
+      "revision": "9f958da325831ca7a1afd3042ab0bb2c8551c143127f3920a39f761df0a7e9ce",
+      "resources": {
+        "references/brainstorm.md": "sha256:64ca42ceab99615373764d3992a5c509452c4cd938360bca4647b3b132e55a39",
+        "references/feedback.md": "sha256:788cc51d10051ce7de722d943fe4d868288433fd901b162645a1a11dd6ede4df",
+        "references/loop.md": "sha256:508ede97d7fa81abed3ec1bc5abc5f2ed441998c7743b0ee7b4c23d4d58b8eba",
+        "references/studio.md": "sha256:4c2f296ad2f8f4788c2c90413de114a322966acad3e5967fa8d8a6ab789fdbb0",
+        "SKILL.md": "sha256:097205baf9409d619f5fa139a919e20a276412c9df3a6d6c938d531dd61b017d"
+      },
+      "summary": "Design or improve a game loop, challenge, progression, feedback, or playtest plan.",
+      "inject": "Design or improve a game loop, challenge, progression, feedback, or playtest plan.",
       "tags": [
         "grotto",
         "game-dev",
@@ -41,14 +62,30 @@
         "playtesting",
         "brainstorm"
       ],
+      "triggers": [
+        "boring",
+        "too easy",
+        "too hard",
+        "game loop",
+        "meaningful choices",
+        "difficulty curve"
+      ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
     },
     {
       "name": "grotto-cross-device-controls",
       "path": "skills/grotto-cross-device-controls/SKILL.md",
-      "summary": "Design one browser game for desktop and mobile with semantic actions, keyboard/mouse bindings, touch joysticks or direct manipulation, safe-area-aware controls, and reliable input recovery.",
-      "inject": "Cross-device controls — build one semantic action model and map both desktop and touch input to it; the simulation must never branch on device type. Choose controls from the game verbs: direct tap/drag for puzzles and cards, one large action target for runners, left/right plus jump for platformers, or a virtual joystick plus contextual action buttons for free movement. Use Pointer Events with pointer capture and independent pointer IDs so movement and action work simultaneously. Put DOM controls in lower safe corners with at least 48px targets, `touch-action:none` only on the play surface/controls, `env(safe-area-inset-*)`, and no critical play/HUD under thumbs. Preserve keyboard/mouse, clear held inputs on cancel/blur/visibility/pause, suspend camera/gameplay behind modals, and test portrait, landscape, resize, multitouch, restart, and a 390x844 viewport. A pointerdown listener alone is not mobile support; the entire primary loop and recovery path must be comfortable on both desktop and touch.",
+      "version": "1.2.0",
+      "revision": "ea1ff96a500ee7148709506d0958122213bef92d611eb3f427f659df37752a96",
+      "resources": {
+        "references/actions.md": "sha256:f519965700ff81258032c9bc118cc954be8cdff0dd5feab6fd9b7a4103977b34",
+        "references/layout-and-review.md": "sha256:aca657975cf30d9d8fbb095b4d03bf519133b448a118a4732edc1a2879c31287",
+        "references/touch.md": "sha256:bcef985a5f9da40ec5f1bd0654f5bd05079c4f1331d0524f5ecee43c8a325b31",
+        "SKILL.md": "sha256:afc796a278ade91ee35829fd65955b1df1c80fbb7492ca852bffbf144d67163e"
+      },
+      "summary": "Build or repair desktop and touch controls, responsive layouts, or input recovery.",
+      "inject": "Build or repair desktop and touch controls, responsive layouts, or input recovery.",
       "tags": [
         "grotto",
         "game-dev",
@@ -62,14 +99,183 @@
         "responsive",
         "accessibility"
       ],
+      "triggers": [
+        "phone",
+        "finger",
+        "thumb",
+        "stuck movement",
+        "keeps moving",
+        "release button",
+        "portrait",
+        "landscape",
+        "touch controls",
+        "held button",
+        "switch tabs",
+        "thumbs"
+      ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
     },
     {
+      "name": "grotto-game-animation",
+      "path": "skills/grotto-game-animation/SKILL.md",
+      "version": "1.0.0",
+      "revision": "0f800ad239e94811abf56c16f5a0085c3c72461a45b0f60fd094fbb909383b6b",
+      "resources": {
+        "references/sprites.md": "sha256:0035c58c214ac4bed9625db0eb11bffbab02903a8e18d40b237978b01d700ebc",
+        "references/state-and-timing.md": "sha256:84a18db65dcdb0d782fe8d45d80cbb5c1d68b0375acdb202c9db94158751b947",
+        "SKILL.md": "sha256:3b3e2662e44e137ade3244484687bfc389392637019b01dd6dc7a6b2ed9da074",
+        "templates/frame-clock.js": "sha256:c77dfeda764f03a2a4e4eaa431d9e22171660ffb201501f1eea8272fb4f5a876"
+      },
+      "summary": "Animate sprite characters or repair jitter, timing, facing, pivots and movement-to-animation transitions.",
+      "inject": "Animate sprite characters or repair jitter, timing, facing, pivots and movement-to-animation transitions.",
+      "tags": [
+        "animation",
+        "animate",
+        "animated",
+        "spritesheet",
+        "walk-cycle",
+        "idle",
+        "frames"
+      ],
+      "triggers": [
+        "walk cycle",
+        "sprite animation",
+        "animation transition",
+        "jittering sprite"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs"
+    },
+    {
+      "name": "grotto-game-feel-juice",
+      "path": "skills/grotto-game-feel-juice/SKILL.md",
+      "version": "1.0.0",
+      "revision": "e6ed800873ba0a8cabb4db680305cd6a326b45a2187c27fde5178688162a83cc",
+      "resources": {
+        "references/diagnosis.md": "sha256:1073bab21e4dff00ee6108cd9799e9b85718aa93597f8b4109376d36c5c3e578",
+        "references/feedback-and-audio.md": "sha256:2d223e7a1381ac49863f24c255c77b19eac34ee4fc615f0d89752aa9858c683b",
+        "SKILL.md": "sha256:2d58cacb9d7cceb281c68963a21b2d112d7e2dc60965ad6c7058684baf8adbe1"
+      },
+      "summary": "Improve responsiveness and readable feedback, tune movement or combat, and fit effects and audio to the intended experience.",
+      "inject": "Improve responsiveness and readable feedback, tune movement or combat, and fit effects and audio to the intended experience.",
+      "tags": [
+        "feel",
+        "juice",
+        "polish",
+        "hitstop",
+        "screenshake",
+        "feedback",
+        "responsive",
+        "satisfying"
+      ],
+      "triggers": [
+        "satisfying",
+        "sluggish",
+        "unresponsive",
+        "combat feedback",
+        "movement feel",
+        "reduced motion"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs"
+    },
+    {
+      "name": "grotto-game-playtest",
+      "path": "skills/grotto-game-playtest/SKILL.md",
+      "version": "1.0.0",
+      "revision": "3f6a09dc1bcc72eb373b0f8fad81db8634fa8b439c186bc2e61144f36168d328",
+      "resources": {
+        "references/performance.md": "sha256:396674b4de938a3a36884b876e9f071eed845b7cb1372efe9b5bd59c570486cc",
+        "references/playtest.md": "sha256:ac9be90e0039b00ed729967c9deff037eaa64a7e1e44f2637c39157bccc94140",
+        "SKILL.md": "sha256:65e7034be863cd6ef46b5210bb772bb76c37e362d5f3f2ad05e667e4b2e9092f"
+      },
+      "summary": "Playtest a browser game or diagnose softlocks, input failures, save loss, broken recovery and performance regressions.",
+      "inject": "Playtest a browser game or diagnose softlocks, input failures, save loss, broken recovery and performance regressions.",
+      "tags": [
+        "playtest",
+        "qa",
+        "softlock",
+        "performance",
+        "framerate",
+        "stutter",
+        "fps",
+        "freeze"
+      ],
+      "triggers": [
+        "test game",
+        "play test",
+        "memory leak",
+        "frame rate",
+        "long session",
+        "soft lock"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs"
+    },
+    {
+      "name": "grotto-game-runtime-developer-sdk",
+      "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
+      "version": "1.9.0",
+      "revision": "17f4c0ee2da43dd59d6f44e2f6c2767c9bc5e52149ed207aefa3da72082760a8",
+      "resources": {
+        "references/api-and-errors.md": "sha256:26fc0200b847399b57db0c5223304c49a9b8955faccbc2203682adbcbf712a24",
+        "references/capabilities.md": "sha256:d85f6bd0608d3d3928d8a5b9f20ee911a551717dd17d9d500fd9600ed6a4354f",
+        "references/hosting.md": "sha256:0196092309c6842718fa11e606d54a5c1a1f5f51c8425ad6fef6287741109f80",
+        "references/identity-and-boot.md": "sha256:9cf60849389d4fa6289e1fdfeb036d620b8d6cd8fb68b7d8cbb14d6a0ac50795",
+        "references/packaging.md": "sha256:cd06141f140a7daa9f7e95ad9a34cbabbaba2db8bb6d0479b808b298dd9ec14b",
+        "references/saves-and-scores.md": "sha256:c9193b180e78c4226f5c184e23d96f045ab3305d8d299c7d51ad4411688faa30",
+        "references/sdk-contract.md": "sha256:57391fee20ef0162e2ceccf270f501b46957fdea79408a03887cd07c93e2a7ac",
+        "SKILL.md": "sha256:1045ca4e017b50cc15d952299f05eb8ead206bf6d87d03e2fa6fe201611544c2",
+        "templates/minimal-runtime-game.html": "sha256:92b08b80e7930aad0557a74fe006eb0d9bd198ba8c373c9047c8d982f70c23df"
+      },
+      "summary": "Integrate or debug Grotto identity, cloud saves, scores, events, or capability-gated multiplayer.",
+      "inject": "Integrate or debug Grotto identity, cloud saves, scores, events, or capability-gated multiplayer.",
+      "tags": [
+        "progress",
+        "autosave",
+        "save",
+        "saves",
+        "score",
+        "leaderboard",
+        "grotto",
+        "game-dev",
+        "runtime-sdk",
+        "cloud-saves",
+        "leaderboards",
+        "auth",
+        "multiplayer",
+        "html5",
+        "webgl",
+        "railway",
+        "supabase"
+      ],
+      "triggers": [
+        "lost progress",
+        "lose progress",
+        "progress refresh",
+        "progress reload",
+        "save conflict",
+        "cloud save",
+        "score board"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs",
+      "sdk_url": "https://api.enterthegrotto.xyz/sdk/grotto-game-runtime.v1.js"
+    },
+    {
       "name": "grotto-game-token-gated-inventory",
       "path": "skills/grotto-game-token-gated-inventory/SKILL.md",
-      "summary": "Token-gate Grotto game content using capability-gated exact ERC-1155/ERC-721 balances over the immutable verified-wallet launch snapshot.",
-      "inject": "Token-gated content — use `grotto.getInventory()` only when the exact game ID has `inventory:read` enabled by platform policy. The platform checks the immutable private canonical-plus-linked wallet snapshot, applies any per-game contract filter, proves complete pagination, and returns exact decimal-string balances to parse with `BigInt`. Treat missing scope, `503`, invalid data, or `partial !== false` as no gated entitlement; keep only free/default content available. Account-link changes require a new play session. Do not add wallet selectors or trust `checkedAt` as chain-read time; default source staleness is bounded to 45 seconds.",
+      "version": "1.4.0",
+      "revision": "614a91bb1eaf1b844e47ef77d99b77f2a2900e60686760c01d9f2a965fa0a09d",
+      "resources": {
+        "references/contract.md": "sha256:e1231ca2a27aaf85fda0e99cca803cfd6e696408920da3623c88fd4f9a7a6d0e",
+        "references/freshness.md": "sha256:aa8c5e038ddb286460d64ab2e9b3d07cdd752dcda300d2180bca1aa78b965d81",
+        "references/gates.md": "sha256:107221808ecd99655a9eafebd165b25e20ea637bed03c4b29c29a1d36216a28c",
+        "SKILL.md": "sha256:90cf241809c3878bb7f452069434f53439a3b745bddf62b07634c1c68077a692"
+      },
+      "summary": "Gate game content using Grotto capability-scoped ERC-721 or ERC-1155 inventory.",
+      "inject": "Gate game content using Grotto capability-scoped ERC-721 or ERC-1155 inventory.",
       "tags": [
         "grotto",
         "game-dev",
@@ -81,15 +287,28 @@
         "erc721",
         "runtime-sdk"
       ],
+      "triggers": [
+        "token gated",
+        "owned nft",
+        "erc1155",
+        "erc721"
+      ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
     },
     {
       "name": "grotto-hosted-game-github-workflow",
       "path": "skills/grotto-hosted-game-github-workflow/SKILL.md",
-      "summary": "Maintain Grotto games with GitHub, CI, hosted clients, a secure runtime wrapper, and replay-safe authoritative inventory/multiplayer services.",
-      "inject": "Hosted-game workflow — deploy the real client to Railway/Vercel and upload a tiny root wrapper that forwards `grotto:runtime` only from its parent to the known hosted origin. Coordinate exact per-game inventory/multiplayer allowlists after publication. For realtime, request a fresh ticket on every connect/reconnect, verify the strict Ed25519/version/time/game/public-room profile, atomically consume UUIDv4 `jti` in shared storage, then authorize party/queue/ranked placement server-side. Cache JWKS by `kid`, refresh unknown keys, and support current-plus-overlap public-key rotation. Use only with a durable hosted domain.",
-      "autoInject": false,
+      "version": "1.3.0",
+      "revision": "bff05cae6e18a1e0ff417ea0fdf4bc233e744165579fe51f23917845ee2742b7",
+      "resources": {
+        "references/capabilities.md": "sha256:f83360aaf0061b18f552bf518bb238a9addacee5fc65a57d13ab15c52c09882b",
+        "references/delivery.md": "sha256:59da22ea2d3784934f9e451470b2e6b0170e29c3ac990b42f7fcea26dd980431",
+        "references/wrapper.md": "sha256:14977058c0caabbfe663b0e5d686b632f1bddd9b7a2444b46f4a55450b86998d",
+        "SKILL.md": "sha256:ffa92ef87725c5fd87c91621abde2fac9bf909a706d398ed81d19387eedcc6f5"
+      },
+      "summary": "Maintain an explicitly external, durably hosted game client with a secure Grotto runtime wrapper.",
+      "inject": "Maintain an explicitly external, durably hosted game client with a secure Grotto runtime wrapper.",
       "tags": [
         "grotto",
         "game-dev",
@@ -102,25 +321,35 @@
         "iframe",
         "wrapper"
       ],
+      "autoInject": false,
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
     },
     {
-      "name": "grotto-studio-game-updates",
-      "path": "skills/grotto-studio-game-updates/SKILL.md",
-      "summary": "How a creator updates a game in Grotto Studio so the new version reaches players instantly — iterating with B.O.B., keeping cloud saves intact, and rolling back.",
-      "inject": "Updating a live game — in Grotto Studio every change is a new build that becomes the version players load on their next session: no re-upload, no redeploy, instant for the creator. Keep the root `index.html` entry stable, prefer small targeted edits (so updates are fast and rollback-able), and never break a working save format without migrating it.",
+      "name": "grotto-phaser-2d-builder",
+      "path": "skills/grotto-phaser-2d-builder/SKILL.md",
+      "version": "1.0.0",
+      "revision": "64801f6652c858e69136ff981f387cb7650a26d4e3b1c9b25c615599a5656070",
+      "resources": {
+        "references/architecture.md": "sha256:f8cc2b0c3e7b37ea174be10397f8e6bd86358f8f0326a25b4a2163d92289e122",
+        "references/recipes.md": "sha256:4c26c21b97638280e7fb7b7b0e8ee2035e191379b5551e0ac0a047a6e637f816",
+        "SKILL.md": "sha256:c1d3fb7d778b077120398cec6529e4c78fe9e321d68be17c37812588a4c895de"
+      },
+      "summary": "Build or repair a Studio Phaser game using its installed TypeScript, scene, physics, asset and input helpers.",
+      "inject": "Build or repair a Studio Phaser game using its installed TypeScript, scene, physics, asset and input helpers.",
       "tags": [
-        "grotto",
-        "game-dev",
-        "update",
-        "iterate",
-        "publish",
-        "version",
-        "live",
-        "studio",
-        "save-migration",
-        "rollback"
+        "phaser",
+        "2d",
+        "scene",
+        "arcade",
+        "physics",
+        "platformer",
+        "tilemap"
+      ],
+      "triggers": [
+        "phaser scene",
+        "arcade physics",
+        "platformer movement"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
@@ -128,8 +357,17 @@
     {
       "name": "grotto-pixel-art-assets",
       "path": "skills/grotto-pixel-art-assets/SKILL.md",
-      "summary": "Make game assets cheaply: draw pixel art procedurally in code (free), convert any image to crisp pixel art at runtime (free, zero-dep pixelify), and use cheap AI image generation for sprites/textures when you need raster art.",
-      "inject": "Game assets — make them CHEAP. (1) DEFAULT to drawing pixel art in code: define sprites/tiles as a palette + index grid and paint them to an offscreen canvas (imageSmoothingEnabled=false). Free, deterministic, recolorable, tiny. (2) Convert any raster image to crisp pixel art at runtime with a zero-dep canvas pixelify (hard downscale -> optional palette snap -> nearest-neighbor upscale). (3) For rich raster art, the generate_image tool is cheap and on every tier — pass pixel:true for pixel-art sprites; transparent:true for sprites/items. Keep pixels crisp everywhere: CSS image-rendering:pixelated, ctx.imageSmoothingEnabled=false, Three.js NearestFilter. Bias toward code; use AI images to accent, not carry.",
+      "version": "1.2.0",
+      "revision": "dce1b34c8bce09444eb5811c5653f42f41e6864e657393dd86e268ff80f1fbb9",
+      "resources": {
+        "references/generated-art.md": "sha256:c578ef8547563d6eb5dcda17ca903b3783af094837bb02c5f2ee3600f14b4331",
+        "references/pixelify.md": "sha256:1b37fca530539af3c4078041e19613f2a65e6419cf4bf258e6476013f016eb85",
+        "references/procedural.md": "sha256:b3838f74239ad3460a63e55bc35345d73188e2ce9edcb0d808c6115636092ed3",
+        "SKILL.md": "sha256:06c315fcf1a39df6c830df337256133cd04c5b8e0116ebdd873043fb98420cd9",
+        "templates/pixelify.js": "sha256:baa09d5afd4d1b7b6508fb644b3df1aa54f7348f9f7dcbd7b17e3d78e584efea"
+      },
+      "summary": "Create procedural pixel art, pixelify an existing image, or integrate generated raster assets.",
+      "inject": "Create procedural pixel art, pixelify an existing image, or integrate generated raster assets.",
       "tags": [
         "grotto",
         "game-dev",
@@ -143,6 +381,79 @@
         "palette",
         "retro",
         "procedural"
+      ],
+      "triggers": [
+        "pixel art",
+        "art direction",
+        "visual style",
+        "painted background",
+        "transparent sprite"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs"
+    },
+    {
+      "name": "grotto-procedural-generation",
+      "path": "skills/grotto-procedural-generation/SKILL.md",
+      "version": "1.0.0",
+      "revision": "cf06b58fd34cadd615aef950261ccb076e0bff837f8c4f1e18b22c33aa28bdbe",
+      "resources": {
+        "references/generation.md": "sha256:aadbda817661367ed2f136a2e862e315ec7ceed6b084234f1f6a44eaf06535d8",
+        "references/validation.md": "sha256:93e849e7a8ea3ffa6c233c3c334e9f6c692755df5fc8aaa9e4949dcd701e4416",
+        "SKILL.md": "sha256:0651b0201246a5b8ab405213194ef60784076b00414ab34da27e9f460ab19e9b",
+        "templates/seeded-grid.js": "sha256:c5a75e423921d25d9a42e0098f706e71f293e703a1241eebafe5c1b71b97d6d8"
+      },
+      "summary": "Generate reproducible playable levels, encounters or loot, and diagnose unreachable goals or unfair seeds.",
+      "inject": "Generate reproducible playable levels, encounters or loot, and diagnose unreachable goals or unfair seeds.",
+      "tags": [
+        "procedural",
+        "roguelike",
+        "dungeon",
+        "maze",
+        "seed",
+        "endless",
+        "generation"
+      ],
+      "triggers": [
+        "random levels",
+        "unreachable exit",
+        "daily seed",
+        "same seed"
+      ],
+      "public_url": "https://www.enterthegrotto.xyz/skills",
+      "docs_url": "https://api.enterthegrotto.xyz/docs"
+    },
+    {
+      "name": "grotto-studio-game-updates",
+      "path": "skills/grotto-studio-game-updates/SKILL.md",
+      "version": "1.2.0",
+      "revision": "899696ce065324d466688ceefb9b570cd3054cb6f63db032ab461ed09a732e77",
+      "resources": {
+        "references/iteration.md": "sha256:6ae4fd37c8f202cfc39b1a609aa5707d3465088bd6e3693735a28740bf271386",
+        "references/save-migration.md": "sha256:0cd10a25b79a166ba19b5ef38e77cc3abea08ec5336ebb87e17b15165aeaf081",
+        "SKILL.md": "sha256:a99e6af698d89d7d597ba333c81511db37355c152d3e396bb5209a8645fc6231"
+      },
+      "summary": "Update an existing Studio game while preserving its identity, save compatibility and publication history.",
+      "inject": "Update an existing Studio game while preserving its identity, save compatibility and publication history.",
+      "tags": [
+        "grotto",
+        "game-dev",
+        "update",
+        "iterate",
+        "publish",
+        "version",
+        "live",
+        "studio",
+        "save-migration",
+        "rollback"
+      ],
+      "triggers": [
+        "existing progress",
+        "existing game",
+        "save migration",
+        "wiping progress",
+        "new version",
+        "roll back"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
