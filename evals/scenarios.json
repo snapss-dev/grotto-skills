@@ -1,5 +1,65 @@
 [
   {
+    "id": "recurring-level-design",
+    "skill": "grotto-level-design",
+    "request": "Develop and playtest a short teaching route for the current controller. Record its route assumptions and what players understood.",
+    "followUpRequests": [
+      "Using the actual build and record from the previous pass, add a dash and revisit the route assumptions it changes.",
+      "Run another focused level-design pass from the retained findings. Preserve working sections and report which earlier scenarios were replayed."
+    ],
+    "observe": [
+      "Later passes use the actual prior build and evidence",
+      "Changed movement assumptions trigger relevant route and recovery checks",
+      "Working design is retained without a fresh full-game replacement",
+      "Each pass leaves decisions, observations and an explicit next question"
+    ]
+  },
+  {
+    "id": "recurring-art-direction",
+    "skill": "grotto-game-art-direction",
+    "request": "Establish a small representative asset set and visual rules for this game. Inspect it at gameplay scale and retain an asset plan within the available budget.",
+    "followUpRequests": [
+      "Using the accepted representatives and asset plan from the previous pass, develop the next small enemy and pickup batch.",
+      "Revisit the visual system after a camera zoom change. Use the prior assets and findings to decide what actually needs revision."
+    ],
+    "observe": [
+      "The same visual conventions and provenance survive across batches",
+      "Actual integrated assets are inspected at the changed camera scale",
+      "The available budget and intentional reuse guide asset choices",
+      "Later passes retain prior decisions and record justified exceptions"
+    ]
+  },
+  {
+    "id": "recurring-playtest",
+    "skill": "grotto-game-playtest",
+    "request": "Run a bounded browser playtest on this playable build. Retain scenario steps, observed failures and identified performance conditions.",
+    "followUpRequests": [
+      "Use the actual first pass's findings to address the highest-impact failure, then replay its original scenario and an affected neighboring path.",
+      "Run the next milestone playtest using the retained scenario suite and baseline. Add coverage only for new behavior or unresolved findings."
+    ],
+    "observe": [
+      "The original failing scenario is replayed after the change",
+      "Measurements identify comparable revisions and environments",
+      "Untested behavior remains explicit in every pass",
+      "The scenario suite grows from evidence rather than being reinvented"
+    ]
+  },
+  {
+    "id": "recurring-save-integration",
+    "skill": "grotto-game-runtime-developer-sdk",
+    "request": "Run a save integration pass with the installed runtime. Retain the identity, late-hydration, conflict and recovery scenarios actually tested.",
+    "followUpRequests": [
+      "Extend progression with a saved-state version change. Reuse the previous pass's contract cases and a real older save from that build.",
+      "Recheck the next update against the retained saves and integration record. Keep private session and wallet data out of the record."
+    ],
+    "observe": [
+      "Save versions and actual old-save fixtures carry into later passes",
+      "Local progress is preserved during allowed late hydration",
+      "Contract cases cover unavailable services and conflicts",
+      "No credentials or private wallet snapshots enter the reusable record"
+    ]
+  },
+  {
     "id": "seeded-cave",
     "skill": "grotto-procedural-generation",
     "request": "Build a small cave exploration game with a key and exit. Support replaying a seed, keyboard and touch, pause and restart.",

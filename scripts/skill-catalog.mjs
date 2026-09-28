@@ -39,7 +39,8 @@ export function renderCatalog(manifest) {
     `Path: \`${skill.path}\``,
     "",
     skill.summary,
-    ...(skill.outcome ? ["", `Outcome: ${skill.outcome}`] : [])
+    ...(skill.outcome ? ["", `Outcome: ${skill.outcome}`] : []),
+    ...(skill.repeatWhen ? ["", `Repeat: ${skill.repeatWhen}`, "", `Carry forward: ${skill.carryForward}`] : [])
   ].join("\n");
   const entries = skillCategories.map(category => {
     const skills = manifest.skills.filter(skill => skill.category === category);
@@ -94,6 +95,9 @@ export function parseSkillFrontmatter(source, sourcePath = "SKILL.md") {
     category: metadataValue("category"),
     stage: metadataValue("stage"),
     outcome: metadataValue("outcome"),
+    repeatWhen: metadataValue("repeat_when"),
+    inputs: metadataValue("inputs"),
+    carryForward: metadataValue("carry_forward"),
     version: frontmatter.match(/^\s*version:\s*["\']?([0-9]+\.[0-9]+\.[0-9]+)["\']?\s*$/m)?.[1] ?? null,
     hasVersion: /^\s*version:\s*\S+/m.test(frontmatter),
     hasLicense: /^license:\s*\S+/m.test(frontmatter)
@@ -175,12 +179,17 @@ export function buildManifest(root = repoRoot) {
       || (front.category === "platform-integration") !== (front.stage === "connect")) {
       throw new Error(name + " requires a display name, outcome and valid collection/workflow stage");
     }
+    if ([front.repeatWhen, front.inputs, front.carryForward].some(value => !value || value.length > 240)
+      || !texts['references/workflow.md']) {
+      throw new Error(name + " requires bounded repeat, input and carry-forward metadata and a workflow reference");
+    }
     const resources = Object.fromEntries(Object.entries(texts).map(([path, text]) => [path, "sha256:" + digest(text)]));
     return {
       name, path: "skills/" + name + "/SKILL.md", version: front.version,
       revision: digest(JSON.stringify(resources)), resources,
       summary: front.description, inject: front.description, tags: front.tags,
       title: front.displayName, category: front.category, stage: front.stage, outcome: front.outcome,
+      repeatWhen: front.repeatWhen, inputs: front.inputs, carryForward: front.carryForward,
       ...(routing[name] || {}),
       public_url: "https://www.enterthegrotto.xyz/skills",
       docs_url: "https://api.enterthegrotto.xyz/docs",

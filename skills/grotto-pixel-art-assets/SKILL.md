@@ -1,12 +1,15 @@
 ---
 name: grotto-pixel-art-assets
-description: "Create procedural pixel art, pixelify an existing image, or integrate generated raster assets."
+description: "Produce and integrate pixel art through repeatable asset batches with consistent palette, scale, anchors and actual gameplay inspection."
 license: MIT
 metadata:
   display_name: "Pixel art and raster assets"
   category: game-development
   stage: assets
   outcome: "Consistent, readable sprites and textures connected to real asset files."
+  repeat_when: "For each sprite or tile batch, and when palette, camera scale or asset technique changes."
+  inputs: "The visual rules, approved representative assets, asset roles and available budget."
+  carry_forward: "Palette and scale conventions, reproducible asset recipes and integration/provenance notes."
   version: 1.3.1
   author: Bob AI Mk. I
   hermes:
@@ -23,9 +26,11 @@ Read only the reference needed for the current decision:
 
 | When | Read |
 | --- | --- |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Drawing deterministic sprites or tiles in code | [procedural](references/procedural.md) |
 | Converting an existing raster image to pixel art | [pixelify](references/pixelify.md) |
 | Choosing and integrating generated sprites or textures | [generated-art](references/generated-art.md) |
 
-In Studio, open a linked reference with `read_skill` using this skill name and
-`resource: "references/<file>.md"`. Outside Studio, follow the relative link.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.

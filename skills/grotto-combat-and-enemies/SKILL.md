@@ -1,14 +1,17 @@
 ---
 name: grotto-combat-and-enemies
-description: "Build readable attacks, hit resolution, enemy decisions and navigation that support the intended combat experience."
+description: "Develop combat and enemy behavior in repeated encounter passes covering attack rules, telegraphs, decisions, navigation and player readability."
 compatibility: "Use the installed Studio foundation and tools offered in the current run."
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   display_name: "Combat and enemy behavior"
   category: game-development
   stage: build
   outcome: "Predictable hit rules and enemies with readable, purposeful behavior."
+  repeat_when: "For each enemy or encounter, and after attack, camera, movement or damage changes."
+  inputs: "Attack rules, enemy roles, the current encounter and the previous readability findings."
+  carry_forward: "Attack phase contracts, enemy-role decisions and reproducible encounter cases."
   author: "Grotto"
   hermes:
     tags: [enemy-ai, combat-design, hitbox, telegraph, pathfinding]
@@ -23,10 +26,10 @@ for the current decision; a small edit does not need every workflow.
 
 | When | Read |
 | --- | --- |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Defining attack phases, damage or threat readability | [combat-contract](references/combat-contract.md) |
 | Authoring enemy decisions, sensing or navigation | [enemy-decisions](references/enemy-decisions.md) |
 
-In Studio, use read_skill with this name and resource: "references/<file>.md".
-Outside Studio, follow the relative links. Reading a guide does not spend credit,
-start a build or authorize publication. Implement, inspect and report the actual
-result and any unverified behavior.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.

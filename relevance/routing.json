@@ -60,8 +60,6 @@
   "grotto-pixel-art-assets": {
     "triggers": [
       "pixel art",
-      "art direction",
-      "visual style",
       "painted background",
       "transparent sprite"
     ]
@@ -115,7 +113,9 @@
       "memory leak",
       "frame rate",
       "long session",
-      "soft lock"
+      "soft lock",
+      "regression playtest",
+      "repeatable playtest"
     ]
   },
   "grotto-game-production": {
@@ -124,7 +124,10 @@
       "first playable",
       "scope creep",
       "production workflow",
-      "prototype risk"
+      "prototype risk",
+      "development cycle",
+      "milestone review",
+      "plan the next iteration"
     ]
   },
   "grotto-game-architecture": {
@@ -144,7 +147,8 @@
       "encounter pacing",
       "tutorial level",
       "checkpoint placement",
-      "puzzle route"
+      "puzzle route",
+      "level design pass"
     ]
   },
   "grotto-combat-and-enemies": {
@@ -155,7 +159,8 @@
       "damage twice",
       "hit detection",
       "enemies through walls",
-      "combat rules"
+      "combat rules",
+      "combat design pass"
     ]
   },
   "grotto-progression-and-balance": {
@@ -166,7 +171,8 @@
       "too grindy",
       "economy balance",
       "duplicate rewards",
-      "unlock pacing"
+      "unlock pacing",
+      "balance pass"
     ]
   },
   "grotto-game-ui-accessibility": {
@@ -190,7 +196,8 @@
       "music muted",
       "autoplay blocked",
       "sound mix",
-      "audio teardown"
+      "audio teardown",
+      "audio pass"
     ]
   },
   "grotto-game-art-direction": {
@@ -201,7 +208,9 @@
       "asset plan",
       "matching art",
       "consistent style",
-      "gameplay silhouette"
+      "gameplay silhouette",
+      "asset batch review",
+      "recurring art direction"
     ]
   }
 }

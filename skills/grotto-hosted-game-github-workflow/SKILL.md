@@ -1,12 +1,15 @@
 ---
 name: grotto-hosted-game-github-workflow
-description: "Maintain an explicitly external, durably hosted game client with a secure Grotto runtime wrapper."
+description: "Run recurring release and rollback workflows for explicitly external hosted game clients with a trusted Grotto runtime wrapper."
 license: MIT
 metadata:
   display_name: "External hosting and GitHub"
   category: platform-integration
   stage: connect
   outcome: "A durable external game client with a secure runtime wrapper and release checks."
+  repeat_when: "For each authorized external client release, wrapper change or rollback."
+  inputs: "The durable hosted origin, reviewed client revision, wrapper contract and rollback target."
+  carry_forward: "Client/wrapper revisions, origin decisions, release evidence and verified rollback state."
   version: 1.4.1
   author: Bob AI Mk. I
   hermes:
@@ -23,9 +26,11 @@ Read only the reference needed for the current decision:
 
 | When | Read |
 | --- | --- |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Building or reviewing the hosted client and wrapper | [wrapper](references/wrapper.md) |
 | Enabling inventory or authorizing multiplayer | [capabilities](references/capabilities.md) |
 | Testing, publishing or rolling back an external client | [delivery](references/delivery.md) |
 
-In Studio, open a linked reference with `read_skill` using this skill name and
-`resource: "references/<file>.md"`. Outside Studio, follow the relative link.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.

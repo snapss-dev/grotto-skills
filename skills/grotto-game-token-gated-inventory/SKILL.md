@@ -1,12 +1,15 @@
 ---
 name: grotto-game-token-gated-inventory
-description: "Gate game content using Grotto capability-scoped ERC-721 or ERC-1155 inventory."
+description: "Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change."
 license: MIT
 metadata:
   display_name: "Token-gated inventory"
   category: platform-integration
   stage: connect
   outcome: "Ownership gates that handle missing capabilities and stale inventory safely."
+  repeat_when: "When gated content, entitlement rules, caching or platform inventory contracts change."
+  inputs: "The exact game capability, entitlement rules and prior granted/denied/partial-read cases."
+  carry_forward: "Non-secret gate definitions, freshness rules and reproducible entitlement test cases."
   version: 1.5.1
   author: Bob AI Mk. I
   hermes:
@@ -23,9 +26,11 @@ Read only the reference needed for the current decision:
 
 | When | Read |
 | --- | --- |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Understanding capabilities, identity and inventory responses | [contract](references/contract.md) |
 | Implementing client cosmetics or server-authoritative gates | [gates](references/gates.md) |
 | Handling caching, revocation or security review | [freshness](references/freshness.md) |
 
-In Studio, open a linked reference with `read_skill` using this skill name and
-`resource: "references/<file>.md"`. Outside Studio, follow the relative link.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.
