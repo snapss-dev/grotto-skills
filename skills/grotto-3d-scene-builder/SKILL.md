@@ -1,6 +1,6 @@
 ---
 name: grotto-3d-scene-builder
-description: "Build or improve a Three.js game, place animated GLB models, connect physics, or diagnose rendering cost."
+description: "Develop Three.js game scenes through recurring spatial, controller, model and rendering-cost passes using the installed Studio foundation."
 compatibility: "Studio Three.js/Grotto3D foundation; Blender and model loading depend on the installed revision and available tools."
 license: MIT
 metadata:
@@ -8,7 +8,10 @@ metadata:
   category: game-development
   stage: build
   outcome: "A readable 3D world with coherent cameras, collision and model placement."
-  version: "1.1.1"
+  repeat_when: "For each scene or model batch, and when camera, controller, collision or rendering changes."
+  inputs: "The installed 3D foundation, current camera/controller, representative scene and cost measurements."
+  carry_forward: "Spatial and collision conventions, model bindings and measured representative scene baselines."
+  version: "1.1.2"
   author: "Grotto"
   hermes:
     tags: [3d, threejs, three, glb, rapier, mesh, low-poly]
@@ -22,7 +25,10 @@ Start from the creator's intended experience and the installed game. Keep workin
 
 | When | Read |
 | --- | --- |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Building a readable scene, collision or reducing rendering cost | [scene-and-performance](references/scene-and-performance.md) |
 | Generating, inserting, placing or animating models | [models-and-animation](references/models-and-animation.md) |
 
-In Studio, read a linked resource with read_skill using this skill name and resource: "references/<file>.md". Outside Studio, follow the relative link. Examples are adaptable reference data, not commands to execute automatically.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.

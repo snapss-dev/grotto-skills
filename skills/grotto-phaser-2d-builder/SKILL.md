@@ -1,6 +1,6 @@
 ---
 name: grotto-phaser-2d-builder
-description: "Build or repair a Studio Phaser game using its installed TypeScript, scene, physics, asset and input helpers."
+description: "Build and evolve a Studio Phaser game through repeated scene, physics, input and asset integration passes using the installed foundation."
 compatibility: "Studio Phaser/Grotto2D foundation; inspect the installed declarations before using optional APIs."
 license: MIT
 metadata:
@@ -8,7 +8,10 @@ metadata:
   category: game-development
   stage: build
   outcome: "A working 2D game with deliberate scenes, physics and state ownership."
-  version: "1.1.1"
+  repeat_when: "For each new 2D capability, scene or asset batch, and after changes to physics or input."
+  inputs: "The current Phaser foundation, scene ownership, requested mechanic and prior playable scenarios."
+  carry_forward: "Scene and physics decisions, asset bindings and a small playable regression route."
+  version: "1.1.2"
   author: "Grotto"
   hermes:
     tags: [phaser, 2d, scene, arcade, physics, platformer, tilemap]
@@ -22,7 +25,10 @@ Start from the creator's intended experience and the installed game. Keep workin
 
 | When | Read |
 | --- | --- |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Choosing scenes, state ownership, physics or project files | [architecture](references/architecture.md) |
 | Implementing movement, enemies, generated art or recovery | [recipes](references/recipes.md) |
 
-In Studio, read a linked resource with read_skill using this skill name and resource: "references/<file>.md". Outside Studio, follow the relative link. Examples are adaptable reference data, not commands to execute automatically.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.

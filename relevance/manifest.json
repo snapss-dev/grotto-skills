@@ -3,20 +3,21 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "97eb32929f268a77bb936293113c9ef361507d3dda4003f15f7fee436a77b34c",
+  "revision": "73d8b4e0f460fc132b4df8438275f3d91d4073924efa229176a02f1371fdb7f2",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
       "path": "skills/grotto-3d-scene-builder/SKILL.md",
-      "version": "1.1.1",
-      "revision": "8ce6d06413961dffe3da24062cc5f6c14ed095c47e0399a4921e8bc3e3deb7c6",
+      "version": "1.1.2",
+      "revision": "293ce6fda23a57ddfa4c92f20a6d44b3c552f5abb4ee56df3f96dce52e336ba7",
       "resources": {
         "references/models-and-animation.md": "sha256:58b11859b4c777ccd198e744b7f92985188d71f9b156f60a882518e9bd45d592",
         "references/scene-and-performance.md": "sha256:46842b83f7757bda8138cb12d27c88832a5e04e07e7b10ab419fba998f103abd",
-        "SKILL.md": "sha256:26fda3431d44f800ba41b27cb3649ac4b8f1fbb5fb47c57f4470fdf874f0566a"
+        "references/workflow.md": "sha256:226775f3fa94051ebabe99363dfcf7aeeb17f50fe547bc3765520e8fcfdac607",
+        "SKILL.md": "sha256:01041361868ab4d80cc25caa3e90a69f834b500d9b26644ebcdfae555a4e5d2e"
       },
-      "summary": "Build or improve a Three.js game, place animated GLB models, connect physics, or diagnose rendering cost.",
-      "inject": "Build or improve a Three.js game, place animated GLB models, connect physics, or diagnose rendering cost.",
+      "summary": "Develop Three.js game scenes through recurring spatial, controller, model and rendering-cost passes using the installed Studio foundation.",
+      "inject": "Develop Three.js game scenes through recurring spatial, controller, model and rendering-cost passes using the installed Studio foundation.",
       "tags": [
         "3d",
         "threejs",
@@ -30,6 +31,9 @@
       "category": "game-development",
       "stage": "build",
       "outcome": "A readable 3D world with coherent cameras, collision and model placement.",
+      "repeatWhen": "For each scene or model batch, and when camera, controller, collision or rendering changes.",
+      "inputs": "The installed 3D foundation, current camera/controller, representative scene and cost measurements.",
+      "carryForward": "Spatial and collision conventions, model bindings and measured representative scene baselines.",
       "triggers": [
         "low poly",
         "3d model",
@@ -43,15 +47,16 @@
     {
       "name": "grotto-combat-and-enemies",
       "path": "skills/grotto-combat-and-enemies/SKILL.md",
-      "version": "1.0.0",
-      "revision": "928de10bec49b7db0d6f72c4c9397a3166a869effd82c094f2d85c9b8730d8f7",
+      "version": "1.0.1",
+      "revision": "504db2bf5e0315a4ce05e6aa07843bf0de6e661b41981dea2ab786a5c8e91971",
       "resources": {
         "references/combat-contract.md": "sha256:5a9f4f9fda5595dc78ae378317f09ccc92751e109387a5e9d35e4f6eb0e93e47",
         "references/enemy-decisions.md": "sha256:d1c629885a03e4e01b450db5ba6e21e5d8b638db42872fcaaa2ea6e6d16b9e0b",
-        "SKILL.md": "sha256:5414d88d4b3de19ff0caa667084877cd94859a16385f9d48079bd034d840b322"
+        "references/workflow.md": "sha256:6009f4d60ac2eade896234c7147efc9e2975c6a8a1a6df8e966c0dabc7f5a972",
+        "SKILL.md": "sha256:ef2e99d909e8912969f2d2276385e582b3b15e86077e8cc8ad82d737b3bd899c"
       },
-      "summary": "Build readable attacks, hit resolution, enemy decisions and navigation that support the intended combat experience.",
-      "inject": "Build readable attacks, hit resolution, enemy decisions and navigation that support the intended combat experience.",
+      "summary": "Develop combat and enemy behavior in repeated encounter passes covering attack rules, telegraphs, decisions, navigation and player readability.",
+      "inject": "Develop combat and enemy behavior in repeated encounter passes covering attack rules, telegraphs, decisions, navigation and player readability.",
       "tags": [
         "enemy-ai",
         "combat-design",
@@ -63,6 +68,9 @@
       "category": "game-development",
       "stage": "build",
       "outcome": "Predictable hit rules and enemies with readable, purposeful behavior.",
+      "repeatWhen": "For each enemy or encounter, and after attack, camera, movement or damage changes.",
+      "inputs": "Attack rules, enemy roles, the current encounter and the previous readability findings.",
+      "carryForward": "Attack phase contracts, enemy-role decisions and reproducible encounter cases.",
       "triggers": [
         "enemy ai",
         "enemy behavior",
@@ -70,7 +78,8 @@
         "damage twice",
         "hit detection",
         "enemies through walls",
-        "combat rules"
+        "combat rules",
+        "combat design pass"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
@@ -79,16 +88,17 @@
       "name": "grotto-core-of-gaming",
       "path": "skills/grotto-core-of-gaming/SKILL.md",
       "version": "1.3.1",
-      "revision": "034e49bf51eb36151d540b406afc468ee756101950633cc64705d6200f4a6050",
+      "revision": "60ded4cdbe386f415f5fd458ea084ae08268d13a8b5d433effc6a12e4988473a",
       "resources": {
         "references/brainstorm.md": "sha256:64ca42ceab99615373764d3992a5c509452c4cd938360bca4647b3b132e55a39",
         "references/feedback.md": "sha256:e8102badd0f5adc8284e7caf34eabac71c9347a21672e96864a3e13354b184de",
         "references/loop.md": "sha256:1c1dbd62e2c1096c6a74a975738048c203494441b44663908980567cffa571a1",
         "references/studio.md": "sha256:0e3a313d9b04654a78605a73cf53484e9c0a1ff4ff76a62614497983c2eb641f",
-        "SKILL.md": "sha256:3dbb42719f05fa81b252ed63e96c26dac0001165f9581bc145d266c748111f9c"
+        "references/workflow.md": "sha256:1b6647d393204e1880563ab359083d37927d53efe85d90bc65670eaa4592e6e9",
+        "SKILL.md": "sha256:99f61e5f18dff7394c9fc109e08d3297d69f4de3cbe9d59e145e1a67b9b93688"
       },
-      "summary": "Design or improve a game loop, challenge, progression, feedback, or playtest plan.",
-      "inject": "Design or improve a game loop, challenge, progression, feedback, or playtest plan.",
+      "summary": "Develop and revisit a game’s player fantasy, core loop, meaningful choices and learning rhythm through repeated playtest-led design passes.",
+      "inject": "Develop and revisit a game’s player fantasy, core loop, meaningful choices and learning rhythm through repeated playtest-led design passes.",
       "tags": [
         "game-design",
         "challenge",
@@ -102,6 +112,9 @@
       "category": "game-development",
       "stage": "design",
       "outcome": "A clear player fantasy, meaningful choices and a complete playable loop.",
+      "repeatWhen": "After testing the core loop, or when verbs, goals, challenge or progression change.",
+      "inputs": "The intended player experience, current rules and observations from recent play.",
+      "carryForward": "A concise loop description, design hypotheses, observed player choices and the next experiment.",
       "triggers": [
         "boring",
         "too easy",
@@ -117,15 +130,16 @@
       "name": "grotto-cross-device-controls",
       "path": "skills/grotto-cross-device-controls/SKILL.md",
       "version": "1.3.1",
-      "revision": "20b6780859627d1f146e679b3cedb17921ecb6cc9513c3d81847e7fc5fa50a58",
+      "revision": "aa8fcf7965f29bf8d3fa01cd34efca385c625e1471fd756a3189a51dfe35bd36",
       "resources": {
         "references/actions.md": "sha256:ac44321dd65a88a4465751ca8c4a825c71131c48ff873b942e572d307efa9440",
         "references/layout-and-review.md": "sha256:aca657975cf30d9d8fbb095b4d03bf519133b448a118a4732edc1a2879c31287",
         "references/touch.md": "sha256:cdc33c5e31bcd39de5a255d9d9f6e88a2893326a7e8f30e21c4d325b2f1704b9",
-        "SKILL.md": "sha256:fd5890e2ef2dc22301c6bfa83110b7bb62d70bc9dd931858a630f1b3ae6af0d7"
+        "references/workflow.md": "sha256:76fa0b5032ee21dc38e0908a6a419b12c25ef1c091b0fc16b23a252812fabaeb",
+        "SKILL.md": "sha256:283485e43f6e7105f6da7c23bfa34e6bd029dbf33718c05cc464412c843c4ba4"
       },
-      "summary": "Build or repair desktop and touch controls, responsive layouts, or input recovery.",
-      "inject": "Build or repair desktop and touch controls, responsive layouts, or input recovery.",
+      "summary": "Maintain desktop and touch controls through recurring action-map, layout, multitouch and input-recovery passes as mechanics evolve.",
+      "inject": "Maintain desktop and touch controls through recurring action-map, layout, multitouch and input-recovery passes as mechanics evolve.",
       "tags": [
         "controls",
         "input",
@@ -141,6 +155,9 @@
       "category": "game-development",
       "stage": "build",
       "outcome": "Keyboard, pointer and touch actions that recover cleanly after interruptions.",
+      "repeatWhen": "Whenever player actions, camera framing, HUD layout or device support changes.",
+      "inputs": "The semantic action map, target devices, current controls and previous recovery cases.",
+      "carryForward": "Action bindings, device coverage, layout constraints and interruption replay cases.",
       "triggers": [
         "phone",
         "finger",
@@ -161,16 +178,17 @@
     {
       "name": "grotto-game-animation",
       "path": "skills/grotto-game-animation/SKILL.md",
-      "version": "1.1.1",
-      "revision": "ed7cb9583512111b44331bf51b2b6d92c6d2e97ac9335905a6b5df69df91c2fe",
+      "version": "1.1.2",
+      "revision": "412a3e464692bbe36341ecf85caa5cc9751d87899584ae14efb2d5a21dbb3777",
       "resources": {
         "references/sprites.md": "sha256:0035c58c214ac4bed9625db0eb11bffbab02903a8e18d40b237978b01d700ebc",
         "references/state-and-timing.md": "sha256:c4bc4cd23fa018517357aba62bc40f55f5ef094bdb0f02cfa9e6e99985575587",
-        "SKILL.md": "sha256:3418214ed502555bf8b8d9069308618d5ec634d5c3928cc6c47e853fb9b58ce0",
+        "references/workflow.md": "sha256:b577bada6a3a74c1347e824cd5fdd37824226bf1b947e2c4029a2c782ca1ef7a",
+        "SKILL.md": "sha256:2081f5325536356efd306d41b347af83b7212d3028d0d5db7379a07a2400466d",
         "templates/frame-clock.js": "sha256:c77dfeda764f03a2a4e4eaa431d9e22171660ffb201501f1eea8272fb4f5a876"
       },
-      "summary": "Animate sprite characters or repair jitter, timing, facing, pivots and movement-to-animation transitions.",
-      "inject": "Animate sprite characters or repair jitter, timing, facing, pivots and movement-to-animation transitions.",
+      "summary": "Iterate character animation through recurring asset, state-transition, timing and interruption passes at gameplay scale.",
+      "inject": "Iterate character animation through recurring asset, state-transition, timing and interruption passes at gameplay scale.",
       "tags": [
         "animation",
         "animate",
@@ -184,6 +202,9 @@
       "category": "game-development",
       "stage": "assets",
       "outcome": "Stable pivots, responsive transitions and frame-rate-independent clips.",
+      "repeatWhen": "When clips, sprite sheets, movement states, facing or interruption rules change.",
+      "inputs": "Current assets, state transitions, anchor/scale conventions and prior timing observations.",
+      "carryForward": "An animation-state map, timing decisions, asset bindings and interruption scenarios.",
       "triggers": [
         "walk cycle",
         "sprite animation",
@@ -196,15 +217,16 @@
     {
       "name": "grotto-game-architecture",
       "path": "skills/grotto-game-architecture/SKILL.md",
-      "version": "1.0.0",
-      "revision": "8b0d56d810bc53fdc03f3e61a6a789bffed085843f0835db9fb5b521394c1548",
+      "version": "1.0.1",
+      "revision": "76abebc024e181a5c618b2eecb31721edb99af56f738d608620c900c51b7e421",
       "resources": {
         "references/lifecycle.md": "sha256:9a28759269fc7f7ba4cdf7378e05e2542cf692111222774c574a561c61e115d7",
         "references/state-and-time.md": "sha256:20cb488030361af99b286500359f00edc5c8b76d30fadaeeb31be348a32287b4",
-        "SKILL.md": "sha256:cdd88fec094cfaa535979cae82339d16bd1ffaf2a5d735ce032f2114581dcf29"
+        "references/workflow.md": "sha256:8c645e015b1962c0cbb92c77963f7bcc9cbc3b5d02ff1c66fc3d6d48b17383dd",
+        "SKILL.md": "sha256:680cfaeafc1ff7eba4c5c33b2127549fb1476947e9a152e1c822bbf3b533c608"
       },
-      "summary": "Structure game state, simulation clocks and lifecycle ownership; repair restart duplication or stale asynchronous work.",
-      "inject": "Structure game state, simulation clocks and lifecycle ownership; repair restart duplication or stale asynchronous work.",
+      "summary": "Evolve game state, simulation timing and lifecycle ownership through planned system passes, with repeatable pause, restart and loading checks.",
+      "inject": "Evolve game state, simulation timing and lifecycle ownership through planned system passes, with repeatable pause, restart and loading checks.",
       "tags": [
         "state-machine",
         "simulation",
@@ -215,6 +237,9 @@
       "category": "game-development",
       "stage": "build",
       "outcome": "One owner for game state, consistent timing and clean restart lifecycles.",
+      "repeatWhen": "When a system, state transition, asynchronous task or restart path changes.",
+      "inputs": "The installed foundation, state owners, resource lifetimes and the last recovery checks.",
+      "carryForward": "An ownership map, transition decisions and reproducible lifecycle scenarios.",
       "triggers": [
         "state ownership",
         "state machine",
@@ -229,15 +254,16 @@
     {
       "name": "grotto-game-art-direction",
       "path": "skills/grotto-game-art-direction/SKILL.md",
-      "version": "1.0.0",
-      "revision": "677d50a7ac83758a85ec33e0a323af96a531c77416cdb1b6984c67d7b02b628b",
+      "version": "1.0.1",
+      "revision": "6c58af6e57b51fdb9a6ab7e3a5215f5d370b605e64c74baa869fae6c33346ffa",
       "resources": {
         "references/asset-plan.md": "sha256:b492d5587130bea7c079f9f6d451927ba5d52b82d60d0be90e51b1bcfea18d00",
         "references/visual-system.md": "sha256:004103bd8ad5fcde23fcf060b9c4beb068e58bac21a54671f2d8f99e5e8bc662",
-        "SKILL.md": "sha256:c7562ab21432d2e0b0cf32fb673e1942e9f7730ef921e4d0f8478c8dc7a3d3e3"
+        "references/workflow.md": "sha256:bbe01b9375c78961270f8e7aad98f681e7b6db3fa0c175d8b12cc748a98f5be2",
+        "SKILL.md": "sha256:15d3c1668556dae3a5f40472c790de6b22cd6b7fa9cd2c9ecbfce9b52088840f"
       },
-      "summary": "Establish a coherent game visual system and plan, inspect and integrate assets at gameplay scale within the available budget.",
-      "inject": "Establish a coherent game visual system and plan, inspect and integrate assets at gameplay scale within the available budget.",
+      "summary": "Maintain a game’s visual direction through recurring representative asset reviews, budget planning and integration at gameplay scale.",
+      "inject": "Maintain a game’s visual direction through recurring representative asset reviews, budget planning and integration at gameplay scale.",
       "tags": [
         "art-direction",
         "visual-system",
@@ -249,6 +275,9 @@
       "category": "game-development",
       "stage": "assets",
       "outcome": "A consistent visual direction and a verified, budgeted asset set.",
+      "repeatWhen": "At each asset batch or milestone, and when camera, palette or visual scope changes.",
+      "inputs": "The visual brief, representative gameplay view, approved assets and available asset budget.",
+      "carryForward": "A visual-system decision sheet, asset provenance and an updated asset plan.",
       "triggers": [
         "art direction",
         "visual consistency",
@@ -256,7 +285,9 @@
         "asset plan",
         "matching art",
         "consistent style",
-        "gameplay silhouette"
+        "gameplay silhouette",
+        "asset batch review",
+        "recurring art direction"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
@@ -264,15 +295,16 @@
     {
       "name": "grotto-game-audio",
       "path": "skills/grotto-game-audio/SKILL.md",
-      "version": "1.0.0",
-      "revision": "1a3388626c039f4daa12ddff295422a2c1b45c7a4b2ff4555c1698e496ff59a9",
+      "version": "1.0.1",
+      "revision": "76e70695a467be47bb5b9b16febee951de8a013e8980a1bf682f800aa80d54ca",
       "resources": {
         "references/browser-lifecycle.md": "sha256:963ff2db636ba5a05297ebbf33f3d450cf9eedd9a164b993b60254dbcd75a52e",
         "references/cues-and-mix.md": "sha256:3008af2abc242e30aab0f10e9dbc054e72bb3252b2fb0957be6c329fa17a63d3",
-        "SKILL.md": "sha256:1148f553cce83da035656a3a2c722cf939dc941c3ef8719d628eb5bd5570980e"
+        "references/workflow.md": "sha256:b7d30876835a5b823eda8eee11d95d9bca2829e58ace67568162c99cb55326a0",
+        "SKILL.md": "sha256:91c9200f9f8254eb20aa107be5a0d172ab972a59ec554e7479ab71c6ce52bb08"
       },
-      "summary": "Design and integrate game sound, music, browser audio unlock, bounded mixing and playback cleanup within the run budget.",
-      "inject": "Design and integrate game sound, music, browser audio unlock, bounded mixing and playback cleanup within the run budget.",
+      "summary": "Iterate a game’s cue map, mix and browser playback lifecycle through recurring audio passes that respect creator intent and run budget.",
+      "inject": "Iterate a game’s cue map, mix and browser playback lifecycle through recurring audio passes that respect creator intent and run budget.",
       "tags": [
         "audio",
         "sound",
@@ -285,6 +317,9 @@
       "category": "game-development",
       "stage": "assets",
       "outcome": "Intentional sound with working mute, startup, mixing and teardown.",
+      "repeatWhen": "When game events, audio assets, mix priorities or playback lifecycle change.",
+      "inputs": "The intended sound or silence, event-to-cue map, current mix and available asset budget.",
+      "carryForward": "The cue map, mix priorities, mute behavior and browser playback test cases.",
       "triggers": [
         "audio unlock",
         "music loop",
@@ -293,7 +328,8 @@
         "music muted",
         "autoplay blocked",
         "sound mix",
-        "audio teardown"
+        "audio teardown",
+        "audio pass"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
@@ -301,15 +337,16 @@
     {
       "name": "grotto-game-feel-juice",
       "path": "skills/grotto-game-feel-juice/SKILL.md",
-      "version": "1.0.1",
-      "revision": "0878365bea8af9d5dfb24b1404a772b964d5abf744852ef56a555b15939ca5b3",
+      "version": "1.0.2",
+      "revision": "81bae462d3a98e485fee538b16853fab9c381f908d395a2cc41200624f8a983f",
       "resources": {
         "references/diagnosis.md": "sha256:1073bab21e4dff00ee6108cd9799e9b85718aa93597f8b4109376d36c5c3e578",
         "references/feedback-and-audio.md": "sha256:2d223e7a1381ac49863f24c255c77b19eac34ee4fc615f0d89752aa9858c683b",
-        "SKILL.md": "sha256:a45aada89f8733c28f78b21a074b31c0de963a37848f3f72b87ea7bc57ed4a73"
+        "references/workflow.md": "sha256:b2b75855ff5b16acb67eb3539a21814f0f9032c3885b0d4e1e54d5fbf4f1dd7d",
+        "SKILL.md": "sha256:7c9704e5ab5866a571614f76776f75828dcd796834f48d2b7b9091acb2fe3dff"
       },
-      "summary": "Improve responsiveness and readable feedback, tune movement or combat, and fit effects and audio to the intended experience.",
-      "inject": "Improve responsiveness and readable feedback, tune movement or combat, and fit effects and audio to the intended experience.",
+      "summary": "Refine game responsiveness and feedback through repeated hypothesis-driven tuning passes on movement, combat and rewards.",
+      "inject": "Refine game responsiveness and feedback through repeated hypothesis-driven tuning passes on movement, combat and rewards.",
       "tags": [
         "feel",
         "juice",
@@ -324,6 +361,9 @@
       "category": "game-development",
       "stage": "polish",
       "outcome": "Responsive actions and readable effects that fit the intended style.",
+      "repeatWhen": "After movement, combat, reward or feedback changes, and when playtests reveal weak response.",
+      "inputs": "The intended feel, current parameters, a representative action and prior player observations.",
+      "carryForward": "Parameter snapshots, feedback priorities and comparable action/recovery test cases.",
       "triggers": [
         "satisfying",
         "sluggish",
@@ -338,16 +378,17 @@
     {
       "name": "grotto-game-playtest",
       "path": "skills/grotto-game-playtest/SKILL.md",
-      "version": "1.0.1",
-      "revision": "7b046cffc5c87acd69dc5fb2898aba682f71e3671915a63eb6e350e9729463dd",
+      "version": "1.0.2",
+      "revision": "b3cbbf3c3da9e671ea89b97fd7471cd7665274ebd725b2a53fb94a69cef3c34d",
       "resources": {
         "references/design-observation.md": "sha256:2e7b748c9928924591e6103535f36f40c892e0f1c94726f6ee6aaaf52534c80e",
         "references/performance.md": "sha256:396674b4de938a3a36884b876e9f071eed845b7cb1372efe9b5bd59c570486cc",
         "references/playtest.md": "sha256:ac9be90e0039b00ed729967c9deff037eaa64a7e1e44f2637c39157bccc94140",
-        "SKILL.md": "sha256:c4aceb7b50aa8469d57cd575144d99c980d3d78d90e1b1582239dd5539d5c8f3"
+        "references/workflow.md": "sha256:402490a3fcabd9fd0d3de76fdd7149105034441676390f0167a596b09f8ae380",
+        "SKILL.md": "sha256:a91bb033a4e046d4f23d8a9d7371b2c8761cc23b37ab54e032facea7abee8ccb"
       },
-      "summary": "Playtest a browser game or diagnose softlocks, input failures, save loss, broken recovery and performance regressions.",
-      "inject": "Playtest a browser game or diagnose softlocks, input failures, save loss, broken recovery and performance regressions.",
+      "summary": "Run repeatable browser playtest and performance passes, preserving scenarios and findings across milestones, devices and revisions.",
+      "inject": "Run repeatable browser playtest and performance passes, preserving scenarios and findings across milestones, devices and revisions.",
       "tags": [
         "playtest",
         "qa",
@@ -362,13 +403,18 @@
       "category": "game-development",
       "stage": "polish",
       "outcome": "Reproducible findings from actual play, recovery and measured performance.",
+      "repeatWhen": "Before a milestone or release, and after changes to the playable loop or recovery paths.",
+      "inputs": "A playable revision, the creator’s intended experience, target devices and prior failing scenarios.",
+      "carryForward": "A scenario suite, evidence-linked findings, measured baselines and the next review scope.",
       "triggers": [
         "test game",
         "play test",
         "memory leak",
         "frame rate",
         "long session",
-        "soft lock"
+        "soft lock",
+        "regression playtest",
+        "repeatable playtest"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
@@ -376,31 +422,38 @@
     {
       "name": "grotto-game-production",
       "path": "skills/grotto-game-production/SKILL.md",
-      "version": "1.0.0",
-      "revision": "473fa173d6edbf23701e964ae8e4142e6358fd9201b743bea17d2c22ba3a4764",
+      "version": "1.0.1",
+      "revision": "7b86ec3d4631966623bdd1e992c1993be96f4a51b51a11473c57437d64af40db",
       "resources": {
         "references/first-playable.md": "sha256:de2404e12f060ad82d47bde4423179f2136578a895b6137da1534b99e6cb498e",
         "references/iteration-and-handoff.md": "sha256:fed990633da18db77978bd074edad34ee22c006ee77ef3f2228476a4f9eeff5d",
-        "SKILL.md": "sha256:03891518e6ba194edea6d0072af6b156a2477bad0e5c8fc9ec6507fb2dec5f23"
+        "references/workflow.md": "sha256:c128c07f211cdebb28ca53539f3a2ee9aae5d55ca3461091fb669a0640b94760",
+        "SKILL.md": "sha256:f969762e9ff462d10a9837409ee91bd2489be6144efb6377638af5aa5145036b"
       },
-      "summary": "Scope and iterate a Studio game through a risk test, first playable, vertical slice and evidence-backed handoff.",
-      "inject": "Scope and iterate a Studio game through a risk test, first playable, vertical slice and evidence-backed handoff.",
+      "summary": "Run a recurring Studio production cycle: review the current build, choose the next risk or milestone, develop a playable slice and carry playtest evidence forward.",
+      "inject": "Run a recurring Studio production cycle: review the current build, choose the next risk or milestone, develop a playable slice and carry playtest evidence forward.",
       "tags": [
         "vertical-slice",
         "first-playable",
         "production-workflow",
         "scope"
       ],
-      "title": "First playable workflow",
+      "title": "Game production and iteration",
       "category": "game-development",
       "stage": "design",
       "outcome": "A scoped playable slice, clear risks and an evidence-backed iteration plan.",
+      "repeatWhen": "At each milestone, after a playtest, or when scope and priorities change.",
+      "inputs": "The creator brief, current playable build, remaining budget and findings from the previous pass.",
+      "carryForward": "The scope decision, tested build revision, findings and one next learning question.",
       "triggers": [
         "vertical slice",
         "first playable",
         "scope creep",
         "production workflow",
-        "prototype risk"
+        "prototype risk",
+        "development cycle",
+        "milestone review",
+        "plan the next iteration"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
@@ -409,7 +462,7 @@
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
       "version": "1.10.1",
-      "revision": "abd42a77618490b3700d9c7f422fef7190a6daabc17b060684030ceb3ce024c6",
+      "revision": "80b99234cde6fe6f6a27e03ec9b62a403848435143f0391cea0db6631c6c8ec4",
       "resources": {
         "references/api-and-errors.md": "sha256:26fc0200b847399b57db0c5223304c49a9b8955faccbc2203682adbcbf712a24",
         "references/capabilities.md": "sha256:d85f6bd0608d3d3928d8a5b9f20ee911a551717dd17d9d500fd9600ed6a4354f",
@@ -420,11 +473,12 @@
         "references/saves-and-scores.md": "sha256:9604d085dc69de659d83abd9acbea96aa4de7699769ac43e607038571ad93e0d",
         "references/sdk-contract.md": "sha256:57391fee20ef0162e2ceccf270f501b46957fdea79408a03887cd07c93e2a7ac",
         "references/studio-capabilities.md": "sha256:3d18f565e7c2249dbe01a3bbd830f825d02648ca8a73fa7fe168dd7c848986d0",
-        "SKILL.md": "sha256:1bbedf4bac8a4408a1dd7c1014eee3c8cde875ebcc0a15133176782d5a87cf1a",
+        "references/workflow.md": "sha256:446415cf006d18ade18846b89b7378d9741284863ecb2508cb21b36aba50c9c7",
+        "SKILL.md": "sha256:c63a8ea929d72900e0e247ec0044ddb9db65a8a6d5c97f96b14a7b7eece06f04",
         "templates/minimal-runtime-game.html": "sha256:92b08b80e7930aad0557a74fe006eb0d9bd198ba8c373c9047c8d982f70c23df"
       },
-      "summary": "Integrate or debug Grotto identity, cloud saves, scores, events, or capability-gated multiplayer.",
-      "inject": "Integrate or debug Grotto identity, cloud saves, scores, events, or capability-gated multiplayer.",
+      "summary": "Maintain Grotto identity, saves, scores and capability-scoped services through recurring integration and contract-verification passes.",
+      "inject": "Maintain Grotto identity, saves, scores and capability-scoped services through recurring integration and contract-verification passes.",
       "tags": [
         "progress",
         "autosave",
@@ -442,6 +496,9 @@
       "category": "platform-integration",
       "stage": "connect",
       "outcome": "Trusted identity, version-aware cloud saves and capability-scoped services.",
+      "repeatWhen": "When a service contract, SDK usage, save schema or capability requirement changes.",
+      "inputs": "The installed runtime, required services and prior identity/save scenarios.",
+      "carryForward": "Service requirements, save-version decisions and contract/recovery cases.",
       "triggers": [
         "lost progress",
         "lose progress",
@@ -459,15 +516,16 @@
       "name": "grotto-game-token-gated-inventory",
       "path": "skills/grotto-game-token-gated-inventory/SKILL.md",
       "version": "1.5.1",
-      "revision": "a655580b4294d32e82ccd69ceaa750858d15a679b23a30313c7f12c9a8c36513",
+      "revision": "d2247996ca31b53d7133fad1842929c46ddbea3af96b50eda71090ad1f796621",
       "resources": {
         "references/contract.md": "sha256:e1231ca2a27aaf85fda0e99cca803cfd6e696408920da3623c88fd4f9a7a6d0e",
         "references/freshness.md": "sha256:aa8c5e038ddb286460d64ab2e9b3d07cdd752dcda300d2180bca1aa78b965d81",
         "references/gates.md": "sha256:107221808ecd99655a9eafebd165b25e20ea637bed03c4b29c29a1d36216a28c",
-        "SKILL.md": "sha256:f0a38e4999fa5e5618cbf6ef4674ad00616c327e9c10370fecb8e5bbc8760c7e"
+        "references/workflow.md": "sha256:a656d1fcd0c5a1e1d251838ff0a0fd7e1d2e6ea50d43758c04ac97204594a7d4",
+        "SKILL.md": "sha256:e5ccd79a932462211ffc04f0400e4a7387d7456693ac315c7a4a098946dde060"
       },
-      "summary": "Gate game content using Grotto capability-scoped ERC-721 or ERC-1155 inventory.",
-      "inject": "Gate game content using Grotto capability-scoped ERC-721 or ERC-1155 inventory.",
+      "summary": "Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change.",
+      "inject": "Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change.",
       "tags": [
         "token-gating",
         "inventory",
@@ -481,6 +539,9 @@
       "category": "platform-integration",
       "stage": "connect",
       "outcome": "Ownership gates that handle missing capabilities and stale inventory safely.",
+      "repeatWhen": "When gated content, entitlement rules, caching or platform inventory contracts change.",
+      "inputs": "The exact game capability, entitlement rules and prior granted/denied/partial-read cases.",
+      "carryForward": "Non-secret gate definitions, freshness rules and reproducible entitlement test cases.",
       "triggers": [
         "token gated",
         "owned nft",
@@ -493,15 +554,16 @@
     {
       "name": "grotto-game-ui-accessibility",
       "path": "skills/grotto-game-ui-accessibility/SKILL.md",
-      "version": "1.0.0",
-      "revision": "0019f1e9ccf85d49698ee9dd1e83407c9d4c68c8dee462e7fc3a9dd6adf2d023",
+      "version": "1.0.1",
+      "revision": "ffd1724b4b4ae1f37e0703a7fe17b16602fb97bd53294c21d00cd54d70631d63",
       "resources": {
         "references/accessibility.md": "sha256:81a19e462d826f0347245f8c32f115df07f8014f08e4f273b79786728a6b4ab1",
         "references/hud-and-menus.md": "sha256:498d4f24c5b4dd5e266967d972b615dbae0caf0938cf0ce8e71229e683b26158",
-        "SKILL.md": "sha256:3a51203fde4dd35531e3ebe266bd66d8651dd5a258021de5232caea09fc38bc4"
+        "references/workflow.md": "sha256:a23874774a5aeb29a19ecb8abc443cefbbe9292658720181cae94f6296d24da4",
+        "SKILL.md": "sha256:24b0e7644ce9edc3966323e359a6208e94e830c558686424a7c22a29ea3705c7"
       },
-      "summary": "Design readable HUDs, menus and accessible game interactions with explicit focus, input and assist-setting behavior.",
-      "inject": "Design readable HUDs, menus and accessible game interactions with explicit focus, input and assist-setting behavior.",
+      "summary": "Evolve HUDs, menus and accessible interactions through recurring task, device, focus and assist-setting reviews.",
+      "inject": "Evolve HUDs, menus and accessible interactions through recurring task, device, focus and assist-setting reviews.",
       "tags": [
         "hud",
         "game-menu",
@@ -513,6 +575,9 @@
       "category": "game-development",
       "stage": "polish",
       "outcome": "Menus and game information usable across input, motion and audio preferences.",
+      "repeatWhen": "After adding a player task, changing the HUD or menus, or introducing new input and assist settings.",
+      "inputs": "Player tasks, the current UI, target input modes and previously observed access barriers.",
+      "carryForward": "A task/input matrix, focus rules, assist-setting decisions and reproducible access checks.",
       "triggers": [
         "pause menu",
         "keyboard focus",
@@ -530,15 +595,16 @@
       "name": "grotto-hosted-game-github-workflow",
       "path": "skills/grotto-hosted-game-github-workflow/SKILL.md",
       "version": "1.4.1",
-      "revision": "7302d5a22b3b7f53cea3fefffd08989945ca1257a4938ec3bbea1854e4656038",
+      "revision": "c4fb46cb91b44fdeef714380b07810ad69d71aef241b6d18fa6a6a17b6703e11",
       "resources": {
         "references/capabilities.md": "sha256:f83360aaf0061b18f552bf518bb238a9addacee5fc65a57d13ab15c52c09882b",
         "references/delivery.md": "sha256:59da22ea2d3784934f9e451470b2e6b0170e29c3ac990b42f7fcea26dd980431",
+        "references/workflow.md": "sha256:5498ee4d157c2d14d07baf1d4253d94bf862f9e5002b5b91c3bba0fba6504114",
         "references/wrapper.md": "sha256:4cbfca57e52d23484586b27169f2fa225a55c0ad8508a183aca0ed122248155e",
-        "SKILL.md": "sha256:dc12fd03d5bf9c58f0fc8ef72c2cb044a44ffdf55577567e32b06bbdc78ad22b"
+        "SKILL.md": "sha256:8e00a2fb8ba76d617bd1ea2565ccf48579d47338a406d6bf049e9cd7807aaf10"
       },
-      "summary": "Maintain an explicitly external, durably hosted game client with a secure Grotto runtime wrapper.",
-      "inject": "Maintain an explicitly external, durably hosted game client with a secure Grotto runtime wrapper.",
+      "summary": "Run recurring release and rollback workflows for explicitly external hosted game clients with a trusted Grotto runtime wrapper.",
+      "inject": "Run recurring release and rollback workflows for explicitly external hosted game clients with a trusted Grotto runtime wrapper.",
       "tags": [
         "github",
         "version-control",
@@ -552,6 +618,9 @@
       "category": "platform-integration",
       "stage": "connect",
       "outcome": "A durable external game client with a secure runtime wrapper and release checks.",
+      "repeatWhen": "For each authorized external client release, wrapper change or rollback.",
+      "inputs": "The durable hosted origin, reviewed client revision, wrapper contract and rollback target.",
+      "carryForward": "Client/wrapper revisions, origin decisions, release evidence and verified rollback state.",
       "autoInject": false,
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
@@ -559,15 +628,16 @@
     {
       "name": "grotto-level-design",
       "path": "skills/grotto-level-design/SKILL.md",
-      "version": "1.0.0",
-      "revision": "7dab24e349fdbab1f31c8949be17ea2d1767aead93864825276578f3bc73a08b",
+      "version": "1.0.1",
+      "revision": "03d57e9a4c15370df24daaf9a608318139b883e7ff86a05a86ab993cb6e67c54",
       "resources": {
         "references/layout-and-learning.md": "sha256:abbe50c3d62fbb7f9d863fe214008fc000b80bf57683d512c72b81e93ffa0f93",
         "references/pacing-and-validation.md": "sha256:97c08c6a9badbf60a93f73bd5f038510f0acd6d81bf20cf4096c8c5a3cd526e0",
-        "SKILL.md": "sha256:f89598adb3bba10e1d0ba39169dc4e082eff81df926523c6779889ac29c5148b"
+        "references/workflow.md": "sha256:5965a53e153370c14f9ffe4834a60b7e5e447bf992983fd13f6abccb1324f5b3",
+        "SKILL.md": "sha256:e6dfcac21121687cb266a81ac633585f3f587ede01b696e5de8bcf7f5c38debe"
       },
-      "summary": "Design authored levels, teach mechanics through play, tune encounter pacing and validate puzzle or traversal routes.",
-      "inject": "Design authored levels, teach mechanics through play, tune encounter pacing and validate puzzle or traversal routes.",
+      "summary": "Iterate authored levels through layout, mechanic teaching, pacing and observed traversal or puzzle playtests.",
+      "inject": "Iterate authored levels through layout, mechanic teaching, pacing and observed traversal or puzzle playtests.",
       "tags": [
         "level-design",
         "encounter-pacing",
@@ -578,13 +648,17 @@
       "category": "game-development",
       "stage": "design",
       "outcome": "Readable spaces, purposeful encounters and reachable recovery paths.",
+      "repeatWhen": "For each new level, or after changes to movement, encounters, checkpoints or teaching.",
+      "inputs": "The level’s purpose, current controller and camera, layout and prior player observations.",
+      "carryForward": "A route and teaching plan, pacing notes, observed failure points and replay scenarios.",
       "triggers": [
         "level design",
         "teach mechanic",
         "encounter pacing",
         "tutorial level",
         "checkpoint placement",
-        "puzzle route"
+        "puzzle route",
+        "level design pass"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
@@ -592,15 +666,16 @@
     {
       "name": "grotto-phaser-2d-builder",
       "path": "skills/grotto-phaser-2d-builder/SKILL.md",
-      "version": "1.1.1",
-      "revision": "6b848ecfbe4dee383d98958c89c78fa50f44e3ff3a86bb1b6077ab9276082adb",
+      "version": "1.1.2",
+      "revision": "27d71c3d02149faffc22d2515fd43a4a29acf7207ba6bf6a6c5ee40af85d15ef",
       "resources": {
         "references/architecture.md": "sha256:cc509494ab0957317b9511f18e026e2286da4dd3e234dba12afcc37660ba3f1f",
         "references/recipes.md": "sha256:181e98b13f81bda0069956fa81ace0d5c9520c58d2f3f2a42a38278e3f9db486",
-        "SKILL.md": "sha256:5c51652bac58c11780de38b4459ce6858d7f570dad711e126f42629416642402"
+        "references/workflow.md": "sha256:9731397cd9a948165d06b0e60f436314a362ac6cabc96dd9871135864f6ae99c",
+        "SKILL.md": "sha256:3be71ff0f738a9cd0026c87e64c86309d0a56df7a4b2fc9ba4fc41ce85090b1b"
       },
-      "summary": "Build or repair a Studio Phaser game using its installed TypeScript, scene, physics, asset and input helpers.",
-      "inject": "Build or repair a Studio Phaser game using its installed TypeScript, scene, physics, asset and input helpers.",
+      "summary": "Build and evolve a Studio Phaser game through repeated scene, physics, input and asset integration passes using the installed foundation.",
+      "inject": "Build and evolve a Studio Phaser game through repeated scene, physics, input and asset integration passes using the installed foundation.",
       "tags": [
         "phaser",
         "2d",
@@ -614,6 +689,9 @@
       "category": "game-development",
       "stage": "build",
       "outcome": "A working 2D game with deliberate scenes, physics and state ownership.",
+      "repeatWhen": "For each new 2D capability, scene or asset batch, and after changes to physics or input.",
+      "inputs": "The current Phaser foundation, scene ownership, requested mechanic and prior playable scenarios.",
+      "carryForward": "Scene and physics decisions, asset bindings and a small playable regression route.",
       "triggers": [
         "phaser scene",
         "arcade physics",
@@ -626,16 +704,17 @@
       "name": "grotto-pixel-art-assets",
       "path": "skills/grotto-pixel-art-assets/SKILL.md",
       "version": "1.3.1",
-      "revision": "05636b68733edd6f52f180f0ea5e47d064a98e2dbb66e5440c8a2374df8aa1d2",
+      "revision": "9a7d76f7c59cef84b037fe33760d25024da6b169037844ec9f95813dce77f74d",
       "resources": {
         "references/generated-art.md": "sha256:c578ef8547563d6eb5dcda17ca903b3783af094837bb02c5f2ee3600f14b4331",
         "references/pixelify.md": "sha256:ff2522ee199a9eb7ae81ef98d15aa221846a342f0a49817ad33fbb3b19b26b5b",
         "references/procedural.md": "sha256:3a7eef7ffa7d61efd6674d45456a9ee44a14b029c9aa18a2a679448bd0824e66",
-        "SKILL.md": "sha256:f3d07ffea3874aa9772d10bdeb16cea74cbcb54e61b0f50080e6eb3c371818aa",
+        "references/workflow.md": "sha256:1ea5cac51b832e5b7bd718188e39e8b7b70bac5179b87ccdd8551897a2d2c4fd",
+        "SKILL.md": "sha256:d1fc2d711648f601ff53b03cc5e811851781a5dfd7a85363cada60ba0eb77a29",
         "templates/pixelify.js": "sha256:baa09d5afd4d1b7b6508fb644b3df1aa54f7348f9f7dcbd7b17e3d78e584efea"
       },
-      "summary": "Create procedural pixel art, pixelify an existing image, or integrate generated raster assets.",
-      "inject": "Create procedural pixel art, pixelify an existing image, or integrate generated raster assets.",
+      "summary": "Produce and integrate pixel art through repeatable asset batches with consistent palette, scale, anchors and actual gameplay inspection.",
+      "inject": "Produce and integrate pixel art through repeatable asset batches with consistent palette, scale, anchors and actual gameplay inspection.",
       "tags": [
         "pixel-art",
         "sprite",
@@ -652,10 +731,11 @@
       "category": "game-development",
       "stage": "assets",
       "outcome": "Consistent, readable sprites and textures connected to real asset files.",
+      "repeatWhen": "For each sprite or tile batch, and when palette, camera scale or asset technique changes.",
+      "inputs": "The visual rules, approved representative assets, asset roles and available budget.",
+      "carryForward": "Palette and scale conventions, reproducible asset recipes and integration/provenance notes.",
       "triggers": [
         "pixel art",
-        "art direction",
-        "visual style",
         "painted background",
         "transparent sprite"
       ],
@@ -665,16 +745,17 @@
     {
       "name": "grotto-procedural-generation",
       "path": "skills/grotto-procedural-generation/SKILL.md",
-      "version": "1.1.1",
-      "revision": "86475cbae4731ca1b792405410181ee0068e094261b63762cbe9d3db8153779c",
+      "version": "1.1.2",
+      "revision": "77cfa010be1046f1df956412cc133a6ee365ac066ad6f85d2dc5f12cdec78f09",
       "resources": {
         "references/generation.md": "sha256:37cc4c1649794d1abdb312033ab864903dea8049c5360a377d0376cffc38b33e",
         "references/validation.md": "sha256:60fb30352c1fba319eacf1c5b39a78d0f781d1351f785823be9f49974d834e7c",
-        "SKILL.md": "sha256:0582baf52a0f40a5bd02a6f879849c3b2af49b1a10730597ed8ba723b2c7e721",
+        "references/workflow.md": "sha256:d076250b5a161ac55eaf9eaf49b0f7699f856db65918d28fef53eca75103b97e",
+        "SKILL.md": "sha256:9ccc712fcfa96d719c09730658ef9576dded2aa5b63215016998d223e932a7aa",
         "templates/seeded-grid.js": "sha256:c5a75e423921d25d9a42e0098f706e71f293e703a1241eebafe5c1b71b97d6d8"
       },
-      "summary": "Generate reproducible playable levels, encounters or loot, and diagnose unreachable goals or unfair seeds.",
-      "inject": "Generate reproducible playable levels, encounters or loot, and diagnose unreachable goals or unfair seeds.",
+      "summary": "Evolve seeded worlds through recurring generator, validity and fairness passes with retained seeds and explicit generator revisions.",
+      "inject": "Evolve seeded worlds through recurring generator, validity and fairness passes with retained seeds and explicit generator revisions.",
       "tags": [
         "procedural",
         "roguelike",
@@ -688,6 +769,9 @@
       "category": "game-development",
       "stage": "build",
       "outcome": "Reproducible worlds validated against the actual movement rules.",
+      "repeatWhen": "When generation rules, movement assumptions, content pools or difficulty change.",
+      "inputs": "The generator revision, RNG streams, movement rules and a retained seed corpus.",
+      "carryForward": "Generator/version decisions, seed coverage, validity constraints and failing seed cases.",
       "triggers": [
         "random levels",
         "unreachable exit",
@@ -700,15 +784,16 @@
     {
       "name": "grotto-progression-and-balance",
       "path": "skills/grotto-progression-and-balance/SKILL.md",
-      "version": "1.0.0",
-      "revision": "d14fc2f4f1a99e41e02ee95431cd32727e001dcd9274b2afe63bfd0fbcec51e9",
+      "version": "1.0.1",
+      "revision": "06bcf8607cd2ccdc0132b59ee8081399ea5b9058e87c53f32679da456caa00ed",
       "resources": {
         "references/economy-and-unlocks.md": "sha256:243e9c23af598bcf39d78fe7a15df0bea50984b2bc45c51746b2c6a0e0514b6e",
         "references/tuning.md": "sha256:1f58af6ab3b7fbd40509ce01670cfb18eb1e044572edb69fd53673a403826a43",
-        "SKILL.md": "sha256:2d0d2e424d6d6d639da6b5e00a61d02f82c2bd96c1063516e9d73df1501018f8"
+        "references/workflow.md": "sha256:33a4e13866f6e693cd2a33df89fcd0d958c5867fdb1f4c7b0fb75700d0947427",
+        "SKILL.md": "sha256:c6af5354616ecc2a4c3c708d8e259008d9fd564b207249585627c564a7c58e01"
       },
-      "summary": "Design in-game resource sources and sinks, meaningful unlocks and scenario-based balance without duplicating rewards.",
-      "inject": "Design in-game resource sources and sinks, meaningful unlocks and scenario-based balance without duplicating rewards.",
+      "summary": "Tune progression through recurring scenario-based passes on resource flows, unlocks, player choices and saved-state compatibility.",
+      "inject": "Tune progression through recurring scenario-based passes on resource flows, unlocks, player choices and saved-state compatibility.",
       "tags": [
         "progression-balance",
         "economy-balance",
@@ -719,6 +804,9 @@
       "category": "game-development",
       "stage": "design",
       "outcome": "Useful unlocks and resource rules tuned against representative play.",
+      "repeatWhen": "When rewards, costs, unlocks, difficulty or saved progression change.",
+      "inputs": "Resource sources and sinks, representative player states, current parameters and prior tuning notes.",
+      "carryForward": "A parameter snapshot, scenario results, reward invariants and the next balance hypothesis.",
       "triggers": [
         "progression balance",
         "resource sink",
@@ -726,7 +814,8 @@
         "too grindy",
         "economy balance",
         "duplicate rewards",
-        "unlock pacing"
+        "unlock pacing",
+        "balance pass"
       ],
       "public_url": "https://www.enterthegrotto.xyz/skills",
       "docs_url": "https://api.enterthegrotto.xyz/docs"
@@ -735,14 +824,15 @@
       "name": "grotto-studio-game-updates",
       "path": "skills/grotto-studio-game-updates/SKILL.md",
       "version": "1.3.1",
-      "revision": "8bf27f9f8779fecad4c11e73b4448a9089f5915147ad80c5e2f14769e6f3693d",
+      "revision": "bcfa2e06ebadadf7602206898b91612d2222c38e3a4edb89f54af15d40d82509",
       "resources": {
         "references/iteration.md": "sha256:6ae4fd37c8f202cfc39b1a609aa5707d3465088bd6e3693735a28740bf271386",
         "references/save-migration.md": "sha256:0cd10a25b79a166ba19b5ef38e77cc3abea08ec5336ebb87e17b15165aeaf081",
-        "SKILL.md": "sha256:751be47f730bb4e4cc09c8fd071aeec0249f0f96b483a5f3d07382d9d56fa2b8"
+        "references/workflow.md": "sha256:71e5fa3d60926c5180c9932aaa2c4ae0c77a6f16321e255187d35dc2f9c008d2",
+        "SKILL.md": "sha256:94df307de40b610114d1cfa512d70e8f033a3ef9c33c3ab1ea5243cd2d6a71b8"
       },
-      "summary": "Update an existing Studio game while preserving its identity, save compatibility and publication history.",
-      "inject": "Update an existing Studio game while preserving its identity, save compatibility and publication history.",
+      "summary": "Run a repeatable Studio update cycle that preserves game identity, save compatibility, review evidence and publication history.",
+      "inject": "Run a repeatable Studio update cycle that preserves game identity, save compatibility, review evidence and publication history.",
       "tags": [
         "update",
         "iterate",
@@ -757,6 +847,9 @@
       "category": "game-development",
       "stage": "ship",
       "outcome": "A verified update that preserves game identity and existing progress.",
+      "repeatWhen": "For each requested game update, save-schema change or rollback decision.",
+      "inputs": "The current game revision, creator request, prior release evidence and representative saves.",
+      "carryForward": "The change decision, save migration checks, accepted revision and verified publication state.",
       "triggers": [
         "existing progress",
         "existing game",

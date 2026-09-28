@@ -1,12 +1,15 @@
 ---
 name: grotto-game-runtime-developer-sdk
-description: "Integrate or debug Grotto identity, cloud saves, scores, events, or capability-gated multiplayer."
+description: "Maintain Grotto identity, saves, scores and capability-scoped services through recurring integration and contract-verification passes."
 license: MIT
 metadata:
   display_name: "Runtime SDK"
   category: platform-integration
   stage: connect
   outcome: "Trusted identity, version-aware cloud saves and capability-scoped services."
+  repeat_when: "When a service contract, SDK usage, save schema or capability requirement changes."
+  inputs: "The installed runtime, required services and prior identity/save scenarios."
+  carry_forward: "Service requirements, save-version decisions and contract/recovery cases."
   version: 1.10.1
   author: Bob AI Mk. I
   hermes:
@@ -14,16 +17,17 @@ metadata:
     related_skills: [grotto-game-token-gated-inventory, grotto-hosted-game-github-workflow, grotto-studio-game-updates]
 ---
 
-# Grotto Game Runtime Developer SDK
+# Runtime SDK
 
 
-Preserve Studio's installed runtime helpers. Never block game boot, input registration or animation on network readiness. Trust the host session, not player-supplied identity; keep wallet snapshots private and immutable. Use version-aware saves, preserve progress during late hydration, and handle missing capabilities or expired sessions without granting access. Multiplayer tickets are single-use; public room routing is not authorization.
+Reuse installed helpers; boot, input and animation must not wait for network readiness. Trust host sessions, never client-supplied identity. Keep wallet snapshots private and immutable. Use version-aware saves and preserve local progress during late hydration. Missing scopes or expired sessions grant no access. Consume multiplayer tickets once; public room routing grants no authority.
 
 Read only the reference needed for the current decision:
 
 | When | Read |
 | --- | --- |
-| Authoring a new Studio game or finding engine, input and asset capabilities | [studio-capabilities](references/studio-capabilities.md) |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
+| Finding installed engine, input and asset capabilities | [studio-capabilities](references/studio-capabilities.md) |
 | Adding runtime startup or trusted identity | [identity-and-boot](references/identity-and-boot.md) |
 | Implementing autosave, migration, save conflicts or leaderboards | [saves-and-scores](references/saves-and-scores.md) |
 | Using inventory, events, presence or multiplayer tickets | [capabilities](references/capabilities.md) |
@@ -31,5 +35,6 @@ Read only the reference needed for the current decision:
 | Looking up raw API behavior or diagnosing runtime errors | [api-and-errors](references/api-and-errors.md) |
 | Reviewing packaging, security or integration requirements | [packaging](references/packaging.md) |
 
-In Studio, open a linked reference with `read_skill` using this skill name and
-`resource: "references/<file>.md"`. Outside Studio, follow the relative link.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.

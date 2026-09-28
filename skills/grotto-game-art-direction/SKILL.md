@@ -1,14 +1,17 @@
 ---
 name: grotto-game-art-direction
-description: "Establish a coherent game visual system and plan, inspect and integrate assets at gameplay scale within the available budget."
+description: "Maintain a game’s visual direction through recurring representative asset reviews, budget planning and integration at gameplay scale."
 compatibility: "Use the installed Studio foundation and tools offered in the current run."
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   display_name: "Art direction and asset planning"
   category: game-development
   stage: assets
   outcome: "A consistent visual direction and a verified, budgeted asset set."
+  repeat_when: "At each asset batch or milestone, and when camera, palette or visual scope changes."
+  inputs: "The visual brief, representative gameplay view, approved assets and available asset budget."
+  carry_forward: "A visual-system decision sheet, asset provenance and an updated asset plan."
   author: "Grotto"
   hermes:
     tags: [art-direction, visual-system, asset-plan, silhouette, provenance]
@@ -23,10 +26,10 @@ for the current decision; a small edit does not need every workflow.
 
 | When | Read |
 | --- | --- |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Choosing a coherent look or reviewing a representative set | [visual-system](references/visual-system.md) |
 | Planning asset scope, budget, provenance or integration | [asset-plan](references/asset-plan.md) |
 
-In Studio, use read_skill with this name and resource: "references/<file>.md".
-Outside Studio, follow the relative links. Reading a guide does not spend credit,
-start a build or authorize publication. Implement, inspect and report the actual
-result and any unverified behavior.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.

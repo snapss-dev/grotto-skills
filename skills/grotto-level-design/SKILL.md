@@ -1,14 +1,17 @@
 ---
 name: grotto-level-design
-description: "Design authored levels, teach mechanics through play, tune encounter pacing and validate puzzle or traversal routes."
+description: "Iterate authored levels through layout, mechanic teaching, pacing and observed traversal or puzzle playtests."
 compatibility: "Use the installed Studio foundation and tools offered in the current run."
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
   display_name: "Level design and pacing"
   category: game-development
   stage: design
   outcome: "Readable spaces, purposeful encounters and reachable recovery paths."
+  repeat_when: "For each new level, or after changes to movement, encounters, checkpoints or teaching."
+  inputs: "The level’s purpose, current controller and camera, layout and prior player observations."
+  carry_forward: "A route and teaching plan, pacing notes, observed failure points and replay scenarios."
   author: "Grotto"
   hermes:
     tags: [level-design, encounter-pacing, tutorial, puzzle-design]
@@ -23,10 +26,10 @@ for the current decision; a small edit does not need every workflow.
 
 | When | Read |
 | --- | --- |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Laying out space or teaching a mechanic | [layout-and-learning](references/layout-and-learning.md) |
 | Tuning pacing, checkpoints, puzzles or route validity | [pacing-and-validation](references/pacing-and-validation.md) |
 
-In Studio, use read_skill with this name and resource: "references/<file>.md".
-Outside Studio, follow the relative links. Reading a guide does not spend credit,
-start a build or authorize publication. Implement, inspect and report the actual
-result and any unverified behavior.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.

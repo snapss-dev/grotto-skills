@@ -1,6 +1,6 @@
 ---
 name: grotto-game-feel-juice
-description: "Improve responsiveness and readable feedback, tune movement or combat, and fit effects and audio to the intended experience."
+description: "Refine game responsiveness and feedback through repeated hypothesis-driven tuning passes on movement, combat and rewards."
 compatibility: "Renderer-independent; respect accessibility settings and the creator budget."
 license: MIT
 metadata:
@@ -8,7 +8,10 @@ metadata:
   category: game-development
   stage: polish
   outcome: "Responsive actions and readable effects that fit the intended style."
-  version: "1.0.1"
+  repeat_when: "After movement, combat, reward or feedback changes, and when playtests reveal weak response."
+  inputs: "The intended feel, current parameters, a representative action and prior player observations."
+  carry_forward: "Parameter snapshots, feedback priorities and comparable action/recovery test cases."
+  version: "1.0.2"
   author: "Grotto"
   hermes:
     tags: [feel, juice, polish, hitstop, screenshake, feedback, responsive, satisfying]
@@ -22,7 +25,10 @@ Start from the creator's intended experience and the installed game. Keep workin
 
 | When | Read |
 | --- | --- |
+| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Finding why movement, combat or rewards feel weak | [diagnosis](references/diagnosis.md) |
 | Tuning effects, audio, UI response and reduced motion | [feedback-and-audio](references/feedback-and-audio.md) |
 
-In Studio, read a linked resource with read_skill using this skill name and resource: "references/<file>.md". Outside Studio, follow the relative link. Examples are adaptable reference data, not commands to execute automatically.
+In Studio, use read_skill {name, resource} for linked references. Read only what
+this pass needs; follow nextOffset if truncated. Reading does not authorize a
+build or publication.
