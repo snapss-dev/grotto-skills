@@ -34,8 +34,8 @@ Before adding content, progression, economies, lore, or polish, state:
 
 1. **Fantasy:** Who is the player, and what should they feel capable of doing?
 2. **Verbs:** What two to four actions do they use most?
-3. **Immediate goal:** What are they trying to accomplish right now?
-4. **Obstacle:** What makes that outcome uncertain?
+3. **Intent:** What authored or self-chosen goal are they pursuing right now?
+4. **Rules:** What constraints, materials or systems shape what they can do?
 5. **Feedback:** How do they know what happened and why?
 6. **Repeat:** Why is the next attempt, turn, wave, room, or decision different?
 

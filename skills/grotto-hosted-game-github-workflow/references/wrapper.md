@@ -27,12 +27,10 @@ my-grotto-game/
 <script src="https://api.enterthegrotto.xyz/sdk/grotto-game-runtime.v1.js"></script>
 ```
 
-```js
-const grotto = await GrottoRuntime.ready({ timeoutMs: 10000 });
-const player = await grotto.getPlayer();
-const save = await grotto.loadSave('default', DEFAULT_STATE);
-startGame({ player, state: save.state });
-```
+Start local rendering and input before runtime readiness, identity or save
+requests. Resolve those services in background work and preserve progress earned
+before hydration. Use the SDK's version-aware autosave contract rather than
+blocking boot on a sequence of network calls.
 
 The hosted URL must be HTTPS.
 
@@ -42,34 +40,23 @@ runtime session receives `inventory:read` or `multiplayer:join`.
 
 ## Grotto wrapper
 
-Upload this as the root `index.html` in the Grotto game zip.
+Author a root `index.html` for the agreed external client. It should size the
+iframe to the intended viewport and give it an accessible title. Set an explicit
+sandbox and permissions policy from the client's actual needs; do not grant
+clipboard, popups, forms or pointer lock solely because a generic wrapper did.
 
-```html
-<!doctype html><html><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>My Grotto Game</title>
-<style>html,body,#game{width:100%;height:100%;margin:0;border:0;overflow:hidden;background:#050510}</style>
-</head><body>
-<iframe id="game" title="My Grotto Game" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-popups" allow="fullscreen; autoplay; clipboard-read; clipboard-write; gamepad"></iframe>
-<script>
-const REMOTE_GAME_URL = 'https://my-game.up.railway.app';
-const REMOTE_GAME_ORIGIN = new URL(REMOTE_GAME_URL).origin;
-const iframe = document.getElementById('game');
-const params = new URLSearchParams(location.search);
-params.set('embedded', 'grotto');
-iframe.src = `${REMOTE_GAME_URL}/?${params}`;
-addEventListener('message', (event) => {
-  const msg = event.data;
-  if (!msg || typeof msg !== 'object') return;
-  if (msg.type === 'grotto:runtime:hello' && event.source === iframe.contentWindow) {
-    parent.postMessage({ type: 'grotto:runtime:hello' }, '*');
-  }
-  if (msg.type === 'grotto:runtime' && event.source === parent) {
-    iframe.contentWindow?.postMessage(msg, REMOTE_GAME_ORIGIN);
-  }
-});
-</script></body></html>
-```
+Resolve the configured HTTPS client URL to a known target origin. Build its
+query string from deliberately allowed, nonsecret parameters. Never forward the
+wrapper's complete query string to another host. Keep the host runtime handshake
+separate from navigation and game state.
+
+For messages, validate the data shape and message type. Accept the client's
+`grotto:runtime:hello` only from that iframe's `contentWindow` and expected origin,
+then request the runtime from the wrapper's parent. Accept `grotto:runtime` only
+from the parent host, and forward it with the known client origin as the exact
+`targetOrigin`. Preserve the SDK protocol; do not create a parallel identity
+system. Check the parent's expected origin where the embedding contract supplies
+it.
 
 Only forward `grotto:runtime` from the wrapper's parent and only accept
 `grotto:runtime:hello` from the hosted iframe. Never copy the `grs_*` session into the hosted URL,

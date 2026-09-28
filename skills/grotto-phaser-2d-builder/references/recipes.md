@@ -1,6 +1,6 @@
-# Phaser recipes: implement the requested behavior
+# Phaser capabilities for authored interactions
 
-Inspect src/game.ts and the installed declarations first. The examples below describe ownership and transitions; adapt them to the actual scene. Do not introduce a second input, save or render loop.
+Inspect src/game.ts and the installed declarations first. The guidance below describes ownership and transitions when the requested mechanic needs them. Do not introduce a second input, save or render loop.
 
 ## Responsive platform movement
 
@@ -10,7 +10,7 @@ Use Arcade Physics bodies for ordinary 2D collision. Set a collider that fits th
 
 ## Enemy behavior
 
-Use explicit states such as patrol, telegraph, attack, recover and defeated. Put cooldown and target selection in state data; animation reflects those states. A new enemy should reuse the existing damage, score and spawn systems. Remove its listeners, colliders and pending timers on scene shutdown. Pool frequently spawned actors when measurement justifies it.
+Use explicit states such as patrol, telegraph, attack, recover and defeated. Put cooldown and target selection in state data; animation reflects those states. When those systems already exist, a new enemy should reuse their damage, score and spawn ownership. Remove its listeners, colliders and pending timers on scene shutdown. Pool frequently spawned actors when measurement justifies it.
 
 Make danger readable before increasing speed: show the attack area, commitment time and escape opportunity. Verify interrupted attacks, overlapping damage, leaving/reentering the scene, and restart after defeat. An enemy that looks different but adds no different decision may not improve the loop.
 
@@ -22,6 +22,6 @@ Preserve a stable origin, display scale and collision body across idle/run/hit f
 
 ## Menus, saves and restart
 
-Use kit.setHud and kit.showOverlay for supported score/status and recovery UI. Keep gameplay state separate from display objects. Freeze gameplay input behind overlays; an overlay's pointer event must not also attack or jump.
+Use kit.setHud and kit.showOverlay when those conveniences fit the intended UI and their DOM targets exist; otherwise author the game's presentation. The minimal source has no score/status or overlay elements. Keep gameplay state separate from display objects. Freeze gameplay input behind overlays; an overlay's pointer event must not also attack or jump.
 
 Restart resets transient state (timers, held actions, enemy count, camera effects) and preserves durable progression according to the game rules. A scene restart must not duplicate global listeners or save writers. Test three consecutive restart cycles and a refresh after earning progress. Call check_project after integration, then actually play the changed path.

@@ -8,6 +8,8 @@ export const manifestPath = join(repoRoot, "relevance", "manifest.json");
 export const readmePath = join(repoRoot, "README.md");
 export const catalogStart = "<!-- generated-skill-catalog:start -->";
 export const catalogEnd = "<!-- generated-skill-catalog:end -->";
+export const skillCategories = ["game-development", "platform-integration"];
+export const skillStages = ["design", "build", "assets", "polish", "ship", "connect"];
 
 const titleTokens = new Map([
   ["grotto", "Grotto"],
@@ -31,13 +33,20 @@ export function skillTitle(name) {
 }
 
 export function renderCatalog(manifest) {
-  const entries = manifest.skills.map((skill) => [
-    `### ${skillTitle(skill.name)}`,
+  const entry = (skill) => [
+    `### ${skill.title || skillTitle(skill.name)}`,
     "",
     `Path: \`${skill.path}\``,
     "",
-    skill.summary
-  ].join("\n"));
+    skill.summary,
+    ...(skill.outcome ? ["", `Outcome: ${skill.outcome}`] : [])
+  ].join("\n");
+  const entries = skillCategories.map(category => {
+    const skills = manifest.skills.filter(skill => skill.category === category);
+    return skills.length ? [`## ${category === "game-development" ? "Game development" : "Platform integrations"}`, "", ...skills.map(entry)].join("\n\n") : "";
+  }).filter(Boolean);
+  // Retain rendering for small external fixtures without discovery metadata.
+  entries.push(...manifest.skills.filter(skill => !skill.category).map(entry));
 
   return `${catalogStart}\n\n${entries.join("\n\n")}\n\n${catalogEnd}`;
 }
@@ -74,12 +83,17 @@ export function parseSkillFrontmatter(source, sourcePath = "SKILL.md") {
     const value = frontmatter.match(new RegExp(`^\\s+${key}:\\s*(\\[.*])$`, "m"))?.[1]?.trim();
     return value ? parseInlineList(value) : [];
   };
+  const metadataValue = (key) => frontmatter.match(new RegExp(`^  ${key}:\\s*(.+)$`, "m"))?.[1]?.trim().replace(/^['"]|['"]$/g, "") ?? null;
 
   return {
     name: topLevel("name"),
     description: topLevel("description"),
     tags: inlineList("tags"),
     relatedSkills: inlineList("related_skills"),
+    displayName: metadataValue("display_name"),
+    category: metadataValue("category"),
+    stage: metadataValue("stage"),
+    outcome: metadataValue("outcome"),
     version: frontmatter.match(/^\s*version:\s*["\']?([0-9]+\.[0-9]+\.[0-9]+)["\']?\s*$/m)?.[1] ?? null,
     hasVersion: /^\s*version:\s*\S+/m.test(frontmatter),
     hasLicense: /^license:\s*\S+/m.test(frontmatter)
@@ -156,11 +170,17 @@ export function buildManifest(root = repoRoot) {
     const texts = skillResources(name, root);
     const front = parseSkillFrontmatter(texts["SKILL.md"], name);
     if (!front.version) throw new Error(name + " requires a three-part version");
+    if (!front.displayName || front.displayName.length > 80 || !front.outcome || front.outcome.length > 240
+      || !skillCategories.includes(front.category) || !skillStages.includes(front.stage)
+      || (front.category === "platform-integration") !== (front.stage === "connect")) {
+      throw new Error(name + " requires a display name, outcome and valid collection/workflow stage");
+    }
     const resources = Object.fromEntries(Object.entries(texts).map(([path, text]) => [path, "sha256:" + digest(text)]));
     return {
       name, path: "skills/" + name + "/SKILL.md", version: front.version,
       revision: digest(JSON.stringify(resources)), resources,
       summary: front.description, inject: front.description, tags: front.tags,
+      title: front.displayName, category: front.category, stage: front.stage, outcome: front.outcome,
       ...(routing[name] || {}),
       public_url: "https://www.enterthegrotto.xyz/skills",
       docs_url: "https://api.enterthegrotto.xyz/docs",

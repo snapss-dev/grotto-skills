@@ -63,10 +63,30 @@ metadata:
     description: "Example skill.",
     tags: ["grotto", "sdk"],
     relatedSkills: ["grotto-other"],
+    displayName: null,
+    category: null,
+    stage: null,
+    outcome: null,
     version: '1.0.0',
     hasVersion: true,
     hasLicense: true
   });
+});
+
+test("catalog groups creator workflows separately from platform integrations", () => {
+  const source = `---\nname: grotto-example\ndescription: Example.\nlicense: MIT\nmetadata:\n  version: 1.0.0\n  display_name: Example workflow\n  category: game-development\n  stage: design\n  outcome: A playable first scope.\n---\n`;
+  const parsed = parseSkillFrontmatter(source);
+  assert.equal(parsed.displayName, "Example workflow");
+  assert.equal(parsed.category, "game-development");
+  assert.equal(parsed.stage, "design");
+  assert.equal(parsed.outcome, "A playable first scope.");
+  const output = renderCatalog({ skills: [
+    { name: "grotto-example", title: parsed.displayName, category: parsed.category, summary: "Example.", path: "skills/grotto-example/SKILL.md", outcome: parsed.outcome },
+    { name: "grotto-runtime", title: "Runtime", category: "platform-integration", summary: "Connect.", path: "skills/grotto-runtime/SKILL.md" },
+  ] });
+  assert.match(output, /## Game development[\s\S]*### Example workflow/);
+  assert.match(output, /## Platform integrations[\s\S]*### Runtime/);
+  assert.match(output, /Outcome: A playable first scope/);
 });
 
 test("frontmatter parser rejects unstructured skill files", () => {

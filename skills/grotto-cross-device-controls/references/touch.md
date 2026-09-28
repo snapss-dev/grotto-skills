@@ -19,46 +19,35 @@ For an analog joystick:
 5. Keep action buttons on the opposite side, at least 48 CSS pixels square, with
    spacing so two adjacent actions cannot be hit by one thumb.
 
-```js
-function bindStick(base, knob) {
-  let pointerId = null;
-  let center = { x: 0, y: 0 };
-  const radius = () => Math.max(1, base.getBoundingClientRect().width * 0.36);
-  const update = (event) => {
-    if (event.pointerId !== pointerId) return;
-    const dx = event.clientX - center.x;
-    const dy = event.clientY - center.y;
-    const distance = Math.hypot(dx, dy);
-    const scale = Math.min(1, radius() / Math.max(1, distance));
-    const x = dx * scale;
-    const y = dy * scale;
-    knob.style.transform = `translate(${x}px, ${y}px)`;
-    const dead = radius() * 0.14;
-    actions.moveX = distance < dead ? 0 : x / radius();
-    actions.moveY = distance < dead ? 0 : y / radius();
-  };
-  const release = (event) => {
-    if (event.pointerId !== pointerId) return;
-    pointerId = null;
-    actions.moveX = actions.moveY = 0;
-    knob.style.transform = '';
-  };
-  base.addEventListener('pointerdown', (event) => {
-    if (pointerId !== null) return;
-    pointerId = event.pointerId;
-    const rect = base.getBoundingClientRect();
-    center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-    base.setPointerCapture(pointerId);
-    update(event);
-    event.preventDefault();
-  });
-  base.addEventListener('pointermove', update);
-  for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) {
-    base.addEventListener(type, release);
-  }
-}
-```
-
 Do not infer touch capability from the user-agent. Show touch controls with
 `@media (pointer: coarse), (hover: none)` and also activate them after the first
 `pointerdown` whose `pointerType` is `touch`. This supports hybrid devices.
+
+## Browser ownership and teardown
+
+Set `touch-action: none` on the actual movement/look/action surfaces before the
+gesture begins when gameplay owns their gestures. Keep scrolling enabled on
+ordinary menu content where the player needs it. Changing `touch-action` after
+`pointerdown` does not reclaim a gesture already assigned to browser scrolling.
+Use `user-select: none` on game controls where selection would interfere, while
+preserving ordinary text and form interaction in menus.
+
+Pointer capture keeps a held action coherent when a finger leaves its visual
+button. Release the correct pointer on every terminal event. Clear held values,
+pending press edges and visual pressed states on window blur, document visibility
+changes, control removal, scene shutdown and modal transitions that take input.
+Make cleanup safe to repeat; a late `lostpointercapture` must not release a new
+finger that subsequently acquired the same control. Remove listeners and release
+captured pointers when disposing an authored control.
+
+Keep coordinate spaces explicit: pointer coordinates are viewport CSS pixels;
+world positions and render pixels may use different scales. Recalculate the
+control's bounds after resize or orientation changes and choose whether to
+cancel an in-progress gesture when its control moves. A camera look gesture must
+not trigger a world edit or menu action when it ends.
+
+For the installed kit's digital buttons, create `#touch-controls [data-action]`
+elements before binding actions. Use only supported and allowed action names,
+accessible labels and visibly distinct targets. The kit's buttons do not supply
+a custom analog joystick automatically; author its geometry, gesture ownership
+and connection to the game's action state when the requested movement needs one.

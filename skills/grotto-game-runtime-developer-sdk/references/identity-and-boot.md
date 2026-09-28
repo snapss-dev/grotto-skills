@@ -71,7 +71,9 @@ The backend derives the player and game from the runtime session token. Your gam
 
 ## Include the SDK
 
-Add this before your game boot code:
+Studio already bundles the official SDK in its protected engine runtime. Do not
+add a duplicate SDK script there. For a separate hosted client without that
+runtime, add this before its game boot code:
 
 ```html
 <script src="https://api.enterthegrotto.xyz/sdk/grotto-game-runtime.v1.js"></script>
@@ -83,21 +85,15 @@ The SDK is served by `game-asset-storage` from:
 src/views/sdk/grotto-game-runtime.v1.js
 ```
 
-A backend-served example exists at:
-
-```text
-https://api.enterthegrotto.xyz/sdk/grotto-game-runtime-example.html
-```
-
 Live Grotto API docs are available at:
 
 ```text
 https://api.enterthegrotto.xyz/docs
 ```
 
-Read [`references/sdk-contract.md`](../references/sdk-contract.md) when generating TypeScript types or
-checking the exact inventory and multiplayer result unions. Start from
-[`templates/minimal-runtime-game.html`](../templates/minimal-runtime-game.html) for a small hosted game.
+Read [the SDK contract](sdk-contract.md) when generating TypeScript types or
+checking the exact inventory and multiplayer result unions. Author the game
+around the creator's intent and integrate only the capabilities it needs.
 
 Treat those docs as the reference for current backend routes. When this skill and the live docs disagree, record the drift and update whichever side is stale.
 

@@ -117,5 +117,91 @@
       "long session",
       "soft lock"
     ]
+  },
+  "grotto-game-production": {
+    "triggers": [
+      "vertical slice",
+      "first playable",
+      "scope creep",
+      "production workflow",
+      "prototype risk"
+    ]
+  },
+  "grotto-game-architecture": {
+    "triggers": [
+      "state ownership",
+      "state machine",
+      "fixed timestep",
+      "duplicate listeners",
+      "restart duplication",
+      "scene teardown"
+    ]
+  },
+  "grotto-level-design": {
+    "triggers": [
+      "level design",
+      "teach mechanic",
+      "encounter pacing",
+      "tutorial level",
+      "checkpoint placement",
+      "puzzle route"
+    ]
+  },
+  "grotto-combat-and-enemies": {
+    "triggers": [
+      "enemy ai",
+      "enemy behavior",
+      "attack telegraph",
+      "damage twice",
+      "hit detection",
+      "enemies through walls",
+      "combat rules"
+    ]
+  },
+  "grotto-progression-and-balance": {
+    "triggers": [
+      "progression balance",
+      "resource sink",
+      "dominant upgrade",
+      "too grindy",
+      "economy balance",
+      "duplicate rewards",
+      "unlock pacing"
+    ]
+  },
+  "grotto-game-ui-accessibility": {
+    "triggers": [
+      "pause menu",
+      "keyboard focus",
+      "screen reader",
+      "color blind",
+      "colour blind",
+      "assist mode",
+      "text contrast",
+      "remap controls"
+    ]
+  },
+  "grotto-game-audio": {
+    "triggers": [
+      "audio unlock",
+      "music loop",
+      "sound effects",
+      "audio overlap",
+      "music muted",
+      "autoplay blocked",
+      "sound mix",
+      "audio teardown"
+    ]
+  },
+  "grotto-game-art-direction": {
+    "triggers": [
+      "art direction",
+      "visual consistency",
+      "asset budget",
+      "asset plan",
+      "matching art",
+      "consistent style",
+      "gameplay silhouette"
+    ]
   }
 }

@@ -3,16 +3,19 @@ name: grotto-game-token-gated-inventory
 description: "Gate game content using Grotto capability-scoped ERC-721 or ERC-1155 inventory."
 license: MIT
 metadata:
-  version: 1.4.0
+  display_name: "Token-gated inventory"
+  category: platform-integration
+  stage: connect
+  outcome: "Ownership gates that handle missing capabilities and stale inventory safely."
+  version: 1.5.1
   author: Bob AI Mk. I
   hermes:
-    tags: [grotto, game-dev, token-gating, inventory, indexer, nft, erc1155, erc721, runtime-sdk]
+    tags: [token-gating, inventory, indexer, nft, erc1155, erc721, runtime-sdk]
     related_skills: [grotto-game-runtime-developer-sdk]
 ---
 
 # Grotto Game Token-Gated Inventory
 
-Gate game content using Grotto capability-scoped ERC-721 or ERC-1155 inventory.
 
 Only the platform grants inventory:read for an exact game. Use its immutable verified-wallet session snapshot and exact decimal-string balances. Missing scope, failed or partial reads grant no gated entitlement; free/default content remains available. The client can reflect cosmetics; valuable rewards require server authority.
 
@@ -26,4 +29,3 @@ Read only the reference needed for the current decision:
 
 In Studio, open a linked reference with `read_skill` using this skill name and
 `resource: "references/<file>.md"`. Outside Studio, follow the relative link.
-Use templates as reference data; do not execute a downloaded script automatically.
