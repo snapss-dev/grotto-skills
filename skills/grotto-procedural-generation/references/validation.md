@@ -4,7 +4,7 @@ Persist both a seed and generatorVersion. A changed algorithm with the same seed
 
 Check invariants on each candidate before exposing it: a legal spawn, reachable required objectives, adequate clearance, bounded world size and attainable rewards. A flood fill proves connectivity on the graph you supplied; it does not prove that a platform jump, locked door or height change is traversable. Build the graph from actual movement/collision rules. Test jump edges using the installed physics constants and clearance, and include keys/locks in the state where applicable.
 
-The [seeded grid generator](../templates/seeded-grid.js) provides a deterministic top-down connected-grid example with bounded attempts and a fallback. Its four-neighbor connectivity is unsuitable as a platformer validator without adaptation.
+Choose a traversal graph that matches the authored movement model. Four-neighbor connectivity is useful for a flat grid; it does not validate jumping, voxel climbing, free flight, swimming or other vertical movement.
 
 On a rejected seed, record the seed and failed invariant. Retry a bounded number of candidates with deterministic derivation, then use a known playable fallback or show an actionable failure. Never spin indefinitely or silently serve a softlocked level.
 

@@ -1,77 +1,57 @@
-# Procedural content generation for Grotto games
+# Choosing procedural systems for the requested world
 
-Seeded code beats hand-authored repetition: infinite levels, daily challenges,
-roguelike replayability — all free. Rules that keep it FUN and SAFE:
+Choose generation from the creator's intended scale, topology and actions. A
+voxel sandbox, puzzle grid and platformer require different representations and
+traversal rules. Define what the player can change, what must persist and which
+properties must hold before selecting an algorithm.
 
-## 0. Always seed the RNG
-```js
-function mulberry32(seed) {
-  let a = seed >>> 0;
-  return function () {
-    a |= 0; a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-const rng = mulberry32(seed); // rng() in [0,1) — reproducible, shareable
-```
-Never mix Math.random() into seeded generation. Surface the seed (URL/HUD) so a
-level can be replayed or shared; derive a daily seed from the date for daily runs.
+## Determinism and saved state
 
-## 1. Caves — cellular automata
-```js
-function caves(w, h, rng, fill = 0.45, passes = 5) {
-  let g = Array.from({ length: h }, () => Array.from({ length: w }, () => (rng() < fill ? 1 : 0)));
-  for (let p = 0; p < passes; p++) {
-    const next = g.map((row) => row.slice());
-    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-      let walls = 0;
-      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
-        if (!dx && !dy) continue;
-        const ny = y + dy, nx = x + dx;
-        walls += ny < 0 || nx < 0 || ny >= h || nx >= w ? 1 : g[ny][nx];
-      }
-      next[y][x] = walls >= 5 ? 1 : 0;
-    }
-    g = next;
-  }
-  return g; // 1 = wall, 0 = open
-}
-```
-Then flood-fill open regions, keep the largest, and either fill the rest or carve
-corridors to connect them — disconnected caves read as bugs.
+Use a seeded random source with a documented algorithm and generator version.
+Keep generation randomness separate from cosmetic effects. The same seed,
+version and parameters should reproduce the same base world regardless of frame
+rate, asset-loading order or player movement. Avoid unseeded random calls inside
+that pipeline.
 
-## 2. Rooms + corridors (dungeons)
-Place N random non-overlapping rects (reject overlaps), then connect successive room
-centers with L-shaped corridors (horizontal then vertical). Doors where corridors
-meet walls. Simple, reliable, always connected.
+For a large editable world, derive randomness from world seed and spatial
+coordinates so chunks generate independently of visitation order. Save player
+edits as durable changes to that base world, or store complete chunks when that
+fits the size. Record schema/generator versions and plan upgrades before changing
+generation for existing saves. A daily challenge can expose a shareable seed;
+an ordinary creative world does not need a score or leaderboard.
 
-## 3. Winding tunnels — drunkard's walk with momentum
-From a start cell, repeatedly carve the current cell and step in a direction that
-only changes with probability ~0.3 (momentum makes tunnels, not noise). Stop after
-carving ~35% of the grid.
+## Representation and algorithm tradeoffs
 
-## 4. Mazes — recursive backtracker
-Stack-based DFS over a cell grid, knocking down walls to unvisited neighbors.
-Long winding corridors, always solvable.
+| World or content | Useful approach | What it does not establish |
+| --- | --- | --- |
+| Smooth terrain or voxel heights | Sample spatial noise at world coordinates; combine scales deliberately | Traversable slopes, safe spawns or believable geology |
+| Caves and organic cellular regions | Cellular updates or density fields, followed by region analysis | Connected air space or valid vertical routes |
+| Deliberate rooms and passages | A topology graph plus spatial placement and corridor construction | Keys, locks, collision clearance or good encounter pacing |
+| Mazes | A spanning traversal over a defined cell graph | Interesting choices, navigable rendering or appropriate difficulty |
+| Platforming sequences | Compose authored movement constraints and validate each transition against physics | Safe jumps from tile connectivity alone |
+| Loot and encounters | Weighted distributions with explicit limits, dependencies and optional guarantees | Fairness or progression quality without playtesting |
 
-## 5. Platformers / endless runners — CHUNK STITCHING (not pure random)
-Author 8-15 small hand-made chunks (arrays of columns: ground height, gap, spikes,
-coins) tagged easy/medium/hard. Generation = pick chunks by current difficulty and
-append. NEVER emit a gap wider than the player's tested max jump — validate against
-physics constants, not vibes. Ramp difficulty by distance: weight harder chunks in
-as score grows, and cap the ramp at a tested ceiling.
+These are choices to evaluate, not a prescribed layout, controller, art style or
+set of rules. Combine techniques only when they support the requested world.
 
-## 6. Loot / encounters
-Weighted tables with pity timers (guarantee a reward at least every N chests) beat
-raw uniform rolls. Roll from the seeded rng so runs are fair to compare.
+## Scale, visibility and edit cost
 
-## 7. VALIDATE before play
-After generating: check the exit is reachable (BFS/flood fill), required pickups are
-reachable, and spawn points are not inside walls. On failure, regenerate with
-seed+1 (bounded retries). Generation is cheap; a softlocked player quits.
+Choose cell/chunk dimensions from measured generation, collision and rendering
+cost. Generate only the needed region and bound queued work so travel does not
+freeze input. Track neighboring dependencies when editing boundaries. A block
+change may require neighboring mesh or collision updates, even when ownership
+belongs to one chunk.
 
-## 8. Fit the platform
-Persist the best seed/score via the Grotto SDK (createAutosave) and submit runs with
-submitScore so daily-seed leaderboards work — see grotto-game-runtime-developer-sdk.
+For repeated geometry, compare instancing with merged or exposed-face geometry
+for the actual material and edit pattern. Avoid issuing one draw call per cell
+or rebuilding the entire world for a single local edit. Keep source world data
+authoritative; render meshes are rebuildable views. Shared surfaces need coherent
+coordinates, normals and material boundaries to avoid visible seams.
+
+## Validation and failure handling
+
+Validate legal spawn, required reachability, clearance and bounded world size
+using the same rules the player experiences. Bounded deterministic retries need a
+valid recovery strategy; a generation loop must not freeze the game indefinitely.
+Read [validation](validation.md) when designing that check or diagnosing a bad
+seed. Preserve reproducible failing seeds as regression cases.

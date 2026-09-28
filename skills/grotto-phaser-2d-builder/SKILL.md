@@ -4,16 +4,19 @@ description: "Build or repair a Studio Phaser game using its installed TypeScrip
 compatibility: "Studio Phaser/Grotto2D foundation; inspect the installed declarations before using optional APIs."
 license: MIT
 metadata:
-  version: "1.0.0"
+  display_name: "Phaser 2D games"
+  category: game-development
+  stage: build
+  outcome: "A working 2D game with deliberate scenes, physics and state ownership."
+  version: "1.1.1"
   author: "Grotto"
   hermes:
     tags: [phaser, 2d, scene, arcade, physics, platformer, tilemap]
-    related_skills: [grotto-game-runtime-developer-sdk]
+    related_skills: [grotto-game-architecture, grotto-cross-device-controls]
 ---
 
 # Phaser 2D Builder
 
-Build or repair a Studio Phaser game using its installed TypeScript, scene, physics, asset and input helpers.
 
 Start from the creator's intended experience and the installed game. Keep working mechanics, engine, art direction and save identity unless the requested change needs to alter them. Use the reference that resolves the current decision; a small change does not need every guide.
 

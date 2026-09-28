@@ -63,5 +63,5 @@ Support three time horizons when the scope allows:
   standing, or a changing possibility space.
 
 Progression should unlock new decisions, combinations, or expressions more
-often than it merely inflates values. End a session on a clear result and make
-the next possibility visible.
+often than it merely inflates values. Make the next possibility visible. For a persistent sandbox, let the player
+stop and resume naturally rather than forcing a terminal result.

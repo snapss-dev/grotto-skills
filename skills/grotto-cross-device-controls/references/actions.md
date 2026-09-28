@@ -25,38 +25,12 @@ clusters of tiny buttons.
 ## Use one semantic action model
 
 Keep physical input state outside the simulation. Sample it once per simulation
-step so input order and device type do not change the rules.
-
-```js
-const actions = {
-  moveX: 0, moveY: 0,
-  primary: { down: false, pressed: false },
-  secondary: { down: false, pressed: false },
-  pause: { pressed: false },
-};
-
-function press(action, down) {
-  const state = actions[action];
-  if (!state) return;
-  if (down && !state.down) state.pressed = true;
-  state.down = down;
-}
-
-function sampleActions() {
-  const frame = {
-    moveX: actions.moveX,
-    moveY: actions.moveY,
-    primaryDown: actions.primary.down,
-    primaryPressed: actions.primary.pressed,
-    secondaryPressed: actions.secondary.pressed,
-    pausePressed: actions.pause.pressed,
-  };
-  actions.primary.pressed = false;
-  actions.secondary.pressed = false;
-  actions.pause.pressed = false;
-  return frame;
-}
-```
+step so input order and device type do not change the rules. The installed kit
+provides `axis`, `down` and `consume` methods; inspect its declarations and reuse
+that ownership when suitable. For custom bindings, store continuous axis values,
+held state and pending press edges separately. Consume each edge once after
+sampling; retain a held value until its actual source releases. Separate pointer
+IDs and device sources so one release does not cancel another held control.
 
 Normalize movement vectors before applying speed. Keep `pressed` edges separate
 from `down` state so holding a button cannot retrigger menus, jumps, or purchases
@@ -65,25 +39,6 @@ every frame.
 Map keyboard centrally. Prevent browser defaults only for keys that the game
 actually handles, and ignore gameplay keys while a text field or modal owns
 focus.
-
-```js
-const keys = new Set();
-const GAME_KEYS = new Set([
-  'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
-  'KeyA', 'KeyD', 'KeyW', 'KeyS', 'Space', 'KeyE', 'Escape',
-]);
-addEventListener('keydown', (event) => {
-  if (event.target?.matches?.('input, textarea, select, [contenteditable]')) return;
-  if (!GAME_KEYS.has(event.code)) return;
-  keys.add(event.code);
-  event.preventDefault();
-});
-addEventListener('keyup', (event) => {
-  if (!GAME_KEYS.has(event.code)) return;
-  keys.delete(event.code);
-  event.preventDefault();
-});
-```
 
 Combine keyboard and touch bindings deliberately; never let one device's reset
 erase input that another device is still holding.

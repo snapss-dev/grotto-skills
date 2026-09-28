@@ -4,16 +4,19 @@ description: "Improve responsiveness and readable feedback, tune movement or com
 compatibility: "Renderer-independent; respect accessibility settings and the creator budget."
 license: MIT
 metadata:
-  version: "1.0.0"
+  display_name: "Game feel and feedback"
+  category: game-development
+  stage: polish
+  outcome: "Responsive actions and readable effects that fit the intended style."
+  version: "1.0.1"
   author: "Grotto"
   hermes:
     tags: [feel, juice, polish, hitstop, screenshake, feedback, responsive, satisfying]
-    related_skills: [grotto-game-runtime-developer-sdk]
+    related_skills: [grotto-game-audio, grotto-game-playtest]
 ---
 
 # Game Feel Juice
 
-Improve responsiveness and readable feedback, tune movement or combat, and fit effects and audio to the intended experience.
 
 Start from the creator's intended experience and the installed game. Keep working mechanics, engine, art direction and save identity unless the requested change needs to alter them. Use the reference that resolves the current decision; a small change does not need every guide.
 

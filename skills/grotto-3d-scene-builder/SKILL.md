@@ -4,16 +4,19 @@ description: "Build or improve a Three.js game, place animated GLB models, conne
 compatibility: "Studio Three.js/Grotto3D foundation; Blender and model loading depend on the installed revision and available tools."
 license: MIT
 metadata:
-  version: "1.0.0"
+  display_name: "Three.js worlds"
+  category: game-development
+  stage: build
+  outcome: "A readable 3D world with coherent cameras, collision and model placement."
+  version: "1.1.1"
   author: "Grotto"
   hermes:
-    tags: [3d, threejs, three, glb, rapier, mesh, low-poly, webgl]
-    related_skills: [grotto-game-runtime-developer-sdk]
+    tags: [3d, threejs, three, glb, rapier, mesh, low-poly]
+    related_skills: [grotto-game-architecture, grotto-game-art-direction]
 ---
 
 # 3D Scene Builder
 
-Build or improve a Three.js game, place animated GLB models, connect physics, or diagnose rendering cost.
 
 Start from the creator's intended experience and the installed game. Keep working mechanics, engine, art direction and save identity unless the requested change needs to alter them. Use the reference that resolves the current decision; a small change does not need every guide.
 

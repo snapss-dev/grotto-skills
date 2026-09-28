@@ -2,11 +2,15 @@
 
 ## Autosave integration
 
-Preserve Studio's installed autosave helper. When implementing a custom integration, run this setup in a background task after local input and rendering have started. Use autosave for games with progress.
+Preserve Studio's installed autosave helper. The current kit owns `default` for
+best-score state; use a distinct stable slot for authored world/inventory or
+other unrelated state and keep one owner per slot. When implementing a custom
+integration, run setup in a background task after local input and rendering have
+started. Use autosave for games with progress.
 
 ```js
 const autosave = grotto.createAutosave({
-  slot: 'default',
+  slot: 'game-state',
   defaultState: DEFAULT_STATE,
   getState: () => gameState,
   applyState: (state) => {

@@ -63,5 +63,93 @@
       "No mandatory shake, music or expensive generation",
       "Recovery and rapid input remain correct"
     ]
+  },
+  {
+    "id": "first-playable",
+    "skill": "grotto-game-production",
+    "request": "Build a short exploratory game about restoring a garden. Start with one useful interaction and keep the first scope finishable. No score or forced ending.",
+    "observe": [
+      "Primary interaction works before broad content is added",
+      "Risks and deferred scope are explicit",
+      "No unrequested score or terminal objective is imposed",
+      "Actual play and recovery are recorded"
+    ]
+  },
+  {
+    "id": "restart-lifecycle",
+    "skill": "grotto-game-architecture",
+    "request": "The scene duplicates enemies after each restart. Fix lifecycle ownership and late model loads.",
+    "observe": [
+      "Entity and update counts stabilize across repeated restart",
+      "A stale pending model cannot enter the new scene",
+      "Gameplay state has one owner",
+      "The normal interaction is preserved"
+    ]
+  },
+  {
+    "id": "learning-route",
+    "skill": "grotto-level-design",
+    "request": "Build a small level that teaches a jump and then combines it with a moving obstacle. Keep every required route reachable on touch.",
+    "observe": [
+      "Teaching uses the real controller",
+      "Required jumps include clearance and actual movement limits",
+      "Challenge develops without an unexplained wall",
+      "A failed attempt has a reachable recovery"
+    ]
+  },
+  {
+    "id": "combat-boundaries",
+    "skill": "grotto-combat-and-enemies",
+    "request": "An enemy hits twice per attack and attacks through a wall. Fix hit resolution and readable sensing.",
+    "observe": [
+      "Damage commits once under repeated contacts",
+      "Wall and range rules govern attack decisions",
+      "Pause, death and restart clear pending hits",
+      "Telegraphs remain readable from the gameplay camera"
+    ]
+  },
+  {
+    "id": "resource-balance",
+    "skill": "grotto-progression-and-balance",
+    "request": "One upgrade dominates and currency gets refunded after a reload. Rebalance the choices and preserve spent resources.",
+    "observe": [
+      "Resource sources and sinks are explicit",
+      "Duplicate awards and spending boundaries are checked",
+      "Save reconciliation cannot refund spent currency",
+      "Representative strategies reveal actual tradeoffs"
+    ]
+  },
+  {
+    "id": "accessible-menu",
+    "skill": "grotto-game-ui-accessibility",
+    "request": "Add a keyboard-accessible pause menu with reduced motion and muted-play alternatives.",
+    "observe": [
+      "Menu owns focus and suspends world input",
+      "Closing restores focus and held actions are released",
+      "Core information remains available when muted or motion is reduced",
+      "Settings work after restart"
+    ]
+  },
+  {
+    "id": "audio-lifecycle",
+    "skill": "grotto-game-audio",
+    "request": "Music doubles after restarting and sounds burst when returning from another tab. Repair startup and playback ownership.",
+    "observe": [
+      "Gesture-gated playback handles actual rejection",
+      "One music owner survives the chosen lifecycle",
+      "Mute before late load is preserved",
+      "Old queued cues do not burst on resume"
+    ]
+  },
+  {
+    "id": "asset-coherence",
+    "skill": "grotto-game-art-direction",
+    "request": "Make a coherent art set for a misty miniature forest, using the available budget and tools.",
+    "observe": [
+      "Representative assets are inspected together at gameplay scale",
+      "Exact returned keys are actually loaded",
+      "Visual and collision ownership are separate",
+      "Generation, inspection and integration are distinguished"
+    ]
   }
 ]

@@ -4,7 +4,7 @@ Drive animation from gameplay state. Movement and collision remain authoritative
 
 Use one clock in seconds. Frame selection for a looping clip is floor(elapsedSeconds * fps) % frameCount; retain the fractional remainder. Reset elapsed time on a real state/clip change, not on every render. Clamp a non-looping action to its final frame and emit its completion once. Do not advance death/attack callbacks once per render while the final frame is held.
 
-Use the renderer's animation system when it already provides this behavior. The [frame clock](../templates/frame-clock.js) is a small renderer-independent reference for a custom Canvas animation, not a replacement for Phaser animation or a GLB mixer.
+Use the renderer's animation system when it already provides this behavior. For custom Canvas animation, own one elapsed-time clock and derive the frame from it; use Phaser animations or a GLB mixer when that renderer already owns clip timing.
 
 For sprite sheets, preserve one origin, ground baseline, display scale and facing convention across clips. Check the actual returned grid; blank frames, inconsistent cell sizes and changing pivots cause jitter that more interpolation will not repair. Flip the visual around its pivot without flipping input or physics.
 

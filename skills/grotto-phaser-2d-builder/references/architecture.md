@@ -6,8 +6,8 @@ need npm install or a model-managed build step: Studio compiles and content-bind
 `styles/game.css`, the protected `platform/grotto-2d.js` kit, then Studio output.
 
 ## Boundaries
-- `index.html`: stable entry, DOM HUD/overlay/touch controls, generated asset scripts.
-- `styles/game.css`: responsive shell, safe areas, accessible DOM presentation.
+- `index.html`: engine entry and `#game-root`; author menus/HUD/touch controls and add generated asset scripts as needed.
+- `styles/game.css`: minimal surface sizing; author responsive layout, safe areas and accessible presentation.
 - `platform/grotto-2d.js`: protected pinned Phaser loader plus input/runtime helpers.
 - `src/types/grotto.d.ts`: protected structural engine/runtime declarations.
 - `src/game.ts` and optional `src/**/*.ts`: scenes, simulation, content, camera, physics and effects.
@@ -15,13 +15,15 @@ need npm install or a model-managed build step: Studio compiles and content-bind
 - Split larger games with static relative TypeScript imports/exports inside `src/`; Studio bundles them without npm or an authored build step.
 - For a legitimate Phaser API outside the installed structural declarations, add a precise authored interface in `src/types/game.d.ts` and narrow `unknown`; do not replace the protected declarations or use `any`.
 
-Keep serializable rules outside sprites. Phaser objects are disposable views. Prefer
-Boot/Preload, Menu and Play scenes; add overlay/debug scenes only when useful.
+Keep serializable rules outside sprites. Phaser objects are disposable views. Choose
+scene boundaries for the requested experience. A single scene may suffice; use
+loading, menu or overlay scenes when they have an actual purpose. New source
+contains no game scene, controller, objective or artwork to preserve.
 
 ## Platform API
 - `Grotto2D.boot(({ Phaser, kit }) => ({ title, config }))` starts the engine.
 - `kit.bindActions(scene, actions)` maps keyboard and multi-pointer DOM controls.
-- `kit.setHud`, `showOverlay`, `recordScore`, `submitScore`, `playTone` wire UX/runtime.
+- `kit.setHud`, `showOverlay`, `recordScore`, `submitScore`, `playTone` are optional UX/runtime capabilities. Author the corresponding DOM before using DOM helpers; the minimal entry has no HUD, overlay or touch buttons. Add scores only when the game has a scoring mechanic.
 - `kit.makeTexture` makes deterministic procedural fallback art.
 - `kit.loadGeneratedImage(scene, textureKey, assetKey)` maps generated data URLs.
 
@@ -33,3 +35,10 @@ Use Arcade Physics for ordinary 2D collision and movement. Use camera follow/bou
 groups/pools, tweens and particles rather than recreating those systems. Still follow
 the creator: a puzzle may need no physics; a bespoke shader toy may justify another
 renderer. Existing games keep their current engine unless migration is requested.
+
+The boot factory returns the authored `config`, including scene definitions and
+optional physics, camera/scaling and renderer choices. The pinned kit defaults
+are overridable through that configuration. Keep `parent: 'game-root'`, one boot
+and the platform's runtime observation. A sprite-based action game, direct-touch
+puzzle and drawing toy need different scenes and input, so do not infer their
+rules or visuals from the boot defaults.

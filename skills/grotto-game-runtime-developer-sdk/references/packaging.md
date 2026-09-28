@@ -1,4 +1,4 @@
-# Reviewing packaging, security or a complete integration example
+# Reviewing packaging, security and integration requirements
 
 ## Packaging checklist
 
@@ -68,7 +68,7 @@ Bad: only cloud save, so network failure loses progress.
 
 Good: SDK/local save immediately, cloud flush after.
 
-## Integration examples
+## Integration references
 
 Preserve the installed Studio runtime helpers. For custom integration, use
 [saves and scores](saves-and-scores.md) and [identity and boot](identity-and-boot.md).
