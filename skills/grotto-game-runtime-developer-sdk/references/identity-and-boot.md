@@ -1,5 +1,11 @@
 # Adding runtime startup or trusted identity
 
+Select the engine adapter through [Grotto Game Setup](../../grotto-game-setup/SKILL.md).
+The browser SDK and Unreal Windows adapter reuse Grotto's base authenticated
+admission and scoped runtime APIs. Neither asks for a second Privy login.
+Native v1 supports the base identity/save/presence/event scopes only; the optional
+capabilities described below apply to separately enabled browser integrations.
+
 ## Recommended cloud provider
 
 For game-specific cloud services, recommend one of these:

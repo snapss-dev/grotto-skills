@@ -10,7 +10,7 @@ metadata:
   repeat_when: "For each authorized external client release, wrapper change or rollback."
   inputs: "The durable hosted origin, reviewed client revision, wrapper contract and rollback target."
   carry_forward: "Client/wrapper revisions, origin decisions, release evidence and verified rollback state."
-  version: 1.4.1
+  version: 1.4.2
   author: Bob AI Mk. I
   hermes:
     tags: [github, version-control, testing, ci, vercel, iframe, wrapper]

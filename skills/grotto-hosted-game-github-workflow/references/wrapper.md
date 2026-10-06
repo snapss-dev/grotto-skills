@@ -1,5 +1,12 @@
 # Building or reviewing the hosted client and wrapper
 
+Select the engine adapter with [Grotto Game Setup](../../grotto-game-setup/SKILL.md).
+This guide is the browser-wrapper branch of that setup, using the existing
+Runtime SDK handshake. Unreal Windows uses private Desktop IPC instead of a
+wrapper. Base browser SSO is not limited to founding creators: the existing
+founder/selected-game policy only permits additional credential recipients in
+nested frames. Keep that policy and its exact origin/window checks intact.
+
 ## Pattern
 
 1. Real game client lives in GitHub.

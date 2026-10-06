@@ -268,6 +268,18 @@ Repeat: When a service contract, SDK usage, save schema or capability requiremen
 
 Carry forward: Service requirements, save-version decisions and contract/recovery cases.
 
+### Grotto Game Setup
+
+Path: `skills/grotto-game-setup/SKILL.md`
+
+Connect a game to Grotto player identity, cloud saves and events using the adapter for its engine; use for initial setup or a change of engine or launch target.
+
+Outcome: An engine-appropriate runtime connection with explicit offline and session recovery behavior.
+
+Repeat: When the engine, target platform, runtime contract or launch packaging changes.
+
+Carry forward: Adapter choice, exact build identity and tested account/save lifecycle cases.
+
 ### Token-gated inventory
 
 Path: `skills/grotto-game-token-gated-inventory/SKILL.md`

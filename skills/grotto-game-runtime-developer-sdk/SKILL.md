@@ -10,7 +10,7 @@ metadata:
   repeat_when: "When a service contract, SDK usage, save schema or capability requirement changes."
   inputs: "The installed runtime, required services and prior identity/save scenarios."
   carry_forward: "Service requirements, save-version decisions and contract/recovery cases."
-  version: 1.10.1
+  version: 1.11.2
   author: Bob AI Mk. I
   hermes:
     tags: [progress, autosave, save, saves, score, leaderboard, runtime-sdk, cloud-saves, leaderboards, auth, multiplayer]
@@ -19,22 +19,24 @@ metadata:
 
 # Runtime SDK
 
+Select the browser or Unreal Windows adapter with
+[Grotto Game Setup](../grotto-game-setup/SKILL.md).
 
-Reuse installed helpers; boot, input and animation must not wait for network readiness. Trust host sessions, never client-supplied identity. Keep wallet snapshots private and immutable. Use version-aware saves and preserve local progress during late hydration. Missing scopes or expired sessions grant no access. Consume multiplayer tickets once; public room routing grants no authority.
+Reuse installed helpers and start gameplay before network readiness. Trust host sessions; keep wallet snapshots private and immutable. Use version-aware saves without losing local progress. Enforce scopes and expiry. Consume multiplayer tickets once; room routing grants no authority.
 
 Read only the reference needed for the current decision:
 
 | When | Read |
 | --- | --- |
-| Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
-| Finding installed engine, input and asset capabilities | [studio-capabilities](references/studio-capabilities.md) |
-| Adding runtime startup or trusted identity | [identity-and-boot](references/identity-and-boot.md) |
-| Implementing autosave, migration, save conflicts or leaderboards | [saves-and-scores](references/saves-and-scores.md) |
-| Using inventory, events, presence or multiplayer tickets | [capabilities](references/capabilities.md) |
-| Integrating standalone fallback or a hosted wrapper | [hosting](references/hosting.md) |
-| Looking up raw API behavior or diagnosing runtime errors | [api-and-errors](references/api-and-errors.md) |
-| Reviewing packaging, security or integration requirements | [packaging](references/packaging.md) |
+| Planning the next pass | [repeatable workflow](references/workflow.md) |
+| Engine, input and asset capabilities | [studio-capabilities](references/studio-capabilities.md) |
+| Camera/controls, React UI, resource ownership and pause/restart | [control and lifecycle foundations](references/control-foundations.md) |
+| Startup and trusted identity | [identity-and-boot](references/identity-and-boot.md) |
+| Autosave, migration, conflicts or leaderboards | [saves-and-scores](references/saves-and-scores.md) |
+| Inventory, events, presence or multiplayer | [capabilities](references/capabilities.md) |
+| Standalone fallback or hosted wrappers | [hosting](references/hosting.md) |
+| Raw API and runtime errors | [api-and-errors](references/api-and-errors.md) |
+| Packaging, security and integration | [packaging](references/packaging.md) |
 
-In Studio, use read_skill {name, resource} for linked references. Read only what
-this pass needs; follow nextOffset if truncated. Reading does not authorize a
-build or publication.
+In Studio, read needed pages with read_skill {name, resource}; follow nextOffset
+if truncated. Reads do not authorize builds or publication.
