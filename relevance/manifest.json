@@ -3,7 +3,7 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "24ddf49d1d4d1dad178011bbb168086a19fa7a6fcc6e83d31b50d63bd6d1187e",
+  "revision": "4ed489885b9cbd9b101ba36f82e46f706ca0d425456f532bbf9143386d4af529",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
@@ -516,9 +516,9 @@
       "name": "grotto-game-setup",
       "path": "skills/grotto-game-setup/SKILL.md",
       "version": "0.1.0",
-      "revision": "d7519d204894ae357848593f6f8f93c7e230fa2b0089677c98ed6dd4cd28cb53",
+      "revision": "c1e383599992c57bb9b6a2c7e73c1b4d906e24a51a9eb3e5e338793d7b770d42",
       "resources": {
-        "references/unreal-windows.md": "sha256:e3ff763dc158a88a2fb3e208d1ab1c9767b15986db2df916e0f57812bca1a3ee",
+        "references/unreal-windows.md": "sha256:c6967f52ff0109b23ce2ac160ba11058c81bd81a494671101bb8228aaf7a2196",
         "references/workflow.md": "sha256:dac6d39b3fd2946360f38671081e766072a2883f08a301e757502f1fb2e41249",
         "SKILL.md": "sha256:0401688c26e375e0254756a8061792edb1177b2ab00d704b0e39460b08379417"
       },

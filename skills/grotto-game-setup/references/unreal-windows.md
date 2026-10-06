@@ -4,6 +4,11 @@ This adapter is a Windows Unreal beta. Use a Desktop release containing the
 `grotto-native-v1` launcher adapter and a Platform deployment containing the native
 runtime routes. Source availability and compilation do not establish a live
 release. The game's exact archive still needs Distribution scanning and approval.
+Use one approved canonical Platform game ID in both services: runtime admission
+and downloads recheck Platform entitlements. A standalone Desktop submission ID
+without its canonical Platform game cannot authenticate. For the initial beta,
+the existing authorized operator attaches the test archive to its approved,
+test-owned Platform game; no new account grant or publication bypass is needed.
 
 The bundled `assets/unreal/GrottoRuntime` is a Windows x64 runtime C++ plugin.
 Copy that folder into `<Project>/Plugins/`, enable GrottoRuntime in the `.uproject`,
@@ -94,7 +99,9 @@ Shipping builds with logs disabled and Desktop's empty-argument launch path;
 never put credentials in fixture config. Scenario config is test-only.
 For an authorized signed-in acceptance run, set the public `GameId`,
 `ExpectedPlayerId` and a fresh `SaveSlot` in the same fixture section before
-packaging. `GameId` must be the server-assigned test game ID; `ExpectedPlayerId`
+packaging, or in the packaged game's normal Windows user `Game.ini` before
+launch. Keep this config outside the verified install tree. `GameId` must be
+the same approved canonical test game ID in Platform and Distribution; `ExpectedPlayerId`
 only checks the resulting public player identity and grants no access. A fresh
 slot keeps repeat tests from overwriting existing progress. Keep
 `Scenario=authenticated`, so an offline fallback fails authenticated acceptance.
