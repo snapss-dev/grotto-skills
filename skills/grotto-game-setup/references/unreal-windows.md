@@ -1,5 +1,10 @@
 # Unreal Windows adapter
 
+This adapter is a Windows Unreal beta. Use a Desktop release containing the
+`grotto-native-v1` launcher adapter and a Platform deployment containing the native
+runtime routes. Source availability and compilation do not establish a live
+release. The game's exact archive still needs Distribution scanning and approval.
+
 The bundled `assets/unreal/GrottoRuntime` is a Windows x64 runtime C++ plugin.
 Copy that folder into `<Project>/Plugins/`, enable GrottoRuntime in the `.uproject`,
 and add `GrottoRuntime` to a C++ game module's dependencies. Build with the
