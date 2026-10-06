@@ -1,0 +1,11 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1.0",
+  "FriendlyName": "Grotto Runtime",
+  "Description": "Windows scoped runtime admission, player identity, saves and events.",
+  "Category": "Online",
+  "CanContainContent": false,
+  "SupportedTargetPlatforms": ["Win64"],
+  "Modules": [{ "Name": "GrottoRuntime", "Type": "Runtime", "LoadingPhase": "Default", "PlatformAllowList": ["Win64"] }]
+}

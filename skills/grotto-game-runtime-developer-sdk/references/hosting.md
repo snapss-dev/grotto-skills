@@ -1,5 +1,9 @@
 # Integrating standalone fallback or a hosted wrapper
 
+Use [Grotto Game Setup](../../grotto-game-setup/SKILL.md) to select an adapter.
+This page describes the browser transport. Unreal Windows receives the same
+base runtime authority through Desktop's private launch handoff instead.
+
 ## Local fallback for development
 
 During local development, your game may not be embedded in The Grotto player. Provide fallback saves:
@@ -47,6 +51,13 @@ window.parent.postMessage({ type: 'grotto:runtime:hello' }, '*');
 ```
 
 Creators using the SDK do not need to implement this manually.
+
+This base handshake is available to games through the player's validated frame
+boundary. The existing founder/selected-game descendant exception only affects
+which nested frames can receive the session. Legacy `bobert:hello` compatibility
+also returns the same scoped `grs_*` credential with `tokenType: grotto-runtime`.
+Neither grants a platform bearer or wallet authority. Preserve the recipient
+policy; a wrapper does not enable the exception for another game.
 
 Optional `inventory:read` and `multiplayer:join` scopes appear only for games explicitly enabled by
 the platform operator.

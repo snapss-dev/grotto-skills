@@ -1,0 +1,6 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.8",
+  "Modules": [{ "Name": "GrottoContract", "Type": "Runtime", "LoadingPhase": "Default" }],
+  "Plugins": [{ "Name": "GrottoRuntime", "Enabled": true }]
+}
