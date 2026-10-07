@@ -3,7 +3,7 @@
 ## Caching and revocation
 
 - Runtime inventory reads require complete 500-item pagination with non-negative safe-integer
-  ERC-1155 and ERC-721 totals. Missing totals, provider errors, exceeding
+  ERC-20, ERC-1155 and ERC-721 totals. Missing totals, provider errors, exceeding
   `GAME_RUNTIME_INVENTORY_MAX_PAGES` (default 20, clamped to 1-100) for a wallet, an invalid/missing
   wallet snapshot, or more than 50 snapshotted wallets fail the whole request with generic
   `503 RUNTIME_INVENTORY_UNAVAILABLE`.

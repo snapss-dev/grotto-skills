@@ -27,6 +27,8 @@ also receive inventory access on rehydration.
 
 The platform returns holdings across all indexed contracts in the verified launch snapshot.
 Match the returned contract addresses and token IDs against your game's entitlement definitions.
+For ERC20 holdings, match `standard: 'ERC20'` and the contract address; `tokenId` is `null`.
+Reading a token balance does not require token-to-game linking.
 The former inventory enablement and contract-filter settings are ignored, including empty or
 malformed values. Runtime authentication, verified-wallet snapshots and complete inventory reads
 remain required.
@@ -84,3 +86,25 @@ Balances are canonical, exact, additive base-unit decimal strings. Parse and add
 are already aggregated across the verified launch snapshot. Wallet addresses used during
 resolution are not returned. The game selects relevant holdings using its own contract/token
 definitions.
+
+ERC20 holdings also include `decimals` (integer or `null` when unknown) and `symbol` (string or
+`null`). Their `classification` is `token`; `resource` may contain the token name. For example,
+one $HOPE is represented as:
+
+```json
+{
+  "standard": "ERC20",
+  "contractAddress": "0x3bcbfa30d64ec6f844c2575fedd625fe6d083fce",
+  "tokenId": null,
+  "balance": "1000000000000000000",
+  "decimals": 18,
+  "symbol": "HOPE",
+  "classification": "token",
+  "resource": { "id": null, "name": "Hope", "image": null }
+}
+```
+
+The response covers ERC20 contracts tracked by the platform indexer, alongside ERC1155 and
+ERC721 holdings. Native HERESY is not an ERC20 holding. Unknown decimals must not silently
+default to 18. `summary.totalBalance` is the sum of heterogeneous raw units, not a meaningful
+currency total; evaluate each contract separately. See [gates](gates.md) for an ERC20 threshold.

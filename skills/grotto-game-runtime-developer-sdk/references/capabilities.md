@@ -36,7 +36,7 @@ scope list as the source of truth for optional multiplayer.
 
 ## Advanced: token-gated inventory
 
-For NFT/ERC1155/ERC721/game-pass/asset ownership checks over the verified launch snapshot,
+For ERC20 balances and NFT/ERC1155/ERC721/game-pass/asset ownership checks over the verified launch snapshot,
 token-gated skins, and server-authoritative entitlement patterns, use:
 
 ```text
@@ -50,6 +50,11 @@ fail-closed entitlement patterns. Use:
 ```js
 const inventory = await grotto.getInventory();
 ```
+
+ERC20 holdings use `standard: 'ERC20'`, `tokenId: null`, an exact base-unit `balance`,
+and `decimals`/`symbol` metadata. Match by standard and contract address. Missing decimals
+are `null`; use known token decimals for a threshold instead of assuming 18. The inventory
+skill includes a $HOPE example. Token-to-game linking is not required to read a holding.
 
 Do not select a wallet in browser code or call the deprecated public wallet inventory route for
 authorization decisions.
