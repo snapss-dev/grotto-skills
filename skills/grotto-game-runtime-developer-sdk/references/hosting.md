@@ -59,8 +59,8 @@ also returns the same scoped `grs_*` credential with `tokenType: grotto-runtime`
 Neither grants a platform bearer or wallet authority. Preserve the recipient
 policy; a wrapper does not enable the exception for another game.
 
-Optional `inventory:read` and `multiplayer:join` scopes appear only for games explicitly enabled by
-the platform operator.
+Every authenticated game runtime includes `inventory:read` without operator setup.
+`multiplayer:join` remains optional and requires platform enablement for the exact game ID.
 
 ## Advanced: GitHub-hosted game client workflow
 

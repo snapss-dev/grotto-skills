@@ -3,7 +3,7 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "4ed489885b9cbd9b101ba36f82e46f706ca0d425456f532bbf9143386d4af529",
+  "revision": "5e3b459bb4f2faf803be5b4a5d0368ea28a490d28f078642ecb74696f114ff8b",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
@@ -461,20 +461,20 @@
     {
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
-      "version": "1.11.2",
-      "revision": "6f84623094ded535199740ad5b1d5c554b75b9168f4731452a147059d74e900b",
+      "version": "1.12.0",
+      "revision": "a61b141081e133133d66ecfdd51c11cf91e77b00a53d3e0c6d0ed87f90c1c4dd",
       "resources": {
         "references/api-and-errors.md": "sha256:26fc0200b847399b57db0c5223304c49a9b8955faccbc2203682adbcbf712a24",
-        "references/capabilities.md": "sha256:d85f6bd0608d3d3928d8a5b9f20ee911a551717dd17d9d500fd9600ed6a4354f",
+        "references/capabilities.md": "sha256:c2af9a8d19269d306dba73291ecf4d0397e46e2bd11cf2a257885383f675c819",
         "references/control-foundations.md": "sha256:4cec87e9d418e7b3e66492cf25dd977cce83b7b7f348cc5a368947f9006c26bf",
-        "references/hosting.md": "sha256:f64094bad55188d7e1e96434ddc3891d815d7723a1b8d67c49f89c837f366a99",
-        "references/identity-and-boot.md": "sha256:9b017bc799c30f37dfc3dd6c42f0fa94291326f5227d9b819c891c0a5d731cd3",
-        "references/packaging.md": "sha256:6e1543f9eb65f1caf5657015ff6968bdd5383eb17e4220f3d3e6f274a80481e8",
+        "references/hosting.md": "sha256:30317bf84f971d70732f6c88dea960aaacb17bc08c5d5784c40b3e3460f7b301",
+        "references/identity-and-boot.md": "sha256:bf8fd5e8b94625e5ce7785a05161844fb40b1e81eebaac5d92465da1d2508325",
+        "references/packaging.md": "sha256:8ddff4bbb7cf5ab70578bb910976e7e2dd3ea8c30d83beaf60e10530a0272069",
         "references/saves-and-scores.md": "sha256:9604d085dc69de659d83abd9acbea96aa4de7699769ac43e607038571ad93e0d",
-        "references/sdk-contract.md": "sha256:57391fee20ef0162e2ceccf270f501b46957fdea79408a03887cd07c93e2a7ac",
+        "references/sdk-contract.md": "sha256:dd3d23eab5d9cca39811af1186ebb45420947177ee29390de8b9b0313e1d0bed",
         "references/studio-capabilities.md": "sha256:3d18f565e7c2249dbe01a3bbd830f825d02648ca8a73fa7fe168dd7c848986d0",
         "references/workflow.md": "sha256:446415cf006d18ade18846b89b7378d9741284863ecb2508cb21b36aba50c9c7",
-        "SKILL.md": "sha256:bab370dc1b04a01b4951deaa028ae1aded4037b0611bb6f2cf4a349851a5abc4",
+        "SKILL.md": "sha256:836af0698b6d17d4737d4cc39301293c8b1e400f50f6d3fd12cbad8ea719a3d4",
         "templates/minimal-runtime-game.html": "sha256:92b08b80e7930aad0557a74fe006eb0d9bd198ba8c373c9047c8d982f70c23df"
       },
       "summary": "Maintain Grotto identity, saves, scores and capability-scoped services through recurring integration and contract-verification passes.",
@@ -515,12 +515,12 @@
     {
       "name": "grotto-game-setup",
       "path": "skills/grotto-game-setup/SKILL.md",
-      "version": "0.1.0",
-      "revision": "c1e383599992c57bb9b6a2c7e73c1b4d906e24a51a9eb3e5e338793d7b770d42",
+      "version": "0.1.1",
+      "revision": "49ab19e4c9cb87f0e9ff0c8a2320f89138382bee0fca83aed1f78b5f8a64c5f3",
       "resources": {
         "references/unreal-windows.md": "sha256:c6967f52ff0109b23ce2ac160ba11058c81bd81a494671101bb8228aaf7a2196",
-        "references/workflow.md": "sha256:dac6d39b3fd2946360f38671081e766072a2883f08a301e757502f1fb2e41249",
-        "SKILL.md": "sha256:0401688c26e375e0254756a8061792edb1177b2ab00d704b0e39460b08379417"
+        "references/workflow.md": "sha256:10fe201a7495e9dbec0c9d12f751a3a640f4061fa29ceff69e17b28f33bdcbb7",
+        "SKILL.md": "sha256:541da8e489494573bc59ef6a12920f8646e9654aa7b0f3ce3d2f99bbd5db1077"
       },
       "summary": "Connect a game to Grotto player identity, cloud saves and events using the adapter for its engine; use for initial setup or a change of engine or launch target.",
       "inject": "Connect a game to Grotto player identity, cloud saves and events using the adapter for its engine; use for initial setup or a change of engine or launch target.",
@@ -547,14 +547,14 @@
     {
       "name": "grotto-game-token-gated-inventory",
       "path": "skills/grotto-game-token-gated-inventory/SKILL.md",
-      "version": "1.5.1",
-      "revision": "d2247996ca31b53d7133fad1842929c46ddbea3af96b50eda71090ad1f796621",
+      "version": "1.6.0",
+      "revision": "8229b4123739e596d7b492f6bd1164b0934b1af4aac9c74320a4636e2da2f99c",
       "resources": {
-        "references/contract.md": "sha256:e1231ca2a27aaf85fda0e99cca803cfd6e696408920da3623c88fd4f9a7a6d0e",
-        "references/freshness.md": "sha256:aa8c5e038ddb286460d64ab2e9b3d07cdd752dcda300d2180bca1aa78b965d81",
+        "references/contract.md": "sha256:6f80f101856fbf417307afd6064d18b8e60f0155919b6ee8cf87ecfa01260585",
+        "references/freshness.md": "sha256:671df94ae1c91345f37766ab6983a22296699a2dc0c493afbaa7a6a087299eb8",
         "references/gates.md": "sha256:107221808ecd99655a9eafebd165b25e20ea637bed03c4b29c29a1d36216a28c",
-        "references/workflow.md": "sha256:a656d1fcd0c5a1e1d251838ff0a0fd7e1d2e6ea50d43758c04ac97204594a7d4",
-        "SKILL.md": "sha256:e5ccd79a932462211ffc04f0400e4a7387d7456693ac315c7a4a098946dde060"
+        "references/workflow.md": "sha256:a79d85a277c192a8ce8a26c6da88cdb53f61368522f6743a2cf0df45632543bf",
+        "SKILL.md": "sha256:e2db8741676e32a7b81e76acc90d3f9e2b087fadc0b7a206b4c7038911131bf4"
       },
       "summary": "Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change.",
       "inject": "Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change.",
@@ -626,14 +626,14 @@
     {
       "name": "grotto-hosted-game-github-workflow",
       "path": "skills/grotto-hosted-game-github-workflow/SKILL.md",
-      "version": "1.4.2",
-      "revision": "635d8d4821d59e970d91eb46402a349ce0521f384a6da511461e5f9c9cec1462",
+      "version": "1.5.0",
+      "revision": "0a4f72cf690dff5a8f1aab765d8e4c8a8f5ecf1b7f2074ac22f3a15327843094",
       "resources": {
-        "references/capabilities.md": "sha256:f83360aaf0061b18f552bf518bb238a9addacee5fc65a57d13ab15c52c09882b",
+        "references/capabilities.md": "sha256:78317625bfbfa5f2b3e98d51bb917da0e6e86b228932c6ea1ef5a91259394782",
         "references/delivery.md": "sha256:59da22ea2d3784934f9e451470b2e6b0170e29c3ac990b42f7fcea26dd980431",
         "references/workflow.md": "sha256:5498ee4d157c2d14d07baf1d4253d94bf862f9e5002b5b91c3bba0fba6504114",
-        "references/wrapper.md": "sha256:7be6c1698f00ea43eac5dff812285da3119e2cb65bf37b47a02f5d7c56b40419",
-        "SKILL.md": "sha256:2c7b5ab761ba1587688196bcfcf389e5088eaf756afe50816e14d251e1294891"
+        "references/wrapper.md": "sha256:b76dcdee07afb9a1412f3eb392d055d70b06e39692b71a69fc61bf1fbabfe784",
+        "SKILL.md": "sha256:866f9ffad9b9a02797dad4bf34e2277d73afded88f211aa1c72e8239f936c985"
       },
       "summary": "Run recurring release and rollback workflows for explicitly external hosted game clients with a trusted Grotto runtime wrapper.",
       "inject": "Run recurring release and rollback workflows for explicitly external hosted game clients with a trusted Grotto runtime wrapper.",

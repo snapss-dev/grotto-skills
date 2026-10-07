@@ -41,9 +41,9 @@ blocking boot on a sequence of network calls.
 
 The hosted URL must be HTTPS.
 
-Optional inventory and multiplayer APIs are not enabled by the wrapper or client. The exact
-published Grotto game ID must be allowlisted by the platform operator before a newly launched
-runtime session receives `inventory:read` or `multiplayer:join`.
+Inventory is available automatically through every authenticated Grotto runtime session.
+Optional multiplayer still requires the exact published game ID to be allowlisted by the platform
+operator before a newly launched runtime session receives `multiplayer:join`.
 
 ## Grotto wrapper
 

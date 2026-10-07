@@ -31,16 +31,18 @@ When a player opens your game from The Grotto:
    - autosave
    - events/analytics
    - presence
-   - capability-gated, session-scoped inventory
+   - session-scoped inventory
    - short-lived public multiplayer bootstrap tickets
 
 Your game never asks players to paste wallets or sign a second message.
 
-`inventory:read` and `multiplayer:join` are optional platform capabilities, not default scopes. The
-exact game ID must be present in the corresponding server-owned allowlist before a new runtime
-session receives either scope. The platform rechecks this policy when a persisted session is
-rehydrated and whenever either capability is used, so removing an opt-in takes effect without
-trusting an old scope. A browser cannot request or add a scope itself.
+`inventory:read` is a default scope for every authenticated game runtime. No operator approval,
+game allowlist, or contract allowlist is needed. Persisted sessions issued with older scope lists
+also receive inventory access on rehydration.
+
+`multiplayer:join` remains optional and requires the exact game ID in its server-owned allowlist.
+The platform rechecks multiplayer policy on rehydration and use, so removing its opt-in takes
+effect without trusting an old scope. A browser cannot grant itself multiplayer authority.
 
 Runtime sessions have a renewable idle expiry (two hours by default) and an absolute lifetime that
 is hard-capped at 24 hours from launch. Heartbeats, refreshes, service restarts, and database

@@ -370,7 +370,7 @@ syntax, resource hashes, and credential-shaped values. Run npm run generate:read
 - Redact secrets as `[REDACTED]`.
 - Prefer runnable examples and explicit security notes.
 - Keep Grotto identity/session guidance clear: games should not trust wallet/user IDs supplied by client-side code.
-- Treat optional inventory/multiplayer scopes as explicit per-game platform capabilities.
+- Inventory is available to every authenticated runtime without operator setup; multiplayer remains an explicit per-game capability.
 - Treat `roomId=public` as routing only and atomically consume each multiplayer ticket `jti` once.
 
 ## PR watch

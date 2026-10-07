@@ -139,9 +139,11 @@ type GrottoRuntimeGlobal = {
 
 ## Capability invariants
 
-- `inventory:read` and `multiplayer:join` appear only on newly launched sessions for exact game IDs
-  enabled by server-owned policy. That policy is checked again on session rehydration and every
-  capability use, so removing an opt-in takes effect without trusting an old scope.
+- `inventory:read` is available to every authenticated game runtime without operator setup.
+  Persisted sessions with older scope lists also receive it on rehydration. Inventory returns
+  all indexed contracts; the game matches its own contract/token definitions.
+- `multiplayer:join` requires per-game server-owned policy, rechecked on session rehydration and
+  use so removing its opt-in takes effect without trusting an old scope.
 - The canonical-plus-linked verified-wallet snapshot is private and immutable for the session.
 - Heartbeat renews idle expiry but never the hard 24-hour absolute lifetime.
 - `getInventory()` returns exact decimal strings and fails unless pagination is complete.

@@ -23,8 +23,7 @@
 
 - [ ] Use `grotto.getInventory()` rather than a wallet-selected inventory URL.
 - [ ] Require `inventory:read` on the runtime session.
-- [ ] Confirm the exact game ID is in `GAME_RUNTIME_INVENTORY_GAME_IDS`.
-- [ ] Configure `GAME_RUNTIME_INVENTORY_CONTRACTS_JSON` when the game should see only approved contracts.
+- [ ] Match returned holdings to the game's contract/token definitions; inventory needs no operator setup.
 - [ ] Treat the launch-time wallet snapshot as immutable and require relaunch after account changes.
 - [ ] Treat balances as `BigInt` decimal strings.
 - [ ] Require complete pagination and fail closed for partial, unproven, or unavailable inventory.
