@@ -23,16 +23,16 @@ Example response:
     "displayName": "@snaps",
     "avatar": "https://..."
   },
-  "scopes": ["identity:read", "save:read", "save:write", "presence:write", "events:write"],
+  "scopes": ["identity:read", "inventory:read", "save:read", "save:write", "presence:write", "events:write"],
   "expiresAt": "2026-04-25T16:00:00.000Z"
 }
 ```
 
 Use this for display and personalization. For authoritative progression, still store state through `grotto.save()`.
 
-If platform operators enable inventory or multiplayer for this exact game ID, the corresponding
-`inventory:read` or `multiplayer:join` scope also appears. Treat the received scope list as the
-source of truth; do not assume optional capabilities exist.
+Every authenticated game runtime includes `inventory:read` automatically. `multiplayer:join`
+appears only when platform operators enable multiplayer for the exact game ID. Treat the received
+scope list as the source of truth for optional multiplayer.
 
 ## Advanced: token-gated inventory
 
@@ -60,10 +60,9 @@ request when completeness, the wallet snapshot, or the provider is unavailable. 
 not serve stale-while-refresh; default source staleness is bounded to 45 seconds. `checkedAt` is
 response time, not guaranteed chain-read time.
 
-Before publishing an inventory-enabled game, coordinate the exact Grotto game ID with the platform
-operator. It must be present in `GAME_RUNTIME_INVENTORY_GAME_IDS`. Operators may also restrict the
-response to approved contracts with `GAME_RUNTIME_INVENTORY_CONTRACTS_JSON`; an empty contract list
-returns no holdings. Missing or malformed capability policy fails closed.
+Inventory requires no operator setup or game/contract allowlist. Call `grotto.getInventory()`
+from the authenticated runtime and match returned holdings against your game's contract/token
+definitions. The former inventory enablement and contract-filter settings are ignored.
 
 ## Events
 

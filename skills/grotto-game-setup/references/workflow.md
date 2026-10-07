@@ -5,7 +5,8 @@ and creates a scoped `grs_*` runtime session. Browser games receive it through
 `grotto:runtime:hello` / `grotto:runtime`; Unreal Windows exchanges Desktop's
 private single-use launch ticket for the same runtime authority. Neither adapter
 adds a Privy login or wallet-signing step. Native v1 uses only identity, saves,
-presence and events; browser inventory and multiplayer opt-ins remain separate.
+presence and events. Inventory is a default authenticated runtime scope without
+operator setup; optional multiplayer authorization remains separate.
 
 For browser wrappers, preserve the existing credential-recipient checks. The
 founder/selected-game descendant exception and legacy `bobert:hello` reply are

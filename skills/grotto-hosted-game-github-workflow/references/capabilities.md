@@ -1,21 +1,21 @@
-# Enabling inventory or authorizing multiplayer
+# Reading inventory or authorizing multiplayer
 
 ## Runtime capability rollout
 
-Coordinate these server-owned settings with the Grotto platform operator after the final game ID
-is known:
+Every authenticated game runtime includes `inventory:read` automatically. No game or contract
+allowlist is needed. Call `grotto.getInventory()` and match its holdings to your game's contract/token
+definitions. Persisted sessions with older scope lists receive inventory access on rehydration.
+
+For multiplayer, coordinate this server-owned setting with the Grotto platform operator after the
+final game ID is known:
 
 ```dotenv
-GAME_RUNTIME_INVENTORY_GAME_IDS=game-123
 GAME_RUNTIME_MULTIPLAYER_GAME_IDS=game-123
-GAME_RUNTIME_INVENTORY_CONTRACTS_JSON={"game-123":["0x1234567890abcdef1234567890abcdef12345678"]}
 ```
 
-The capability lists are exact, comma-separated game IDs. Inventory contract policy is optional;
-when a game has a mapping, only those contracts are returned, and an empty array returns none.
-Malformed policy fails closed. Policy is rechecked when a persisted session is rehydrated and on
-every capability use, so removing an opt-in takes effect without trusting an old scope. A client
-cannot mint either optional scope or select a contract.
+The multiplayer list contains exact, comma-separated game IDs. Malformed multiplayer policy fails
+closed. It is rechecked on rehydration and use, so removing an opt-in takes effect without trusting
+an old scope. A client cannot grant itself multiplayer authority.
 
 At launch, Grotto privately snapshots the canonical wallet plus all verified linked EVM wallets.
 That authority is immutable for the session and never appears in runtime responses. Linking or
@@ -26,7 +26,7 @@ absolute lifetime.
 Runtime inventory returns exact decimal-string balances aggregated with `BigInt` across the launch
 snapshot. Require complete 500-item pagination and `partial === false`; do not round balances
 through `Number`. Strict reads fail closed on missing/invalid snapshots, provider errors, unproven
-pagination, page/wallet ceilings, or unavailable capability. They do not serve stale-while-refresh.
+pagination, page/wallet ceilings, or unavailable runtime authentication. They do not serve stale-while-refresh.
 The default source-staleness bound is 45 seconds (15-second indexer freshness plus 30-second
 classified cache), and `checkedAt` is response time rather than chain-read time.
 

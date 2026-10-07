@@ -10,7 +10,7 @@ metadata:
   repeat_when: "When gated content, entitlement rules, caching or platform inventory contracts change."
   inputs: "The exact game capability, entitlement rules and prior granted/denied/partial-read cases."
   carry_forward: "Non-secret gate definitions, freshness rules and reproducible entitlement test cases."
-  version: 1.5.1
+  version: 1.6.0
   author: Bob AI Mk. I
   hermes:
     tags: [token-gating, inventory, indexer, nft, erc1155, erc721, runtime-sdk]
@@ -20,7 +20,7 @@ metadata:
 # Grotto Game Token-Gated Inventory
 
 
-Only the platform grants inventory:read for an exact game. Use its immutable verified-wallet session snapshot and exact decimal-string balances. Missing scope, failed or partial reads grant no gated entitlement; free/default content remains available. The client can reflect cosmetics; valuable rewards require server authority.
+Every authenticated game runtime receives inventory:read automatically, with no operator setup. Use its immutable verified-wallet session snapshot and exact decimal-string balances. Missing scope, failed or partial reads grant no gated entitlement; free/default content remains available. The client can reflect cosmetics; valuable rewards require server authority.
 
 Read only the reference needed for the current decision:
 

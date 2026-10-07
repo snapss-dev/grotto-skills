@@ -18,7 +18,7 @@ mark missing evidence explicitly.
 
 ## Run the cycle
 
-1. Review the exact game’s inventory:read grant and gate definition. The platform owns capability grants and the immutable verified-wallet session snapshot. Keep free/default content separate from gated entitlement.
+1. Review the game's contract/token gate definition. Every authenticated runtime has inventory:read without operator setup. The platform owns the immutable verified-wallet session snapshot. Keep free/default content separate from gated entitlement.
 
 2. Define normal, missing-scope, expired-session, partial-read and revocation cases for the changed gate. Use exact decimal-string balances; distinguish cosmetic presentation from valuable server-authoritative rewards.
 

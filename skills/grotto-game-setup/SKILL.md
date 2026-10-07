@@ -10,7 +10,7 @@ metadata:
   repeat_when: "When the engine, target platform, runtime contract or launch packaging changes."
   inputs: "Engine, platform, canonical Grotto game ID, release archive and existing save schema."
   carry_forward: "Adapter choice, exact build identity and tested account/save lifecycle cases."
-  version: 0.1.0
+  version: 0.1.1
   author: The Grotto
   hermes:
     tags: [grotto, setup, unreal, windows, identity, runtime-sdk, cloud-saves, native]

@@ -21,20 +21,15 @@ absolute lifetime.
 
 ## Platform capability policy
 
-`inventory:read` is not a default runtime scope. Before publishing, coordinate the exact Grotto
-game ID with the platform operator:
+`inventory:read` is a default scope for every authenticated game runtime. No operator approval,
+game allowlist, or contract allowlist is needed. Persisted sessions issued with older scope lists
+also receive inventory access on rehydration.
 
-```dotenv
-GAME_RUNTIME_INVENTORY_GAME_IDS=game-123
-GAME_RUNTIME_INVENTORY_CONTRACTS_JSON={"game-123":["0x1234567890abcdef1234567890abcdef12345678"]}
-```
-
-The first variable is a comma-separated allowlist. The second is optional and maps a game ID to the
-only contracts its runtime inventory may return. Omitting a mapping permits all indexed contracts
-for an allowlisted game; an empty array permits none. A browser cannot select or expand this policy.
-Missing or malformed policy fails closed, and a new session without the opt-in does not receive
-`inventory:read`. The platform rechecks the policy when a persisted session is rehydrated and when
-inventory is used, so removing an opt-in takes effect without trusting an old scope.
+The platform returns holdings across all indexed contracts in the verified launch snapshot.
+Match the returned contract addresses and token IDs against your game's entitlement definitions.
+The former inventory enablement and contract-filter settings are ignored, including empty or
+malformed values. Runtime authentication, verified-wallet snapshots and complete inventory reads
+remain required.
 
 ## Runtime API
 
@@ -87,5 +82,5 @@ Example response:
 Balances are canonical, exact, additive base-unit decimal strings. Parse and add them with
 `BigInt`, never `Number`, `parseInt`, or floating point. Holdings for the same contract and token
 are already aggregated across the verified launch snapshot. Wallet addresses used during
-resolution are not returned. Per-game contract filtering may intentionally omit unrelated indexed
-holdings.
+resolution are not returned. The game selects relevant holdings using its own contract/token
+definitions.

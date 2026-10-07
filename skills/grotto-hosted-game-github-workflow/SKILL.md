@@ -10,7 +10,7 @@ metadata:
   repeat_when: "For each authorized external client release, wrapper change or rollback."
   inputs: "The durable hosted origin, reviewed client revision, wrapper contract and rollback target."
   carry_forward: "Client/wrapper revisions, origin decisions, release evidence and verified rollback state."
-  version: 1.4.2
+  version: 1.5.0
   author: Bob AI Mk. I
   hermes:
     tags: [github, version-control, testing, ci, vercel, iframe, wrapper]
@@ -20,7 +20,7 @@ metadata:
 # Grotto Hosted Game GitHub Workflow
 
 
-Use only when the creator requests external hosting and has a durable domain. Ordinary Studio builds stay packaged in Studio. Forward runtime messages only from the trusted parent to the known hosted origin. Per-game capabilities and multiplayer authorization remain server-owned.
+Use only when the creator requests external hosting and has a durable domain. Ordinary Studio builds stay packaged in Studio. Forward runtime messages only from the trusted parent to the known hosted origin. Inventory is available automatically through the authenticated runtime. Multiplayer authorization remains server-owned.
 
 Read only the reference needed for the current decision:
 
@@ -28,7 +28,7 @@ Read only the reference needed for the current decision:
 | --- | --- |
 | Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Building or reviewing the hosted client and wrapper | [wrapper](references/wrapper.md) |
-| Enabling inventory or authorizing multiplayer | [capabilities](references/capabilities.md) |
+| Reading inventory or authorizing multiplayer | [capabilities](references/capabilities.md) |
 | Testing, publishing or rolling back an external client | [delivery](references/delivery.md) |
 
 In Studio, use read_skill {name, resource} for linked references. Read only what

@@ -15,7 +15,7 @@ Before uploading to The Grotto:
 - [ ] Game handles cloud save failure without losing current progress.
 - [ ] Game handles page reload with cloud load.
 - [ ] Inventory is read with `grotto.getInventory()` and fails closed when incomplete.
-- [ ] Optional inventory/multiplayer scopes were enabled for the exact published game ID.
+- [ ] Inventory uses the authenticated runtime without operator setup; optional multiplayer is enabled for the exact published game ID.
 - [ ] Multiplayer tickets are requested just before every connect/reconnect and never enter URLs or logs.
 
 ## Security checklist
