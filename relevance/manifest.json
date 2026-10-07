@@ -3,7 +3,7 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "5e3b459bb4f2faf803be5b4a5d0368ea28a490d28f078642ecb74696f114ff8b",
+  "revision": "47b574f3b038f0a8b420b14d439d5fe0fc9cb735a827aa4763c149ee42f0e4b4",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
@@ -461,20 +461,20 @@
     {
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
-      "version": "1.12.0",
-      "revision": "a61b141081e133133d66ecfdd51c11cf91e77b00a53d3e0c6d0ed87f90c1c4dd",
+      "version": "1.13.0",
+      "revision": "43b923d02d981260f422d28fec088e3ae48afc22a9bd7ca9f394c5eb890f38e4",
       "resources": {
         "references/api-and-errors.md": "sha256:26fc0200b847399b57db0c5223304c49a9b8955faccbc2203682adbcbf712a24",
-        "references/capabilities.md": "sha256:c2af9a8d19269d306dba73291ecf4d0397e46e2bd11cf2a257885383f675c819",
+        "references/capabilities.md": "sha256:3e85b40ddd33e09f2fd0a34414e03e83dc7dd3c6f35e2991260f96a0ceae706d",
         "references/control-foundations.md": "sha256:4cec87e9d418e7b3e66492cf25dd977cce83b7b7f348cc5a368947f9006c26bf",
         "references/hosting.md": "sha256:30317bf84f971d70732f6c88dea960aaacb17bc08c5d5784c40b3e3460f7b301",
         "references/identity-and-boot.md": "sha256:bf8fd5e8b94625e5ce7785a05161844fb40b1e81eebaac5d92465da1d2508325",
         "references/packaging.md": "sha256:8ddff4bbb7cf5ab70578bb910976e7e2dd3ea8c30d83beaf60e10530a0272069",
         "references/saves-and-scores.md": "sha256:9604d085dc69de659d83abd9acbea96aa4de7699769ac43e607038571ad93e0d",
-        "references/sdk-contract.md": "sha256:dd3d23eab5d9cca39811af1186ebb45420947177ee29390de8b9b0313e1d0bed",
+        "references/sdk-contract.md": "sha256:c1e5805e807b5d4f81aab06f906d2b80d28d064ac57f62d8ea0970fe09d26eec",
         "references/studio-capabilities.md": "sha256:3d18f565e7c2249dbe01a3bbd830f825d02648ca8a73fa7fe168dd7c848986d0",
         "references/workflow.md": "sha256:446415cf006d18ade18846b89b7378d9741284863ecb2508cb21b36aba50c9c7",
-        "SKILL.md": "sha256:836af0698b6d17d4737d4cc39301293c8b1e400f50f6d3fd12cbad8ea719a3d4",
+        "SKILL.md": "sha256:c3e3251fd8a70cd55e6523acb9393fe06e53af72bd6edbff549dab091045002c",
         "templates/minimal-runtime-game.html": "sha256:92b08b80e7930aad0557a74fe006eb0d9bd198ba8c373c9047c8d982f70c23df"
       },
       "summary": "Maintain Grotto identity, saves, scores and capability-scoped services through recurring integration and contract-verification passes.",
@@ -547,14 +547,14 @@
     {
       "name": "grotto-game-token-gated-inventory",
       "path": "skills/grotto-game-token-gated-inventory/SKILL.md",
-      "version": "1.6.0",
-      "revision": "8229b4123739e596d7b492f6bd1164b0934b1af4aac9c74320a4636e2da2f99c",
+      "version": "1.7.0",
+      "revision": "148af1c98141bd96aa618aa2a68760d1befc49023bf280f0f96a70769f0b3d85",
       "resources": {
-        "references/contract.md": "sha256:6f80f101856fbf417307afd6064d18b8e60f0155919b6ee8cf87ecfa01260585",
-        "references/freshness.md": "sha256:671df94ae1c91345f37766ab6983a22296699a2dc0c493afbaa7a6a087299eb8",
-        "references/gates.md": "sha256:107221808ecd99655a9eafebd165b25e20ea637bed03c4b29c29a1d36216a28c",
+        "references/contract.md": "sha256:88207a80bcbc8628472c37386c4395a8684eb1e759bf9c37b356dfa31bc82e17",
+        "references/freshness.md": "sha256:bda13bd31e64e8aaa90863abaf030bd447dea80d2151ddca0eb602d6513d723e",
+        "references/gates.md": "sha256:1aef36acffd2f9b0c00ee012484c79ebcfcd163cdc2fcf32d7b3b3bdbc34f41e",
         "references/workflow.md": "sha256:a79d85a277c192a8ce8a26c6da88cdb53f61368522f6743a2cf0df45632543bf",
-        "SKILL.md": "sha256:e2db8741676e32a7b81e76acc90d3f9e2b087fadc0b7a206b4c7038911131bf4"
+        "SKILL.md": "sha256:aebee359a0bb7e385cfc87a97862d56ccefb25a45b608d9567e4b4c4f4841396"
       },
       "summary": "Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change.",
       "inject": "Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change.",
@@ -563,6 +563,7 @@
         "inventory",
         "indexer",
         "nft",
+        "erc20",
         "erc1155",
         "erc721",
         "runtime-sdk"

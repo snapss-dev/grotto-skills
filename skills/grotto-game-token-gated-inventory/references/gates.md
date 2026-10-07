@@ -26,6 +26,7 @@ function ownsGate(inventory, gate) {
   if (!contract) return false;
 
   const total = inventory.holdings.reduce((sum, holding) => {
+    if (holding.standard !== 'ERC1155') return sum;
     if (normalizeAddress(holding.contractAddress) !== contract) return sum;
     if (String(holding.tokenId) !== String(gate.tokenId)) return sum;
     if (!/^(0|[1-9][0-9]*)$/.test(String(holding.balance))) return sum;
@@ -52,6 +53,31 @@ async function refreshCosmetic(grotto, gameState) {
 
 Do not permanently copy token ownership into an ordinary cloud save. The current inventory check
 owns the entitlement; a transfer should remove the cosmetic on the next refresh.
+
+## ERC20 holder gate
+
+ERC20 holdings have no token ID. Match the standard and contract, and compare exact base units.
+For a presentation unlock requiring at least one $HOPE (18 decimals):
+
+```js
+const HOPE = '0x3bcbfa30d64ec6f844c2575fedd625fe6d083fce';
+const minimumHope = 10n ** 18n;
+
+function holdsHope(inventory) {
+  if (inventory?.partial !== false || !Array.isArray(inventory.holdings)) return false;
+  const holding = inventory.holdings.find(item =>
+    item.standard === 'ERC20' && item.contractAddress.toLowerCase() === HOPE);
+  if (!holding || !/^(0|[1-9][0-9]*)$/.test(holding.balance)) return false;
+  if (holding.decimals !== null && holding.decimals !== 18) return false;
+  return BigInt(holding.balance) >= minimumHope;
+}
+```
+
+The response already sums the token across the player's verified wallets. `decimals: null`
+means metadata is unknown, not zero or 18; this example uses $HOPE's known decimals.
+Do not use `summary.totalBalance` for a gate: it sums raw units across different token types
+and decimals and is not a portfolio value. Balance checks neither charge nor burn tokens,
+and do not require linking the token to the game. Refresh this gate after transfers, too.
 
 ## Server-authoritative gates
 

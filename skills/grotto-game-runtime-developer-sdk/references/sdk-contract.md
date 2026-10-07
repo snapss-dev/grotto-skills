@@ -46,13 +46,14 @@ type GrottoSave<T = unknown> = {
 };
 
 type GrottoInventoryHolding = {
-  standard: 'ERC1155' | 'ERC721';
   contractAddress: `0x${string}`;
-  tokenId: string;
   balance: string; // exact base-unit decimal; parse with BigInt
   classification: string;
   resource: { id?: string | null; name?: string | null; image?: string | null } | null;
-};
+} & (
+  | { standard: 'ERC1155' | 'ERC721'; tokenId: string }
+  | { standard: 'ERC20'; tokenId: null; decimals: number | null; symbol: string | null }
+);
 
 type GrottoRuntimeInventory = {
   gameId: string;
