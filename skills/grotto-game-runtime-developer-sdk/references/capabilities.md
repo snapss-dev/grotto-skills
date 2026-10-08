@@ -11,7 +11,7 @@ console.log(session.player.displayName);
 console.log(session.player.avatar);
 ```
 
-Example response:
+Example response from an ordinary published game runtime:
 
 ```json
 {
@@ -30,9 +30,10 @@ Example response:
 
 Use this for display and personalization. For authoritative progression, still store state through `grotto.save()`.
 
-Every authenticated game runtime includes `inventory:read` automatically. `multiplayer:join`
-appears only when platform operators enable multiplayer for the exact game ID. Treat the received
-scope list as the source of truth for optional multiplayer.
+Every ordinary published game runtime includes `inventory:read` automatically. Creator-only
+hosted previews have identity and save scopes only. `multiplayer:join` appears only when platform
+operators enable multiplayer for the exact game ID. Treat the received scope list as the source
+of truth for optional capabilities.
 
 ## Advanced: token-gated inventory
 

@@ -2,6 +2,24 @@
 
 This is the intended public browser API exposed by `https://api.enterthegrotto.xyz/sdk/grotto-game-runtime.v1.js`.
 
+## Version compatibility
+
+The `v1` SDK URL and `version: 1` action messages are major contracts. This
+skill's `1.x.y` version tracks guide content and does not change either
+protocol. Compatible v1 updates may add optional methods, fields or failure
+codes, but keep existing argument shapes, base-unit meanings and result states.
+Handle unknown failure codes as unavailable; do not parse message text or
+assume a missing capability is present. New transaction kinds need an explicit
+negotiated capability or a new action message version. Breaking changes to an
+existing action or result require a parallel v2 SDK/protocol, with the v1 path
+kept available during migration. Never fall back to raw wallet calldata when
+a typed action is unavailable.
+
+`ok: true` is reserved for `state: 'confirmed'` after verified delivery.
+`submitted` carries a pending hash with `ok: false` and no error. Use the state
+and authoritative entitlement, never `ok` or a hash alone, to grant durable
+game value.
+
 ## Global
 
 ```ts
@@ -24,6 +42,7 @@ type GrottoRuntimeConfig = {
   scopes: string[];
   hostOrigin?: string; // exact Grotto top-level host origin, supplied by host
   actionHost?: 'desktop'; // Desktop reports typed actions unsupported for now
+  actionPreviewMode?: 'review-only'; // creator preview shows review UI without a payment
 };
 
 type GrottoPlayerSession = {
@@ -114,16 +133,19 @@ type GrottoAction =
   | { type: 'collection.mint'; assetId: string; quantity: number; maxTotalWei?: string }
   | { type: 'crowdfund.buy'; tokenAddress: `0x${string}`; spendWei: string; minTokensOut?: string };
 
-type GrottoActionResult = {
+type GrottoActionResultBase = {
   type: 'grotto:action:result';
   version: 1;
-  ok: boolean;
-  state: 'confirmed' | 'submitted' | 'unknown' | 'unfulfilled' | 'recovered' | 'rejected' | 'failed';
   requestId: string;
-  txHash?: `0x${string}`;
-  receiptStatus?: 'success' | 'reverted' | 'pending';
-  error?: { code: string; message: string };
 };
+
+type GrottoActionResult = GrottoActionResultBase & (
+  | { ok: true; state: 'confirmed'; txHash: `0x${string}`; receiptStatus: 'success'; error?: never }
+  | { ok: false; state: 'submitted'; txHash: `0x${string}`; receiptStatus: 'pending'; error?: never }
+  | { ok: false; state: 'unknown' | 'unfulfilled' | 'recovered' | 'rejected' | 'failed';
+      txHash?: `0x${string}`; receiptStatus?: 'success' | 'reverted' | 'pending';
+      error: { code: string; message: string } }
+);
 ```
 
 ## API
@@ -159,9 +181,10 @@ type GrottoRuntimeGlobal = {
 
 ## Capability invariants
 
-- `inventory:read` is available to every authenticated game runtime without operator setup.
-  Persisted sessions with older scope lists also receive it on rehydration. Inventory returns
-  all indexed contracts; the game matches its own contract/token definitions.
+- `inventory:read` is available to ordinary published game runtimes without operator setup.
+  Persisted published-game sessions with older scope lists also receive it on rehydration.
+  Creator-only hosted previews have identity and save scopes only. Inventory returns all indexed
+  contracts; the game matches its own contract/token definitions.
 - `multiplayer:join` requires per-game server-owned policy, rechecked on session rehydration and
   use so removing its opt-in takes effect without trusting an old scope.
 - The canonical-plus-linked verified-wallet snapshot is private and immutable for the session.
@@ -169,3 +192,7 @@ type GrottoRuntimeGlobal = {
 - `getInventory()` returns exact decimal strings and fails unless pagination is complete.
 - `getMultiplayerToken()` accepts no routing choice other than optional literal `public`; request a
   fresh ticket on every connect/reconnect and handle the `available: false` union.
+- A hosted creator preview may advertise `actionPreviewMode: 'review-only'` while its session has
+  identity and save scopes only. A typed `requestAction()` shows a Grotto review demo and returns
+  `ok: false`, `state: 'failed'`, `error.code: 'PREVIEW_ONLY'`, without `txHash` or `receiptStatus`.
+  It neither quotes nor sends a transaction and cannot prove an entitlement.

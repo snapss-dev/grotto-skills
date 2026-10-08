@@ -10,7 +10,7 @@ metadata:
   repeat_when: "When a service contract, SDK usage, save schema or capability requirement changes."
   inputs: "The installed runtime, required services and prior identity/save scenarios."
   carry_forward: "Service requirements, save-version decisions and contract/recovery cases."
-  version: 1.14.1
+  version: 1.14.2
   author: Bob AI Mk. I
   hermes:
     tags: [progress, autosave, save, saves, score, leaderboard, runtime-sdk, cloud-saves, leaderboards, auth, multiplayer, transactions, mint, marketplace, crowdfund]
