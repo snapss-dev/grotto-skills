@@ -260,9 +260,9 @@ Carry forward: The change decision, save migration checks, accepted revision and
 
 Path: `skills/grotto-game-runtime-developer-sdk/SKILL.md`
 
-Maintain Grotto identity, saves, scores and capability-scoped services through recurring integration and contract-verification passes.
+Maintain Grotto identity, saves, scores, capability-scoped services and typed player actions through recurring integration and contract-verification passes.
 
-Outcome: Trusted identity, version-aware cloud saves and capability-scoped services.
+Outcome: Trusted identity, version-aware cloud saves and player-reviewed Grotto actions.
 
 Repeat: When a service contract, SDK usage, save schema or capability requirement changes.
 

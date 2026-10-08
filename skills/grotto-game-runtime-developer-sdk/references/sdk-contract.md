@@ -22,6 +22,8 @@ type GrottoRuntimeConfig = {
   expiresAt?: string;
   expiresIn?: number;
   scopes: string[];
+  hostOrigin?: string; // exact Grotto top-level host origin, supplied by host
+  actionHost?: 'desktop'; // Desktop reports typed actions unsupported for now
 };
 
 type GrottoPlayerSession = {
@@ -106,6 +108,22 @@ type GrottoAutosave = {
   markDirty: () => void;
   flush: () => Promise<boolean>;
 };
+
+type GrottoAction =
+  | { type: 'marketplace.buyListing'; listingHash: `0x${string}`; maxPriceWei?: string }
+  | { type: 'collection.mint'; assetId: string; quantity: number; maxTotalWei?: string }
+  | { type: 'crowdfund.buy'; tokenAddress: `0x${string}`; spendWei: string; minTokensOut?: string };
+
+type GrottoActionResult = {
+  type: 'grotto:action:result';
+  version: 1;
+  ok: boolean;
+  state: 'confirmed' | 'submitted' | 'unknown' | 'unfulfilled' | 'recovered' | 'rejected' | 'failed';
+  requestId: string;
+  txHash?: `0x${string}`;
+  receiptStatus?: 'success' | 'reverted' | 'pending';
+  error?: { code: string; message: string };
+};
 ```
 
 ## API
@@ -130,6 +148,7 @@ type GrottoRuntimeClient = {
   getMultiplayerToken: (
     options?: { room?: 'public' }
   ) => Promise<GrottoMultiplayerTicket | GrottoMultiplayerUnavailable>;
+  requestAction: (action: GrottoAction) => Promise<GrottoActionResult>;
   createAutosave: <T>(options: GrottoAutosaveOptions<T>) => GrottoAutosave;
 };
 
