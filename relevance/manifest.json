@@ -3,7 +3,7 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "3c3b2a80e5a79244a8793f3bd52f82ff96f7e35f6194deb90b72f8d855e8828e",
+  "revision": "6a7fe1054802d7b7e571ef382102a7f28da9de1b31382452b6e425e3e500bf6e",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
@@ -461,21 +461,21 @@
     {
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
-      "version": "1.14.1",
-      "revision": "d2674ddfbb2319056b68a7be42557ea8e5d3973fa048c3b66928a7370bb2470c",
+      "version": "1.14.2",
+      "revision": "b242b1588076e9de7987a750185bfec957ca608210e70d2115d82fddbd0df270",
       "resources": {
-        "references/actions.md": "sha256:0e1f179948b81c4b967d2972f18aaea85ce0abba35fe3c0264f1bf3ad9a82666",
+        "references/actions.md": "sha256:28aabc492380f47f5fe4d820449f70d0432689e41313a4681e21591a14db479f",
         "references/api-and-errors.md": "sha256:26fc0200b847399b57db0c5223304c49a9b8955faccbc2203682adbcbf712a24",
-        "references/capabilities.md": "sha256:3e85b40ddd33e09f2fd0a34414e03e83dc7dd3c6f35e2991260f96a0ceae706d",
+        "references/capabilities.md": "sha256:69d1191049db9af156a7c9a1dc5c7c7671613e2fe65d0b3a77718b62e36e1f70",
         "references/control-foundations.md": "sha256:4cec87e9d418e7b3e66492cf25dd977cce83b7b7f348cc5a368947f9006c26bf",
-        "references/hosting.md": "sha256:910cc07d3408fbebd3a25d3363ace03f406fcca488e7bdf24be1f6804f6a9bda",
-        "references/identity-and-boot.md": "sha256:bf8fd5e8b94625e5ce7785a05161844fb40b1e81eebaac5d92465da1d2508325",
+        "references/hosting.md": "sha256:ac9fe8908e09bd95687072dae67d44299fd04cd6cbb6cd37d6454e3c67360a2a",
+        "references/identity-and-boot.md": "sha256:cf85e7a97255b1f73aad10f59e2d9b1cd7c293c2f5bb1ab8962168efd7e523f5",
         "references/packaging.md": "sha256:8ddff4bbb7cf5ab70578bb910976e7e2dd3ea8c30d83beaf60e10530a0272069",
         "references/saves-and-scores.md": "sha256:9604d085dc69de659d83abd9acbea96aa4de7699769ac43e607038571ad93e0d",
-        "references/sdk-contract.md": "sha256:2a90882ea5135a395e13f766f9915c902e47cf7b26ec431e5ab7098a683bcf16",
+        "references/sdk-contract.md": "sha256:f6279da2dc4e1310c8ae764ae4684bd95176723758dab854534e4f4b54da5f32",
         "references/studio-capabilities.md": "sha256:3d18f565e7c2249dbe01a3bbd830f825d02648ca8a73fa7fe168dd7c848986d0",
         "references/workflow.md": "sha256:446415cf006d18ade18846b89b7378d9741284863ecb2508cb21b36aba50c9c7",
-        "SKILL.md": "sha256:d7dacad0be283c09195d513acd696a3f40b74143f2adc50d88bf0166fabad796",
+        "SKILL.md": "sha256:e0d49f43733e0a583e2a537e44f2d6eba4f9088d130be1e45f059eb5a229e7bf",
         "templates/minimal-runtime-game.html": "sha256:92b08b80e7930aad0557a74fe006eb0d9bd198ba8c373c9047c8d982f70c23df"
       },
       "summary": "Maintain Grotto identity, saves, scores, capability-scoped services and typed player actions through recurring integration and contract-verification passes.",

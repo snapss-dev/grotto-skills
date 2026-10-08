@@ -29,15 +29,28 @@ But in production, prefer SDK cloud saves.
 
 ## Try the SDK from your own hosted game
 
-In Grotto Studio, choose **Connect hosted game**, enter a title and the exact
-public HTTPS URL of your game, then open the private preview. This reserves the
+In Grotto Studio, choose
+[Connect hosted game](https://www.enterthegrotto.xyz/games/hosted-preview),
+enter a title and the exact public HTTPS URL of your game, then open the
+private preview. This reserves the
 game ID without uploading a build. Load the normal Grotto browser SDK in your
 game; the preview supplies a short-lived session when the SDK handshakes with
-the Grotto player. The creator can test Grotto identity and cloud saves at the
-hosted URL, and those saves remain under the same game ID after publication.
+the Grotto player. The creator can test Grotto identity, cloud saves and all
+three action review demos at the hosted URL. The demos show game-supplied
+identifiers and bounds; they do not fetch live prices, ownership or gas.
+Saves remain under the same game ID after publication. The page shows
+handshake and identity/save diagnostics. These check the transport and a
+temporary save slot, not your game's own save calls or the safety of its code.
+When **Save URL** is available, you can update the exact hosted URL after a
+deploy and open a new session. Saving the URL revokes the old preview session,
+even if the URL text is unchanged.
 
-The hosted preview is for the verified creator only. It cannot request player
-transactions, inventory, scores, multiplayer, rewards or public play credit.
+The hosted preview is for the verified creator only. Its session has only
+identity and save scopes. An action request shows a review demo and returns
+`failed` with `PREVIEW_ONLY`, without opening a wallet prompt, sending a transaction,
+or delivering an asset. It has no transaction hash or receipt status.
+It cannot request real player transactions, inventory, scores, multiplayer,
+rewards or public play credit.
 To make those features available to players, publish a reviewed Grotto build.
 For a game kept on your own host, the published build may be a small wrapper;
 player transactions still go through Grotto's typed action review and do not
@@ -55,8 +68,9 @@ The hosted player sends your iframe:
     gameId: 'game-123',
     sessionId: 'grs_...',
     hostOrigin: 'https://www.enterthegrotto.xyz',
+    actionPreviewMode: 'review-only', // creator preview only; no payment scope
     expiresAt: '2026-04-25T16:00:00.000Z',
-    scopes: ['identity:read', 'save:read', 'save:write', 'presence:write', 'events:write']
+    scopes: ['identity:read', 'save:read', 'save:write']
   }
 }
 ```
@@ -67,7 +81,10 @@ The SDK sends this handshake upward:
 window.parent.postMessage({ type: 'grotto:runtime:hello' }, '*');
 ```
 
-Creators using the SDK do not need to implement this manually.
+Creators using the SDK do not need to implement this manually. When
+`GrottoRuntime.ready()` resolves in a hosted preview, the SDK also acknowledges
+readiness to the parent so the integration diagnostics can distinguish a loaded
+frame from a working SDK handshake.
 The trusted host supplies `hostOrigin` for `requestAction()` replies; a game
 must not invent or replace it. Hosted wrappers should forward the runtime
 descriptor unchanged.
@@ -79,7 +96,8 @@ also returns the same scoped `grs_*` credential with `tokenType: grotto-runtime`
 Neither grants a platform bearer or wallet authority. Preserve the recipient
 policy; a wrapper does not enable the exception for another game.
 
-Every authenticated game runtime includes `inventory:read` without operator setup.
+Every ordinary published game runtime includes `inventory:read` without operator setup.
+Creator-only hosted preview intentionally omits it.
 `multiplayer:join` remains optional and requires platform enablement for the exact game ID.
 
 ## Advanced: GitHub-hosted game client workflow

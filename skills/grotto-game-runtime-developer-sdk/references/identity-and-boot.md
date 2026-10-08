@@ -36,9 +36,10 @@ When a player opens your game from The Grotto:
 
 Your game never asks players to paste wallets or sign a second message.
 
-`inventory:read` is a default scope for every authenticated game runtime. No operator approval,
-game allowlist, or contract allowlist is needed. Persisted sessions issued with older scope lists
-also receive inventory access on rehydration.
+`inventory:read` is a default scope for ordinary published game runtimes. No operator approval,
+game allowlist, or contract allowlist is needed. Persisted published-game sessions issued with
+older scope lists also receive inventory access on rehydration. Creator-only hosted previews
+have identity and save scopes only.
 
 `multiplayer:join` remains optional and requires the exact game ID in its server-owned allowlist.
 The platform rechecks multiplayer policy on rehydration and use, so removing its opt-in takes
