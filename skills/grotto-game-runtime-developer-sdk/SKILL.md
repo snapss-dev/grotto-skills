@@ -10,7 +10,7 @@ metadata:
   repeat_when: "When a service contract, SDK usage, save schema or capability requirement changes."
   inputs: "The installed runtime, required services and prior identity/save scenarios."
   carry_forward: "Service requirements, save-version decisions and contract/recovery cases."
-  version: 1.14.2
+  version: 1.14.3
   author: Bob AI Mk. I
   hermes:
     tags: [progress, autosave, save, saves, score, leaderboard, runtime-sdk, cloud-saves, leaderboards, auth, multiplayer, transactions, mint, marketplace, crowdfund]
@@ -19,25 +19,28 @@ metadata:
 
 # Runtime SDK
 
-Select the browser or Unreal Windows adapter with
+Choose browser or Unreal Windows with
 [Grotto Game Setup](../grotto-game-setup/SKILL.md).
 
-Reuse installed helpers and start gameplay before network readiness. Trust host sessions; keep wallet snapshots private and immutable. Use version-aware saves without losing local progress. Enforce scopes and expiry. Consume multiplayer tickets once; room routing grants no authority.
+Start gameplay before network readiness. Trust host sessions and keep wallet
+snapshots private. Preserve local progress with version-aware saves. Enforce
+scopes and expiry. Consume multiplayer tickets once; room routing grants no
+authority.
 
-Read only the reference needed for the current decision:
+Read only what the decision needs:
 
 | When | Read |
 | --- | --- |
 | Planning the next pass | [repeatable workflow](references/workflow.md) |
 | Engine, input and asset capabilities | [studio-capabilities](references/studio-capabilities.md) |
-| Camera/controls, React UI, resource ownership and pause/restart | [control and lifecycle foundations](references/control-foundations.md) |
+| Controls, UI, resources, pause/restart | [control and lifecycle foundations](references/control-foundations.md) |
 | Startup and trusted identity | [identity-and-boot](references/identity-and-boot.md) |
-| Autosave, migration, conflicts or leaderboards | [saves-and-scores](references/saves-and-scores.md) |
+| Saves, conflicts or leaderboards | [saves-and-scores](references/saves-and-scores.md) |
 | Inventory, events, presence or multiplayer | [capabilities](references/capabilities.md) |
-| Marketplace, mint or crowdfund action | [player-reviewed actions](references/actions.md) |
-| Standalone fallback or hosted wrappers | [hosting](references/hosting.md) |
+| Player-reviewed transactions | [player-reviewed actions](references/actions.md) |
+| Standalone or hosted games | [hosting](references/hosting.md) |
 | Raw API and runtime errors | [api-and-errors](references/api-and-errors.md) |
-| Packaging, security and integration | [packaging](references/packaging.md) |
+| Packaging and security | [packaging](references/packaging.md) |
 
-In Studio, read needed pages with read_skill {name, resource}; follow nextOffset
-if truncated. Reads do not authorize builds or publication.
+In Studio, use read_skill {name, resource} and follow nextOffset when needed.
+Reads do not authorize builds or publication.

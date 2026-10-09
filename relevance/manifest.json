@@ -3,7 +3,7 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "6a7fe1054802d7b7e571ef382102a7f28da9de1b31382452b6e425e3e500bf6e",
+  "revision": "379ed86dca3c9d16889d1ae1651197ba4853dcc14ed4a203b937215962b2cecd",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
@@ -422,13 +422,13 @@
     {
       "name": "grotto-game-production",
       "path": "skills/grotto-game-production/SKILL.md",
-      "version": "1.0.1",
-      "revision": "7b86ec3d4631966623bdd1e992c1993be96f4a51b51a11473c57437d64af40db",
+      "version": "1.0.2",
+      "revision": "07f08f1f5afb5129b468be1acc2580911baed1c0158bc559f4d17e2db48f9129",
       "resources": {
         "references/first-playable.md": "sha256:de2404e12f060ad82d47bde4423179f2136578a895b6137da1534b99e6cb498e",
-        "references/iteration-and-handoff.md": "sha256:fed990633da18db77978bd074edad34ee22c006ee77ef3f2228476a4f9eeff5d",
+        "references/iteration-and-handoff.md": "sha256:fc94c6268b03e4205ddadb9109de1039cd58bc145211bb5125941d5c5286281f",
         "references/workflow.md": "sha256:c128c07f211cdebb28ca53539f3a2ee9aae5d55ca3461091fb669a0640b94760",
-        "SKILL.md": "sha256:f969762e9ff462d10a9837409ee91bd2489be6144efb6377638af5aa5145036b"
+        "SKILL.md": "sha256:1e6f166d064982816cefd8086c1de4a22cc651e2309072fac23fa467d4620375"
       },
       "summary": "Run a recurring Studio production cycle: review the current build, choose the next risk or milestone, develop a playable slice and carry playtest evidence forward.",
       "inject": "Run a recurring Studio production cycle: review the current build, choose the next risk or milestone, develop a playable slice and carry playtest evidence forward.",
@@ -461,21 +461,21 @@
     {
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
-      "version": "1.14.2",
-      "revision": "b242b1588076e9de7987a750185bfec957ca608210e70d2115d82fddbd0df270",
+      "version": "1.14.3",
+      "revision": "626f9bae92af58611319e8f3dc2de688986ae1277a06c3d09698883a7c305465",
       "resources": {
-        "references/actions.md": "sha256:28aabc492380f47f5fe4d820449f70d0432689e41313a4681e21591a14db479f",
+        "references/actions.md": "sha256:328ebbf0974fc3837db622a3eb990e62beb79f22c181df478bd709c9d8895451",
         "references/api-and-errors.md": "sha256:26fc0200b847399b57db0c5223304c49a9b8955faccbc2203682adbcbf712a24",
         "references/capabilities.md": "sha256:69d1191049db9af156a7c9a1dc5c7c7671613e2fe65d0b3a77718b62e36e1f70",
         "references/control-foundations.md": "sha256:4cec87e9d418e7b3e66492cf25dd977cce83b7b7f348cc5a368947f9006c26bf",
-        "references/hosting.md": "sha256:ac9fe8908e09bd95687072dae67d44299fd04cd6cbb6cd37d6454e3c67360a2a",
+        "references/hosting.md": "sha256:947c211a3e6837c7636e540db8101b9d8b6f3f3a4009e6bb7e577685fb2039ce",
         "references/identity-and-boot.md": "sha256:cf85e7a97255b1f73aad10f59e2d9b1cd7c293c2f5bb1ab8962168efd7e523f5",
         "references/packaging.md": "sha256:8ddff4bbb7cf5ab70578bb910976e7e2dd3ea8c30d83beaf60e10530a0272069",
         "references/saves-and-scores.md": "sha256:9604d085dc69de659d83abd9acbea96aa4de7699769ac43e607038571ad93e0d",
         "references/sdk-contract.md": "sha256:f6279da2dc4e1310c8ae764ae4684bd95176723758dab854534e4f4b54da5f32",
         "references/studio-capabilities.md": "sha256:3d18f565e7c2249dbe01a3bbd830f825d02648ca8a73fa7fe168dd7c848986d0",
         "references/workflow.md": "sha256:446415cf006d18ade18846b89b7378d9741284863ecb2508cb21b36aba50c9c7",
-        "SKILL.md": "sha256:e0d49f43733e0a583e2a537e44f2d6eba4f9088d130be1e45f059eb5a229e7bf",
+        "SKILL.md": "sha256:ed716495f2353f4218ed47842598265cd89d478ef54598529bd4a753fb923fff",
         "templates/minimal-runtime-game.html": "sha256:92b08b80e7930aad0557a74fe006eb0d9bd198ba8c373c9047c8d982f70c23df"
       },
       "summary": "Maintain Grotto identity, saves, scores, capability-scoped services and typed player actions through recurring integration and contract-verification passes.",
@@ -632,14 +632,14 @@
     {
       "name": "grotto-hosted-game-github-workflow",
       "path": "skills/grotto-hosted-game-github-workflow/SKILL.md",
-      "version": "1.5.0",
-      "revision": "0a4f72cf690dff5a8f1aab765d8e4c8a8f5ecf1b7f2074ac22f3a15327843094",
+      "version": "1.5.1",
+      "revision": "0ceb0b1c52dac10962154c8c65b867bfac5d9cb3535f116c17de10537495244c",
       "resources": {
         "references/capabilities.md": "sha256:78317625bfbfa5f2b3e98d51bb917da0e6e86b228932c6ea1ef5a91259394782",
         "references/delivery.md": "sha256:59da22ea2d3784934f9e451470b2e6b0170e29c3ac990b42f7fcea26dd980431",
         "references/workflow.md": "sha256:5498ee4d157c2d14d07baf1d4253d94bf862f9e5002b5b91c3bba0fba6504114",
-        "references/wrapper.md": "sha256:b76dcdee07afb9a1412f3eb392d055d70b06e39692b71a69fc61bf1fbabfe784",
-        "SKILL.md": "sha256:866f9ffad9b9a02797dad4bf34e2277d73afded88f211aa1c72e8239f936c985"
+        "references/wrapper.md": "sha256:3ccf659d561625993271543e4d6913f882781dcda3dc77c3c841fd2ca72cced3",
+        "SKILL.md": "sha256:bc1d83b65a9200ff79ec65bd03e7582a179a4ebe562bc47c55608a59fd9d35c0"
       },
       "summary": "Run recurring release and rollback workflows for explicitly external hosted game clients with a trusted Grotto runtime wrapper.",
       "inject": "Run recurring release and rollback workflows for explicitly external hosted game clients with a trusted Grotto runtime wrapper.",
@@ -741,14 +741,14 @@
     {
       "name": "grotto-pixel-art-assets",
       "path": "skills/grotto-pixel-art-assets/SKILL.md",
-      "version": "1.3.1",
-      "revision": "9a7d76f7c59cef84b037fe33760d25024da6b169037844ec9f95813dce77f74d",
+      "version": "1.3.2",
+      "revision": "4ac5b99d05d796c983c153b693c7cf38837ae87b31d856ed38f29efe5ac55507",
       "resources": {
         "references/generated-art.md": "sha256:c578ef8547563d6eb5dcda17ca903b3783af094837bb02c5f2ee3600f14b4331",
         "references/pixelify.md": "sha256:ff2522ee199a9eb7ae81ef98d15aa221846a342f0a49817ad33fbb3b19b26b5b",
         "references/procedural.md": "sha256:3a7eef7ffa7d61efd6674d45456a9ee44a14b029c9aa18a2a679448bd0824e66",
         "references/workflow.md": "sha256:1ea5cac51b832e5b7bd718188e39e8b7b70bac5179b87ccdd8551897a2d2c4fd",
-        "SKILL.md": "sha256:d1fc2d711648f601ff53b03cc5e811851781a5dfd7a85363cada60ba0eb77a29",
+        "SKILL.md": "sha256:99c3bf8d7a5459fd2a2eff54321119686492a1d0affc7ccefb53232a1f512ca9",
         "templates/pixelify.js": "sha256:baa09d5afd4d1b7b6508fb644b3df1aa54f7348f9f7dcbd7b17e3d78e584efea"
       },
       "summary": "Produce and integrate pixel art through repeatable asset batches with consistent palette, scale, anchors and actual gameplay inspection.",
@@ -757,8 +757,6 @@
         "pixel-art",
         "sprite",
         "texture",
-        "asset",
-        "art",
         "image",
         "canvas",
         "palette",

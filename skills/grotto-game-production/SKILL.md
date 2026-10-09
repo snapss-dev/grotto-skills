@@ -4,7 +4,7 @@ description: "Run a recurring Studio production cycle: review the current build,
 compatibility: "Use the installed Studio foundation and tools offered in the current run."
 license: MIT
 metadata:
-  version: "1.0.1"
+  version: "1.0.2"
   display_name: "Game production and iteration"
   category: game-development
   stage: design
@@ -28,7 +28,7 @@ for the current decision; a small edit does not need every workflow.
 | --- | --- |
 | Planning another pass and carrying its evidence forward | [repeatable workflow](references/workflow.md) |
 | Scoping a new game or its riskiest mechanic | [first-playable](references/first-playable.md) |
-| Prioritizing findings, iterating or handing off a build | [iteration-and-handoff](references/iteration-and-handoff.md) |
+| Reviewing player experience, prioritizing findings or handing off a build | [iteration-and-handoff](references/iteration-and-handoff.md) |
 
 In Studio, use read_skill {name, resource} for linked references. Read only what
 this pass needs; follow nextOffset if truncated. Reading does not authorize a

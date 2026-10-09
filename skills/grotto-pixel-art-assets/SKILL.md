@@ -10,10 +10,10 @@ metadata:
   repeat_when: "For each sprite or tile batch, and when palette, camera scale or asset technique changes."
   inputs: "The visual rules, approved representative assets, asset roles and available budget."
   carry_forward: "Palette and scale conventions, reproducible asset recipes and integration/provenance notes."
-  version: 1.3.1
+  version: 1.3.2
   author: Bob AI Mk. I
   hermes:
-    tags: [pixel-art, sprite, texture, asset, art, image, canvas, palette, retro, procedural]
+    tags: [pixel-art, sprite, texture, image, canvas, palette, retro, procedural]
     related_skills: [grotto-game-art-direction, grotto-game-animation]
 ---
 

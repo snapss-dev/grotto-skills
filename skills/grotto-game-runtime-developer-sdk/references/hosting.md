@@ -40,7 +40,7 @@ three action review demos at the hosted URL. The demos show game-supplied
 identifiers and bounds; they do not fetch live prices, ownership or gas.
 Saves remain under the same game ID after publication. The page shows
 handshake and identity/save diagnostics. These check the transport and a
-temporary save slot, not your game's own save calls or the safety of its code.
+temporary save slot, not your game's own save calls.
 When **Save URL** is available, you can update the exact hosted URL after a
 deploy and open a new session. Saving the URL revokes the old preview session,
 even if the URL text is unchanged.
@@ -51,10 +51,14 @@ identity and save scopes. An action request shows a review demo and returns
 or delivering an asset. It has no transaction hash or receipt status.
 It cannot request real player transactions, inventory, scores, multiplayer,
 rewards or public play credit.
-To make those features available to players, publish a reviewed Grotto build.
-For a game kept on your own host, the published build may be a small wrapper;
-player transactions still go through Grotto's typed action review and do not
-accept arbitrary calldata from the hosted game.
+To make those features eligible for players, publish a reviewed Grotto build.
+Real game payments also depend on Grotto's separate payment controls and
+real-wallet action canaries.
+For a game kept on your own host, the published build may be a small wrapper.
+New game payment integrations should use Grotto's typed action review; the
+hosted game cannot choose its calldata or wallet signer through that SDK.
+Approved legacy builds may retain their separate build-bound transaction relay
+as described below.
 
 ## Runtime message protocol
 
@@ -95,6 +99,22 @@ which nested frames can receive the session. Legacy `bobert:hello` compatibility
 also returns the same scoped `grs_*` credential with `tokenType: grotto-runtime`.
 Neither grants a platform bearer or wallet authority. Preserve the recipient
 policy; a wrapper does not enable the exception for another game.
+
+### Existing legacy transaction relay
+
+Existing approved games, including WrathTank, use `bobert:tx` alongside
+`bobert:hello`. Keep that route working for the exact approved game build and
+frame origin. It is a compatibility protocol, not a new
+`GrottoRuntime.requestAction()` type or a creator self-service permission.
+Grotto rechecks the moderator-approved target
+address and four-byte selector policy for the current build before each relay
+send. A changed build or revoked policy fails closed. The legacy Web Privy
+confirmation remains part of that route; the runtime session alone never
+authorizes a send. A target and selector allowlist does not prove the effects
+of arbitrary calldata, so do not describe that prompt as a verified pay/receive
+review. Do not forward a platform account bearer, broaden the frame recipient
+set, or silently translate a `bobert:tx` call into a typed SDK action.
+Plan new payment flows around the typed action API and its result states.
 
 Every ordinary published game runtime includes `inventory:read` without operator setup.
 Creator-only hosted preview intentionally omits it.

@@ -72,6 +72,14 @@ only during a Grotto launch with a transaction-capable host, an exact registered
 game origin, and `transactions:request` in the runtime scope list. Without that
 scope outside creator preview, it returns `failed` with `ACTION_UNAVAILABLE`
 immediately, before opening any wallet UI.
+Grotto's game, action and global payment controls can also pause real quotes;
+the scope is necessary but does not promise that a purchase is available.
+Handle an unavailable action in the game UI without asking for raw wallet
+calldata or repeatedly opening a payment request.
+Before operators widen a real game's permits, each available action needs a
+small real-wallet purchase and recovery check. The creator preview, mock result
+and simulated browser journey do not activate payments or prove that a real
+wallet send and receipt path works.
 The initial mint lane requires a verified priced ERC-1155 target, so a
 zero-price cap currently returns unavailable.
 The current Desktop game host returns `failed` with
@@ -114,15 +122,48 @@ not a live price, balance, NFT or token output. It returns `failed` with
 wallet or transaction is opened, and no asset is delivered. A reviewed Grotto
 build is required for real player actions. Do not grant rewards from the demo.
 
-For real transactions, Grotto displays its own confirmation showing what the
-player pays and receives, any required approval, and a separate network fee
-note. The game cannot replace that review or silently authorize a transaction.
-The host keeps the account token and wallet
-signer; the game receives only its existing game-scoped runtime session and an
-action result. Player-controlled amounts must be decimal strings, never
-JavaScript numbers, to preserve exact base units. The game cannot supply a
-contract target, selector, calldata, arbitrary value transfer, recipient or
-approval allowance.
+For real typed actions, the trusted Grotto host displays a compact confirmation
+of what the player pays and receives. It identifies the requesting game. When
+trusted metadata is available, the review can include the exact NFT image,
+token and collection links, and an indicative USD estimate from a fresh source
+for a known asset. Missing metadata or a price estimate must stay missing
+rather than become a guessed asset or value. Network fees and other technical
+details remain available separately.
+
+The three current typed actions use native-value payments and do not ask for a
+token allowance. If a future action needs an approval, the review must describe
+that approval separately from the purchase or transfer.
+
+For a real typed action, Grotto authenticates the game session and records a
+payment intent before asking the player's wallet to send. The game cannot
+replace the review, choose wallet confirmation behavior, or supply arbitrary
+contract calldata. The separate shared Web review for platform transactions
+is off by default and also needs working browser storage and Web Locks. When
+available, Grotto can use it for selected verified transfers, approvals,
+marketplace, mint, crowdfund, auction, Game Pass, Summit BOB, and platform
+payment flows. Paid Game Pass V2 self-mints need factory proof; older and free
+mints retain Privy confirmation. Opaque or unsupported calls also keep the
+Privy wallet prompt; external wallets keep their provider prompt. A failed
+verified review blocks before signing. This does not make every contract call
+reviewable.
+
+Direct ICTT bridge calls keep wallet-native confirmation. If a provider does
+not return a clear result after a possible send, check wallet and bridge
+activity before retrying; that path cannot promise exactly one outbound send.
+
+The approved WrathTank `bobert:tx` hosted route retains its exact-build policy
+and Web Privy confirmation. It is separate from `requestAction()`. A
+current-state simulation and optional USD estimate cannot guarantee a future
+chain outcome, asset delivery, or resale value. An unresolved payment may need
+recovery in the Grotto host; do not automatically submit another action. The
+shared Web hold covers tabs and reloads in one browser profile, while typed
+actions use a separate account ledger across devices.
+
+The host keeps the account token and wallet signer; the game receives only its
+existing game-scoped runtime session and an action result. Player-controlled
+amounts must be decimal strings, never JavaScript numbers, to preserve exact
+base units. The game cannot supply a contract target, selector, calldata,
+arbitrary value transfer, recipient or approval allowance.
 
 `confirmed` means the transaction receipt succeeded, not that an indexer has
 already reflected ownership. `submitted` means a hash exists but the final
