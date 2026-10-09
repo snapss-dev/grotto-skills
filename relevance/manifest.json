@@ -3,7 +3,7 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "0a2848c9db675aaf017e2e0d0b0610d2ce83911570ca06ebed31fd75a9fd95bd",
+  "revision": "dfd58621999027ff6e543e1bba76632dc16d7b95d1bda3dc1106f4bea305311d",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
@@ -462,9 +462,9 @@
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
       "version": "1.14.3",
-      "revision": "f32a4df2d05eda3b86a0e7b666b54b7773201a455667962004d0ea5397c75a07",
+      "revision": "0faf3cdee1530a1b86fff190ad428891b8b691472d8ba5dd114bbca789cce542",
       "resources": {
-        "references/actions.md": "sha256:d2809b23d0cdc714889adb7988e981190938e86b6b2e26ad20ca2c1bd8dd02c9",
+        "references/actions.md": "sha256:5f1711753c15abaa24e14476fefc8d5b26795d870414bff48202563f7d4528c5",
         "references/api-and-errors.md": "sha256:26fc0200b847399b57db0c5223304c49a9b8955faccbc2203682adbcbf712a24",
         "references/capabilities.md": "sha256:69d1191049db9af156a7c9a1dc5c7c7671613e2fe65d0b3a77718b62e36e1f70",
         "references/control-foundations.md": "sha256:4cec87e9d418e7b3e66492cf25dd977cce83b7b7f348cc5a368947f9006c26bf",

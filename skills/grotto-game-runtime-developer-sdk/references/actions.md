@@ -136,10 +136,12 @@ that approval separately from the purchase or transfer.
 The separate shared Web review for platform transactions is off by default.
 When enabled, selected verified token/NFT approvals and transfers, escrow
 marketplace purchases, V3 collection mints and launcher-proven crowdfund buys
-can use it without game attribution. Opaque bridge or swap calls, unsupported
-marketplace standards, older mint or curve paths and unverified pools retain
-their existing Privy confirmation. An invalid or stale supported review blocks
-before send instead of silently falling back. External wallets keep their own
+and selected legacy auction or Game Pass V2 calls can use it without game
+attribution. Opaque bridge or swap calls, unsupported marketplace standards,
+older mint or curve paths, unverified pools, other legacy auction operations,
+and non-V2 pass operations retain their existing Privy confirmation. An
+invalid or stale supported review blocks before send instead of silently
+falling back. External wallets keep their own
 provider prompt. The approved legacy `bobert:tx` route also retains its
 separate Privy confirmation. The game cannot replace Grotto's review, choose
 the wallet prompt or silently authorize a transaction. A current-state
