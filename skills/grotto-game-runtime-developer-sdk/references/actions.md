@@ -72,6 +72,10 @@ only during a Grotto launch with a transaction-capable host, an exact registered
 game origin, and `transactions:request` in the runtime scope list. Without that
 scope outside creator preview, it returns `failed` with `ACTION_UNAVAILABLE`
 immediately, before opening any wallet UI.
+Grotto's game, action and global payment controls can also pause real quotes;
+the scope is necessary but does not promise that a purchase is available.
+Handle an unavailable action in the game UI without asking for raw wallet
+calldata or repeatedly opening a payment request.
 The initial mint lane requires a verified priced ERC-1155 target, so a
 zero-price cap currently returns unavailable.
 The current Desktop game host returns `failed` with
@@ -114,15 +118,29 @@ not a live price, balance, NFT or token output. It returns `failed` with
 wallet or transaction is opened, and no asset is delivered. A reviewed Grotto
 build is required for real player actions. Do not grant rewards from the demo.
 
-For real transactions, Grotto displays its own confirmation showing what the
-player pays and receives, any required approval, and a separate network fee
-note. The game cannot replace that review or silently authorize a transaction.
-The host keeps the account token and wallet
-signer; the game receives only its existing game-scoped runtime session and an
-action result. Player-controlled amounts must be decimal strings, never
-JavaScript numbers, to preserve exact base units. The game cannot supply a
-contract target, selector, calldata, arbitrary value transfer, recipient or
-approval allowance.
+For real typed actions, the trusted Grotto host displays a compact confirmation
+of what the player pays and receives. It identifies the requesting game. When
+trusted metadata is available, the review can include the exact NFT image,
+token and collection links, and an indicative USD estimate. Missing metadata
+or a price estimate must stay missing rather than become a guessed asset or
+value. Network fees and other technical details remain available separately.
+The three current typed actions use native-value payments and do not ask for a
+token allowance. If a future action needs an approval, the review must describe
+that approval separately from the purchase or transfer.
+
+Grotto platform actions can use the same review without a game attribution
+when that exact transaction has a supported, verified description. Availability
+varies by action and wallet: an unsupported platform call can retain its
+existing wallet confirmation, and an external wallet may show its own prompt.
+The game cannot replace Grotto's review, choose the wallet prompt or silently
+authorize a transaction. A current-state simulation and optional USD estimate
+cannot guarantee a future chain outcome or resale value.
+
+The host keeps the account token and wallet signer; the game receives only its
+existing game-scoped runtime session and an action result. Player-controlled
+amounts must be decimal strings, never JavaScript numbers, to preserve exact
+base units. The game cannot supply a contract target, selector, calldata,
+arbitrary value transfer, recipient or approval allowance.
 
 `confirmed` means the transaction receipt succeeded, not that an indexer has
 already reflected ownership. `submitted` means a hash exists but the final
