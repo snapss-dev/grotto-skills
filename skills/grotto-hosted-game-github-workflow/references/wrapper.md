@@ -73,6 +73,6 @@ An existing approved game may also use the legacy `bobert:hello` and
 `bobert:tx` route. Preserve its existing exact source, origin and descendant
 checks when updating that wrapper; do not add a general message forwarder to
 new wrappers. The transaction relay requires a moderator-approved target and
-selector policy bound to the current build and retains the wallet confirmation.
+selector policy bound to the current build and retains the Web Privy confirmation.
 It is separate from the typed `GrottoRuntime.requestAction()` API. A `grs_*`
 runtime session and a hosted URL do not grant that legacy transaction policy.

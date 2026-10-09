@@ -3,7 +3,7 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "564ce5f6bdbc0235f6923801b67013e760a73747b6e6d0af7fb9fe08587bac8c",
+  "revision": "0a2848c9db675aaf017e2e0d0b0610d2ce83911570ca06ebed31fd75a9fd95bd",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
@@ -462,13 +462,13 @@
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
       "version": "1.14.3",
-      "revision": "dfbb5303599040684200f2b6b2def433a363dd492c3d157050609dcfaef0050c",
+      "revision": "f32a4df2d05eda3b86a0e7b666b54b7773201a455667962004d0ea5397c75a07",
       "resources": {
-        "references/actions.md": "sha256:a30d9eaf37eea4ca45c6b26fe51d4b481529249168cfb55697f9826e627ea34c",
+        "references/actions.md": "sha256:d2809b23d0cdc714889adb7988e981190938e86b6b2e26ad20ca2c1bd8dd02c9",
         "references/api-and-errors.md": "sha256:26fc0200b847399b57db0c5223304c49a9b8955faccbc2203682adbcbf712a24",
         "references/capabilities.md": "sha256:69d1191049db9af156a7c9a1dc5c7c7671613e2fe65d0b3a77718b62e36e1f70",
         "references/control-foundations.md": "sha256:4cec87e9d418e7b3e66492cf25dd977cce83b7b7f348cc5a368947f9006c26bf",
-        "references/hosting.md": "sha256:b30f6554320db001da32f5b8bb72765b2754c05ed0e16a74bbe4223b569689bd",
+        "references/hosting.md": "sha256:a4e6bc6d34b7928110dfeb7c06599b3304b06bb6818585c60b8a89c79261bd9f",
         "references/identity-and-boot.md": "sha256:cf85e7a97255b1f73aad10f59e2d9b1cd7c293c2f5bb1ab8962168efd7e523f5",
         "references/packaging.md": "sha256:8ddff4bbb7cf5ab70578bb910976e7e2dd3ea8c30d83beaf60e10530a0272069",
         "references/saves-and-scores.md": "sha256:9604d085dc69de659d83abd9acbea96aa4de7699769ac43e607038571ad93e0d",
@@ -633,12 +633,12 @@
       "name": "grotto-hosted-game-github-workflow",
       "path": "skills/grotto-hosted-game-github-workflow/SKILL.md",
       "version": "1.5.1",
-      "revision": "e649cbbb1f77d97a14802e0a9a7fdcdf62c88e282d026603ae0710b74f49a375",
+      "revision": "ec1f2452840923bcdd9396ca536735e1622be77950cb18f5a750c0bcb54fdad6",
       "resources": {
         "references/capabilities.md": "sha256:78317625bfbfa5f2b3e98d51bb917da0e6e86b228932c6ea1ef5a91259394782",
         "references/delivery.md": "sha256:59da22ea2d3784934f9e451470b2e6b0170e29c3ac990b42f7fcea26dd980431",
         "references/workflow.md": "sha256:5498ee4d157c2d14d07baf1d4253d94bf862f9e5002b5b91c3bba0fba6504114",
-        "references/wrapper.md": "sha256:e6ffe9323d1687fffaca9c5f89bce276ebcfffece843fb90506e352d9e51fb15",
+        "references/wrapper.md": "sha256:0e7271e18454ba2f9a8c21976ef450d8bba5e1999ef1b35addff9d93fc6edba4",
         "SKILL.md": "sha256:bc1d83b65a9200ff79ec65bd03e7582a179a4ebe562bc47c55608a59fd9d35c0"
       },
       "summary": "Run recurring release and rollback workflows for explicitly external hosted game clients with a trusted Grotto runtime wrapper.",
