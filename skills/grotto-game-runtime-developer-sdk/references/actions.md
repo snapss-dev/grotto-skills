@@ -147,6 +147,10 @@ Privy wallet prompt; external wallets keep their provider prompt. A failed
 verified review blocks before signing. This does not make every contract call
 reviewable.
 
+Direct ICTT bridge calls keep wallet-native confirmation. If a provider does
+not return a clear result after a possible send, check wallet and bridge
+activity before retrying; that path cannot promise exactly one outbound send.
+
 The approved WrathTank `bobert:tx` hosted route retains its exact-build policy
 and Web Privy confirmation. It is separate from `requestAction()`. A
 current-state simulation and optional USD estimate cannot guarantee a future
