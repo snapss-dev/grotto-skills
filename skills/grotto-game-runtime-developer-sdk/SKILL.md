@@ -1,6 +1,6 @@
 ---
 name: grotto-game-runtime-developer-sdk
-description: "Maintain Grotto identity, saves, scores, capability-scoped services and typed player actions through recurring integration and contract-verification passes."
+description: "Integrate Grotto host-provided game identity, saves, scores, scoped services and player-reviewed actions without asking Studio creators to paste a game ID."
 license: MIT
 metadata:
   display_name: "Runtime SDK"
@@ -10,7 +10,7 @@ metadata:
   repeat_when: "When a service contract, SDK usage, save schema or capability requirement changes."
   inputs: "The installed runtime, required services and prior identity/save scenarios."
   carry_forward: "Service requirements, save-version decisions and contract/recovery cases."
-  version: 1.14.3
+  version: 1.14.4
   author: Bob AI Mk. I
   hermes:
     tags: [progress, autosave, save, saves, score, leaderboard, runtime-sdk, cloud-saves, leaderboards, auth, multiplayer, transactions, mint, marketplace, crowdfund]
@@ -26,6 +26,11 @@ Start gameplay before network readiness. Trust host sessions and keep wallet
 snapshots private. Preserve local progress with version-aware saves. Enforce
 scopes and expiry. Consume multiplayer tickets once; room routing grants no
 authority.
+
+In Studio, use the installed runtime without asking the creator for a game ID.
+The host binds the game to the session; if game code needs the public ID for an
+external integration, read `client.runtime.gameId` after
+`const client = await window.GrottoRuntime.ready()`. Keep `sessionId` private.
 
 Read only what the decision needs:
 

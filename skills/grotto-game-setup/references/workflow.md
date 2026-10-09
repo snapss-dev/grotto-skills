@@ -17,10 +17,22 @@ and [hosting](../../grotto-game-runtime-developer-sdk/references/hosting.md)
 guides, and the hosted-game [wrapper contract](../../grotto-hosted-game-github-workflow/references/wrapper.md)
 when the selected adapter is browser-based.
 
-Start with the actual engine/platform, canonical game ID, release archive and
-existing save schema. Reuse the previous adapter and acceptance record when
-available. An engine/platform change requires the corresponding implemented
-adapter; unsupported native targets stay unsupported.
+Start with the actual engine/platform, current Studio project or approved game,
+release archive if one exists, and existing save schema. For Studio or a browser
+game, use the host-supplied SDK session: its game ID is available as
+`(await window.GrottoRuntime.ready()).runtime.gameId` if another integration
+explicitly needs the public ID. The SDK already binds identity, saves, events
+and actions to that session; do not ask the creator for an ID or pass one to
+those calls. Never copy or log the whole runtime descriptor or its secret
+`sessionId`. A Studio project ID is not the canonical game ID, and an
+unpublished project may not have a published game ID yet.
+
+For Unreal Windows, `InitializeGrotto(canonicalGameId)` does need the exact
+approved Platform game ID in public build configuration. Obtain it from the
+approved game/release record, not from a Studio project ID or a guessed slug.
+Reuse the previous adapter and acceptance record when available. An
+engine/platform change requires the corresponding implemented adapter;
+unsupported native targets stay unsupported.
 
 Read the selected adapter reference, integrate its startup/lifecycle entrypoints,
 then exercise the changed behavior with fixture identity first. Keep verified

@@ -78,6 +78,38 @@ runtime readiness, identity and autosave in independent background chains.
 
 The backend derives the player and game from the runtime session token. Your game does not tell the backend who the player is.
 
+## Finding this game's ID when another integration requires it
+
+Most SDK calls, including saves, events, inventory and `requestAction()`, take
+no game ID. The Grotto host supplies the authoritative game-scoped session. In
+a browser game launched through the Grotto player or connected creator-hosted
+preview, read only the public ID after the SDK is ready:
+
+```js
+const client = await window.GrottoRuntime.ready();
+const gameId = client.runtime.gameId;
+```
+
+A standalone Studio canvas or local page may have no authenticated host
+descriptor, so do not block authoring while waiting for this value.
+
+Use that value for display or an external service that explicitly requires the
+game ID. The runtime descriptor also contains a secret `sessionId`: never log,
+copy, put in a URL, or send the whole descriptor to that service. A backend
+must still verify the Grotto session instead of trusting a client-supplied ID.
+
+In Studio, inspect the current owner's project or library record for
+`platformGameId` / `publishedGameId` when a configuration step needs a
+linked canonical game ID. These fields can be empty before linking or
+publication; the Studio project ID is a different identifier. Check the
+game's publication state separately. A prepared release may return a reserved
+`release.gameId`, but that does not mean the game is live. For a connected
+hosted preview, use the ID returned by Connect hosted game or the owner-scoped
+preview record; the preview reserves the same ID that publication will use.
+Do not infer a game ID from a title, slug, or project URL, and do not ask the
+creator to paste one unless the authorized records are unavailable and an
+explicit external configuration truly cannot proceed without it.
+
 ## Include the SDK
 
 Studio already bundles the official SDK in its protected engine runtime. Do not

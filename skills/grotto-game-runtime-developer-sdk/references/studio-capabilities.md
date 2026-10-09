@@ -98,10 +98,18 @@ unrelated schema there. Use a distinct stable authored slot for a world,
 inventory or other game-state schema, with its own lifecycle and merge policy.
 
 Identity, cloud saves, scores, events and presence use the installed scoped
-Grotto runtime. Inventory and multiplayer require explicit platform capabilities;
-they are not automatically available. See [identity](identity-and-boot.md),
+Grotto runtime. Published game runtimes receive inventory access; creator-only
+hosted previews do not. Multiplayer requires explicit platform authorization.
+See [identity](identity-and-boot.md),
 [save/score contracts](saves-and-scores.md), [capabilities](capabilities.md) and
 [SDK types](sdk-contract.md) for the exact operations.
+
+Studio can author the game without a game ID. When the Grotto player or a
+creator-hosted preview launches it, the host supplies the game-scoped runtime.
+Do not request an ID from the creator or substitute the Studio project ID in
+SDK calls. If gameplay needs the public ID for a separate integration, read
+`(await window.GrottoRuntime.ready()).runtime.gameId` after readiness; never
+log or forward the runtime's secret `sessionId`.
 
 Start input and local rendering without waiting on network services. Preserve
 local progress when cloud hydration arrives late; retain save slot and schema

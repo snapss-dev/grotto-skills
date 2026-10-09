@@ -41,7 +41,8 @@ blocking boot on a sequence of network calls.
 
 The hosted URL must be HTTPS.
 
-Inventory is available automatically through every authenticated Grotto runtime session.
+Inventory is available automatically through ordinary published game runtimes;
+creator-only hosted preview sessions omit it.
 Optional multiplayer still requires the exact published game ID to be allowlisted by the platform
 operator before a newly launched runtime session receives `multiplayer:join`.
 
@@ -69,10 +70,12 @@ Only forward `grotto:runtime` from the wrapper's parent and only accept
 `grotto:runtime:hello` from the hosted iframe. Never copy the `grs_*` session into the hosted URL,
 query string, logs, analytics, localStorage, or build artifacts.
 
-An existing approved game such as WrathTank may also use the legacy
-`bobert:hello` and `bobert:tx` route. Preserve its exact source, origin and
-descendant checks when updating that wrapper. Do not add a general message
-forwarder to new wrappers. The relay requires a moderator-approved target and
-selector policy bound to the current build and retains Web Privy confirmation.
+An existing game such as WrathTank may use legacy `bobert:hello` compatibility.
+The separate `bobert:tx` relay requires a verified exact build, frame origin,
+and moderator-approved target and selector policy. Do not infer relay
+eligibility from a working SSO handshake. Preserve exact source, origin and
+descendant checks when updating a wrapper; do not add a general message
+forwarder to new wrappers. When eligible, the relay retains Web Privy
+confirmation.
 It is separate from the typed `GrottoRuntime.requestAction()` API. A `grs_*`
 runtime session and a hosted URL do not grant that legacy transaction policy.
