@@ -40,7 +40,7 @@ three action review demos at the hosted URL. The demos show game-supplied
 identifiers and bounds; they do not fetch live prices, ownership or gas.
 Saves remain under the same game ID after publication. The page shows
 handshake and identity/save diagnostics. These check the transport and a
-temporary save slot, not your game's own save calls or the safety of its code.
+temporary save slot, not your game's own save calls.
 When **Save URL** is available, you can update the exact hosted URL after a
 deploy and open a new session. Saving the URL revokes the old preview session,
 even if the URL text is unchanged.
@@ -102,10 +102,11 @@ policy; a wrapper does not enable the exception for another game.
 
 ### Existing legacy transaction relay
 
-Some existing approved games use `bobert:tx` alongside `bobert:hello`. Keep
-that route working for the exact approved game build and frame origin. It is a
-compatibility protocol, not a new `GrottoRuntime.requestAction()` type or a
-creator self-service permission. Grotto rechecks the moderator-approved target
+Existing approved games, including WrathTank, use `bobert:tx` alongside
+`bobert:hello`. Keep that route working for the exact approved game build and
+frame origin. It is a compatibility protocol, not a new
+`GrottoRuntime.requestAction()` type or a creator self-service permission.
+Grotto rechecks the moderator-approved target
 address and four-byte selector policy for the current build before each relay
 send. A changed build or revoked policy fails closed. The legacy Web Privy
 confirmation remains part of that route; the runtime session alone never

@@ -129,28 +129,28 @@ token and collection links, and an indicative USD estimate from a fresh source
 for a known asset. Missing metadata or a price estimate must stay missing
 rather than become a guessed asset or value. Network fees and other technical
 details remain available separately.
+
 The three current typed actions use native-value payments and do not ask for a
 token allowance. If a future action needs an approval, the review must describe
 that approval separately from the purchase or transfer.
 
-The separate shared Web review for platform transactions is off by default.
-When enabled, selected verified token/NFT approvals and transfers, escrow
-marketplace purchases, V3 collection mints and launcher-proven crowdfund buys
-and selected legacy auction or Game Pass V2 calls can use it without game
-attribution. Opaque bridge or swap calls, unsupported marketplace standards,
-older mint or curve paths, unverified pools, other legacy auction operations,
-and non-V2 pass operations retain their existing Privy confirmation. An
-invalid or stale supported review blocks before send instead of silently
-falling back. External wallets keep their own
-provider prompt. The approved legacy `bobert:tx` route also retains its
-separate Privy confirmation. The game cannot replace Grotto's review, choose
-the wallet prompt or silently authorize a transaction. A current-state
-simulation and optional USD estimate cannot guarantee a future chain outcome
-or resale value. The shared review holds an unresolved send by account and
-chain across tabs and reloads in the same browser profile. It does not
-serialize another device or browser profile, and direct Privy fallback paths
-must use the same hold check and account lock before rollout. Typed actions
-use a separate account ledger across devices.
+For a real typed action, Grotto authenticates the game session and records a
+payment intent before asking the player's wallet to send. The game cannot
+replace the review, choose wallet confirmation behavior, or supply arbitrary
+contract calldata. The separate shared Web review for platform transactions
+is off by default. When enabled, Grotto can use it for selected verified
+transfers, approvals, marketplace, mint, crowdfund, auction, Game Pass, and
+native payment flows. Opaque or unsupported calls retain the Privy wallet
+confirmation; external wallets keep their provider prompt. A failed verified
+review blocks before signing. This does not make every contract call reviewable.
+
+The approved WrathTank `bobert:tx` hosted route retains its exact-build policy
+and Web Privy confirmation. It is separate from `requestAction()`. A
+current-state simulation and optional USD estimate cannot guarantee a future
+chain outcome, asset delivery, or resale value. An unresolved payment may need
+recovery in the Grotto host; do not automatically submit another action. The
+shared Web hold covers tabs and reloads in one browser profile, while typed
+actions use a separate account ledger across devices.
 
 The host keeps the account token and wallet signer; the game receives only its
 existing game-scoped runtime session and an action result. Player-controlled

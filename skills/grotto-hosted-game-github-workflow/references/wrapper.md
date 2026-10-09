@@ -69,10 +69,10 @@ Only forward `grotto:runtime` from the wrapper's parent and only accept
 `grotto:runtime:hello` from the hosted iframe. Never copy the `grs_*` session into the hosted URL,
 query string, logs, analytics, localStorage, or build artifacts.
 
-An existing approved game may also use the legacy `bobert:hello` and
-`bobert:tx` route. Preserve its existing exact source, origin and descendant
-checks when updating that wrapper; do not add a general message forwarder to
-new wrappers. The transaction relay requires a moderator-approved target and
-selector policy bound to the current build and retains the Web Privy confirmation.
+An existing approved game such as WrathTank may also use the legacy
+`bobert:hello` and `bobert:tx` route. Preserve its exact source, origin and
+descendant checks when updating that wrapper. Do not add a general message
+forwarder to new wrappers. The relay requires a moderator-approved target and
+selector policy bound to the current build and retains Web Privy confirmation.
 It is separate from the typed `GrottoRuntime.requestAction()` API. A `grs_*`
 runtime session and a hosted URL do not grant that legacy transaction policy.
