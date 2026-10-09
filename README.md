@@ -260,7 +260,7 @@ Carry forward: The change decision, save migration checks, accepted revision and
 
 Path: `skills/grotto-game-runtime-developer-sdk/SKILL.md`
 
-Maintain Grotto identity, saves, scores, capability-scoped services and typed player actions through recurring integration and contract-verification passes.
+Integrate Grotto host-provided game identity, saves, scores, scoped services and player-reviewed actions without asking Studio creators to paste a game ID.
 
 Outcome: Trusted identity, version-aware cloud saves and player-reviewed Grotto actions.
 

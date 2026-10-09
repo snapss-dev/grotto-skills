@@ -41,6 +41,10 @@ identifiers and bounds; they do not fetch live prices, ownership or gas.
 Saves remain under the same game ID after publication. The page shows
 handshake and identity/save diagnostics. These check the transport and a
 temporary save slot, not your game's own save calls.
+An agent can take the reserved ID from the Connect hosted game response or the
+owner-scoped preview record. Inside the game, the trusted SDK runtime exposes
+it as `client.runtime.gameId`; ordinary SDK calls need no explicit ID. Do not
+ask the creator to copy an ID from Studio or use a Studio project ID instead.
 When **Save URL** is available, you can update the exact hosted URL after a
 deploy and open a new session. Saving the URL revokes the old preview session,
 even if the URL text is unchanged.
@@ -102,11 +106,14 @@ policy; a wrapper does not enable the exception for another game.
 
 ### Existing legacy transaction relay
 
-Existing approved games, including WrathTank, use `bobert:tx` alongside
-`bobert:hello`. Keep that route working for the exact approved game build and
-frame origin. It is a compatibility protocol, not a new
+The legacy `bobert:tx` route exists alongside `bobert:hello` for an
+individually approved game build and frame origin. The current Web v1 relay
+accepts immutable game content origins; Bob's Petroleum's external hosted
+origin is not eligible today, although its `bobert:hello` SSO handshake works.
+A future build and policy must establish relay eligibility before the game can
+rely on that route. It is a compatibility protocol, not a new
 `GrottoRuntime.requestAction()` type or a creator self-service permission.
-Grotto rechecks the moderator-approved target
+When eligible, Grotto rechecks the moderator-approved target
 address and four-byte selector policy for the current build before each relay
 send. A changed build or revoked policy fails closed. The legacy Web Privy
 confirmation remains part of that route; the runtime session alone never

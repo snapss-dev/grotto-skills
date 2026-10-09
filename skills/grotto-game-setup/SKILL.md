@@ -8,9 +8,9 @@ metadata:
   stage: connect
   outcome: "An engine-appropriate runtime connection with explicit offline and session recovery behavior."
   repeat_when: "When the engine, target platform, runtime contract or launch packaging changes."
-  inputs: "Engine, platform, canonical Grotto game ID, release archive and existing save schema."
+  inputs: "Engine, platform, current Studio project or approved game/release, and existing save schema."
   carry_forward: "Adapter choice, exact build identity and tested account/save lifecycle cases."
-  version: 0.1.1
+  version: 0.1.2
   author: The Grotto
   hermes:
     tags: [grotto, setup, unreal, windows, identity, runtime-sdk, cloud-saves, native]
@@ -22,6 +22,8 @@ metadata:
 Choose the adapter from the actual runtime, not the game's marketing label.
 For a new or changed integration, use the [setup pass](references/workflow.md)
 to carry build identity and observed recovery behavior into the next iteration.
+Studio and browser SDK integrations receive their game identity from Grotto's
+runtime; do not ask the creator to find or paste a game ID for them.
 
 | Target | Adapter |
 | --- | --- |

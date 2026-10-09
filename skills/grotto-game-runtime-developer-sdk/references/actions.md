@@ -6,6 +6,8 @@ only a Grotto resource identifier and, where relevant, a quantity and exact
 base-unit bounds. Grotto resolves the contract and builds the transaction in
 the trusted player host. Never ask the game to collect a wallet signature or
 send raw calldata.
+The call takes no game ID; the trusted runtime session already identifies the
+game. Do not make the creator paste an ID into Studio to wire this action.
 
 ```js
 const grotto = await window.GrottoRuntime.ready();
@@ -151,9 +153,12 @@ Direct ICTT bridge calls keep wallet-native confirmation. If a provider does
 not return a clear result after a possible send, check wallet and bridge
 activity before retrying; that path cannot promise exactly one outbound send.
 
-The approved WrathTank `bobert:tx` hosted route retains its exact-build policy
-and Web Privy confirmation. It is separate from `requestAction()`. A
-current-state simulation and optional USD estimate cannot guarantee a future
+The legacy WrathTank `bobert:tx` route remains gated by its exact build, frame
+origin and moderator policy. The current Web v1 relay accepts immutable game
+content origins; Bob's Petroleum's external hosted origin is not eligible
+today, although its SSO handshake works. When eligible, the relay uses Web
+Privy confirmation and remains separate from `requestAction()`. A current-state
+simulation and optional USD estimate cannot guarantee a future
 chain outcome, asset delivery, or resale value. An unresolved payment may need
 recovery in the Grotto host; do not automatically submit another action. The
 shared Web hold covers tabs and reloads in one browser profile, while typed
