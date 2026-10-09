@@ -138,11 +138,14 @@ For a real typed action, Grotto authenticates the game session and records a
 payment intent before asking the player's wallet to send. The game cannot
 replace the review, choose wallet confirmation behavior, or supply arbitrary
 contract calldata. The separate shared Web review for platform transactions
-is off by default. When enabled, Grotto can use it for selected verified
-transfers, approvals, marketplace, mint, crowdfund, auction, Game Pass, and
-native payment flows. Opaque or unsupported calls retain the Privy wallet
-confirmation; external wallets keep their provider prompt. A failed verified
-review blocks before signing. This does not make every contract call reviewable.
+is off by default and also needs working browser storage and Web Locks. When
+available, Grotto can use it for selected verified transfers, approvals,
+marketplace, mint, crowdfund, auction, Game Pass, Summit BOB, and platform
+payment flows. Paid Game Pass V2 self-mints need factory proof; older and free
+mints retain Privy confirmation. Opaque or unsupported calls also keep the
+Privy wallet prompt; external wallets keep their provider prompt. A failed
+verified review blocks before signing. This does not make every contract call
+reviewable.
 
 The approved WrathTank `bobert:tx` hosted route retains its exact-build policy
 and Web Privy confirmation. It is separate from `requestAction()`. A
