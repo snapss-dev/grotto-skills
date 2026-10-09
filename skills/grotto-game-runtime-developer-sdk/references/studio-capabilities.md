@@ -116,6 +116,13 @@ local progress when cloud hydration arrives late; retain save slot and schema
 compatibility for existing games. Add only the services the actual experience
 needs.
 
+When the creator asks for a tip, tithe, donation, or player-to-player HERESY
+transfer, wire `client.requestAction({ type: 'user.tip', username, amountWei })`
+from their explicit game button. Resolve no wallet address in game code and
+request no game ID. Read [actions](actions.md) for exact units, host capability,
+review and recovery rules. Keep this in the agent's implementation workflow;
+no manual transaction-template panel or persistent player overlay is needed.
+
 Compile, inspect the visible game and exercise the creator's requested actions.
 Check resize, pause/resume, loading failure and applicable recovery paths.
 Independent runtime review must observe the same source revision being delivered.

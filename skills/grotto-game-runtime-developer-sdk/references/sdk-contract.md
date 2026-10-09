@@ -34,6 +34,7 @@ declare global {
 
 ```ts
 type GrottoRuntimeConfig = {
+  actionTypes?: readonly string[]; // registered-user tips require 'user.tip'
   apiBaseUrl: string;
   gameId: string;
   sessionId: string;
@@ -131,7 +132,8 @@ type GrottoAutosave = {
 type GrottoAction =
   | { type: 'marketplace.buyListing'; listingHash: `0x${string}`; maxPriceWei?: string }
   | { type: 'collection.mint'; assetId: string; quantity: number; maxTotalWei?: string }
-  | { type: 'crowdfund.buy'; tokenAddress: `0x${string}`; spendWei: string; minTokensOut?: string };
+  | { type: 'crowdfund.buy'; tokenAddress: `0x${string}`; spendWei: string; minTokensOut?: string }
+  | { type: 'user.tip'; username: string; amountWei: string };
 
 type GrottoActionResultBase = {
   type: 'grotto:action:result';
