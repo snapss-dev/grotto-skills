@@ -1,7 +1,8 @@
 # Player-reviewed Grotto actions
 
 Use `grotto.requestAction(action)` when a game wants the player to buy a
-marketplace listing, mint an asset, or buy a crowdfund token. The game supplies
+marketplace listing, mint an asset, buy a crowdfund token, or tip a registered
+Grotto user. The game supplies
 only a Grotto resource identifier and, where relevant, a quantity and exact
 base-unit bounds. Grotto resolves the contract and builds the transaction in
 the trusted player host. Never ask the game to collect a wallet signature or
@@ -64,6 +65,12 @@ await grotto.requestAction({
   tokenAddress: '0x...', // Grotto crowdfund token contract
   spendWei: '...',       // required positive decimal string
   minTokensOut: '...',   // optional positive decimal string
+});
+
+await grotto.requestAction({
+  type: 'user.tip',
+  username: 'justkenny', // registered username, no @ prefix or wallet address
+  amountWei: '100000000000000000', // 0.1 native HERESY, exact base units
 });
 ```
 
@@ -132,7 +139,7 @@ for a known asset. Missing metadata or a price estimate must stay missing
 rather than become a guessed asset or value. Network fees and other technical
 details remain available separately.
 
-The three current typed actions use native-value payments and do not ask for a
+The four current typed actions use native-value payments and do not ask for a
 token allowance. If a future action needs an approval, the review must describe
 that approval separately from the purchase or transfer.
 
@@ -168,9 +175,27 @@ The host keeps the account token and wallet signer; the game receives only its
 existing game-scoped runtime session and an action result. Player-controlled
 amounts must be decimal strings, never JavaScript numbers, to preserve exact
 base units. The game cannot supply a contract target, selector, calldata,
-arbitrary value transfer, recipient or approval allowance.
+arbitrary value transfer, recipient wallet address or approval allowance. For
+`user.tip`, the game chooses a registered username and exact amount; Grotto
+resolves the canonical wallet and binds the username, profile picture, profile
+link and amount into the signed review. It rechecks the profile and destination
+before sending. Unknown users, self-tips, contracts and delegated wallets are
+unavailable. There is no raw-address fallback. The review shows HERESY plus a
+fresh approximate USD value when available; a missing price feed never invents
+a dollar value. Successful verified transfers appear in the recipient's profile
+tip history. A profile-recording outage can be retried without another payment.
 
-`confirmed` means the transaction receipt succeeded, not that an indexer has
+`user.tip` requires `client.runtime.actionTypes` to include `user.tip`; old hosts
+return `ACTION_UNSUPPORTED` before opening a review. Capability advertising does
+not enable payments: transaction scope and global/game/action permits still
+apply. Preview-only hosts can rehearse the request but do not verify a transfer.
+Implement tips from an explicit player button, with the amount visible. Never
+auto-tip on load, repeatedly request after cancellation, or treat a tip as an
+NFT purchase or access entitlement.
+
+For `user.tip`, `confirmed` proves the exact native transfer to the reviewed
+recipient, with no purchased asset. Other actions also verify asset delivery.
+`confirmed` does not mean an indexer has
 already reflected ownership. `submitted` means a hash exists but the final
 chain outcome is pending. `unknown` means the wallet may have broadcast a
 transaction without returning its hash. Neither state means the purchase is

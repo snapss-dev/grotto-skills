@@ -3,7 +3,7 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "222e7cf0e5f05cba9f72b338fe576c07ca28e657b49150a000ea53f724d84a64",
+  "revision": "3e4af5228625379455fb52748be8c57d5a60549ddfc5171a474d51cdba64b3ac",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
@@ -461,10 +461,10 @@
     {
       "name": "grotto-game-runtime-developer-sdk",
       "path": "skills/grotto-game-runtime-developer-sdk/SKILL.md",
-      "version": "1.14.4",
-      "revision": "14ddd9b80f45f1e9c2349c54b156059a8412c3643a5e93b78b2fb787071017cd",
+      "version": "1.15.0",
+      "revision": "4b6637d75b36f359c4aad69c433969ed9f3569a13fd3c8c612d2900cde68fa26",
       "resources": {
-        "references/actions.md": "sha256:5f9d8bbab884a0ed6337dcca5c569918969384857c4a341b3b67b09773e2564e",
+        "references/actions.md": "sha256:319d7454d371b75b012a0c7d3dd5d7cd5784b8d08ce0cc6d1efafd847aa47d4d",
         "references/api-and-errors.md": "sha256:26fc0200b847399b57db0c5223304c49a9b8955faccbc2203682adbcbf712a24",
         "references/capabilities.md": "sha256:69d1191049db9af156a7c9a1dc5c7c7671613e2fe65d0b3a77718b62e36e1f70",
         "references/control-foundations.md": "sha256:4cec87e9d418e7b3e66492cf25dd977cce83b7b7f348cc5a368947f9006c26bf",
@@ -472,10 +472,10 @@
         "references/identity-and-boot.md": "sha256:e3629ca34f455837ec7a4ca3e3d1d57f9463c5376b8b9f1019ebbfee255a6c83",
         "references/packaging.md": "sha256:8ddff4bbb7cf5ab70578bb910976e7e2dd3ea8c30d83beaf60e10530a0272069",
         "references/saves-and-scores.md": "sha256:9604d085dc69de659d83abd9acbea96aa4de7699769ac43e607038571ad93e0d",
-        "references/sdk-contract.md": "sha256:f6279da2dc4e1310c8ae764ae4684bd95176723758dab854534e4f4b54da5f32",
-        "references/studio-capabilities.md": "sha256:28bf9635fb56804bfa363bb8e643f6164448934df0280b15ea19611ee09c3f7c",
+        "references/sdk-contract.md": "sha256:46384875530b32f0a4e02ed290bc4d5aa89bc62d87b4f7345aa578bbadf79baa",
+        "references/studio-capabilities.md": "sha256:e0e4b70fd298b4e169de9b85bd5ad67ff28f6c74df5a472e1ecf01ac1658f6b5",
         "references/workflow.md": "sha256:446415cf006d18ade18846b89b7378d9741284863ecb2508cb21b36aba50c9c7",
-        "SKILL.md": "sha256:9988b125fb28ff2889c1c9b5beaf6543f132dac9decfd5bba73e8ba44afa16cd",
+        "SKILL.md": "sha256:3c5cb6f97041d946246731021c605455cb1edc660b0eaa94773f8c8ab9beb294",
         "templates/minimal-runtime-game.html": "sha256:92b08b80e7930aad0557a74fe006eb0d9bd198ba8c373c9047c8d982f70c23df"
       },
       "summary": "Integrate Grotto host-provided game identity, saves, scores, scoped services and player-reviewed actions without asking Studio creators to paste a game ID.",
@@ -495,7 +495,9 @@
         "transactions",
         "mint",
         "marketplace",
-        "crowdfund"
+        "crowdfund",
+        "tips",
+        "transfers"
       ],
       "title": "Runtime SDK",
       "category": "platform-integration",

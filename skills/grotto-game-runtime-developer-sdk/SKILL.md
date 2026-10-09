@@ -10,10 +10,10 @@ metadata:
   repeat_when: "When a service contract, SDK usage, save schema or capability requirement changes."
   inputs: "The installed runtime, required services and prior identity/save scenarios."
   carry_forward: "Service requirements, save-version decisions and contract/recovery cases."
-  version: 1.14.4
+  version: 1.15.0
   author: Bob AI Mk. I
   hermes:
-    tags: [progress, autosave, save, saves, score, leaderboard, runtime-sdk, cloud-saves, leaderboards, auth, multiplayer, transactions, mint, marketplace, crowdfund]
+    tags: [progress, autosave, save, saves, score, leaderboard, runtime-sdk, cloud-saves, leaderboards, auth, multiplayer, transactions, mint, marketplace, crowdfund, tips, transfers]
     related_skills: [grotto-game-token-gated-inventory, grotto-hosted-game-github-workflow, grotto-studio-game-updates]
 ---
 
@@ -23,8 +23,11 @@ Choose browser or Unreal Windows with
 [Grotto Game Setup](../grotto-game-setup/SKILL.md).
 
 Start gameplay before network readiness. Trust host sessions and keep wallet
-snapshots private. Preserve local progress with version-aware saves. Enforce
-scopes and expiry. Consume multiplayer tickets once; room routing grants no
+snapshots private. Preserve local progress with version-aware saves.
+For registered-user tips, read [actions](references/actions.md); supply the
+username and exact HERESY amount, letting the host resolve the wallet and
+review the recipient profile. Enforce scopes and expiry. Consume multiplayer tickets once;
+room routing grants no
 authority.
 
 In Studio, use the installed runtime without asking the creator for a game ID.
