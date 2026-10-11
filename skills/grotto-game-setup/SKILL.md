@@ -1,16 +1,16 @@
 ---
 name: grotto-game-setup
-description: "Connect a game to Grotto player identity, cloud saves and events using the adapter for its engine; use for initial setup or a change of engine or launch target."
+description: "Connect games to Grotto identity, saves and events; use for setup or engine/launch changes."
 license: MIT
 metadata:
   display_name: "Grotto Game Setup"
   category: platform-integration
   stage: connect
-  outcome: "An engine-appropriate runtime connection with explicit offline and session recovery behavior."
-  repeat_when: "When the engine, target platform, runtime contract or launch packaging changes."
-  inputs: "Engine, platform, current Studio project or approved game/release, and existing save schema."
-  carry_forward: "Adapter choice, exact build identity and tested account/save lifecycle cases."
-  version: 0.1.2
+  outcome: "An engine-appropriate runtime with offline and session recovery."
+  repeat_when: "Engine, platform, runtime or packaging changes."
+  inputs: "Engine, platform, project/release and save schema."
+  carry_forward: "Adapter, build identity and account/save verification."
+  version: 0.1.3
   author: The Grotto
   hermes:
     tags: [grotto, setup, unreal, windows, identity, runtime-sdk, cloud-saves, native]

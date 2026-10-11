@@ -1,4 +1,4 @@
-# Using inventory, events, presence or multiplayer tickets
+# Using inventory, events, presence and managed multiplayer
 
 ## Trusted player identity
 
@@ -31,9 +31,9 @@ Example response from an ordinary published game runtime:
 Use this for display and personalization. For authoritative progression, still store state through `grotto.save()`.
 
 Every ordinary published game runtime includes `inventory:read` automatically. Creator-only
-hosted previews have identity and save scopes only. `multiplayer:join` appears only when platform
-operators enable multiplayer for the exact game ID. Treat the received scope list as the source
-of truth for optional capabilities.
+hosted previews have identity and save scopes only. Published players also receive `rooms:join`
+for free managed shared rooms. `multiplayer:join` is a separate external-server ticket scope
+that requires platform enablement. Treat the received scope list as the source of truth.
 
 ## Advanced: token-gated inventory
 
@@ -108,7 +108,49 @@ the game closes. A future SDK version may manage the timer automatically, so avo
 duplicate timers when the SDK exposes that behavior. A heartbeat only renews the idle expiry; it
 never extends the session's 24-hour absolute maximum.
 
-## Multiplayer bootstrap
+## Grotto-hosted multiplayer
+
+Use this first for small co-op, shared-world and turn-based games. The platform hosts one
+public room per game; the creator does not need to deploy a server. The authenticated host
+binds game and player. Rooms persist a common world seed and shared state across disconnects.
+
+```ts
+const room = await grotto.joinRoom({
+  onUpdate(snapshot) {
+    // Apply snapshot.state and reconcile remote actors by playerId.
+    // Render displayName as text; never treat player data as HTML or code.
+  },
+  onError(error) {
+    // Show connection status while local gameplay continues.
+  },
+});
+const seed = room.getSnapshot().seed;
+room.setPresence({ x: 0, y: 1, z: 0, yaw: 0 });
+const result = await room.patch({ 'block:10:4:-3': 2 });
+if (result.conflict) {
+  // Re-evaluate the intended edit against result.snapshot; do not blindly retry.
+}
+// null removes a key. Call room.leave() when this game session ends.
+```
+
+Presence coalesces to one update per second. Interpolate remote actors locally.
+The SDK polls deltas, reconnects, restores state and backs off after a traffic limit.
+Keep personal inventory/progress in version-aware cloud saves, not shared state.
+Only grant an edit's reward after the shared patch succeeds without a conflict.
+
+There is no fixed player-count cap. The free allowance bounds shared state (64 KiB),
+presence (512 bytes per player), active membership data (1 MiB), patches (4 KiB/32 keys),
+room requests (4,000/min), writes (2,000/min), and response traffic (16 MiB/min).
+Each player gets 240 requests and 120 writes per minute. Report a reached allowance
+without freezing the game or pretending the room is connected. Terrain may be generated
+locally from the shared seed; persistent edited blocks still fit the bounded overlay.
+
+The service synchronizes client-authored state and presence. It does not run model-authored
+server code or validate custom combat/physics. Competitive server-authoritative gameplay
+requires a separately reviewed server. The Studio canvas has no authenticated runtime:
+boot locally there, then join the real room from the published Grotto player.
+
+## External-server multiplayer bootstrap
 
 Before publishing multiplayer, coordinate the exact game ID in
 `GAME_RUNTIME_MULTIPLAYER_GAME_IDS`; otherwise new sessions do not receive `multiplayer:join`.

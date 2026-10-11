@@ -74,6 +74,41 @@ await grotto.requestAction({
 });
 ```
 
+## Additional registered operations
+
+Use these only when `grotto.runtime.actionTypes` includes the exact type.
+Unavailable operations do not grant a raw wallet fallback. The host resolves
+the canonical target, simulates the call, reviews it and verifies its receipt.
+
+| Action | Game parameters | Meaning of confirmation |
+| --- | --- | --- |
+| `game.notarize` | `commitment`: 32-byte hex hash | Zero-value run commitment recorded; the game server must verify the run and nonce. |
+| `collection.burn` | `assetId`, `quantity` (1–50) | Exact verified Grotto ERC-1155 edition transferred to the burn sink. An unlock or reward still needs authoritative, replay-safe verification. |
+
+Discover an edition's canonical `assetId` using the public by-token lookup
+with its collection and token ID; verify both match the response. A game ID
+comes from the host runtime. Request a burn only from an explicit player button.
+
+Bob's Petroleum additionally has registered `bob.approve`, `bob.swap`,
+`bob.commit`, `bob.withdraw` and `bob.redeem` adapters. These require Bob's
+exact published game ID and authenticated creator. They cannot be copied into
+another game to acquire contract access. Approvals have a finite amount and
+registered spender. Swaps specify exact units, minimum output and deadline.
+Positions expose lock duration and maximum withdrawal deductions.
+
+`bob.redeem({ itemId, nonce })` authorizes one short-lived, wallet-bound Season
+2 redemption. Grotto fetches the item and point cost from Bob's fixed server
+endpoint and records their canonical commitment on-chain. It exposes no
+general message signer. `confirmed` means authorization was recorded: Bob
+must still verify it and return successful redemption before the game grants
+anything. A catalog, wallet, nonce or reward change invalidates that proof.
+
+For multi-step flows, await verified approval before the next transaction.
+Stop on `submitted`, `unknown` or `recovered`; recover the existing attempt
+instead of issuing another buy, approval, burn or commitment. After a partial
+buy, refresh chain holdings before calculating another shortfall. Registered
+actions do not enable cross-chain bridges, arbitrary sends or admin custody.
+
 The host may decline an action when a verified, enforceable bound cannot be
 established. A game must handle that as an unavailable purchase rather than
 fall back to its own wallet request. A real `requestAction` purchase is available
@@ -139,9 +174,9 @@ for a known asset. Missing metadata or a price estimate must stay missing
 rather than become a guessed asset or value. Network fees and other technical
 details remain available separately.
 
-The four current typed actions use native-value payments and do not ask for a
-token allowance. If a future action needs an approval, the review must describe
-that approval separately from the purchase or transfer.
+The four purchase/tip actions use native-value payments. Registered approval
+actions describe the allowance separately from the following transaction;
+an approval alone never means a purchase or reward completed.
 
 For a real typed action, Grotto authenticates the game session and records a
 payment intent before asking the player's wallet to send. The game cannot
@@ -175,7 +210,7 @@ The host keeps the account token and wallet signer; the game receives only its
 existing game-scoped runtime session and an action result. Player-controlled
 amounts must be decimal strings, never JavaScript numbers, to preserve exact
 base units. The game cannot supply a contract target, selector, calldata,
-arbitrary value transfer, recipient wallet address or approval allowance. For
+arbitrary value transfer, recipient wallet address or arbitrary approval spender. For
 `user.tip`, the game chooses a registered username and exact amount; Grotto
 resolves the canonical wallet and binds the username, profile picture, profile
 link and amount into the signed review. It rechecks the profile and destination
@@ -194,7 +229,8 @@ auto-tip on load, repeatedly request after cancellation, or treat a tip as an
 NFT purchase or access entitlement.
 
 For `user.tip`, `confirmed` proves the exact native transfer to the reviewed
-recipient, with no purchased asset. Other actions also verify asset delivery.
+recipient, with no purchased asset. Purchase actions also verify asset delivery;
+registered operations verify their specific approval, burn, position or authorization.
 `confirmed` does not mean an indexer has
 already reflected ownership. `submitted` means a hash exists but the final
 chain outcome is pending. `unknown` means the wallet may have broadcast a
@@ -219,3 +255,27 @@ A page outside Grotto could imitate a client-side result. For valuable game
 rewards, verify the receipt and resulting ownership on your server through
 trusted Grotto or chain data. Never accept the game's own claim that an action
 was confirmed as proof of payment.
+
+## Recover an interrupted item use
+
+Before requesting `collection.burn`, save the current wallet/game/item, benefit
+purpose and `createdAfter = Date.now()` in a durable local journal. Keep the
+journal until your server verifies the exact receipt and fulfills that benefit.
+On retry, use the optional SDK extension:
+
+```js
+const result = await grotto.recoverAction(
+  { type: 'collection.burn', assetId, quantity: 1 },
+  { createdAfter: pendingUse.createdAfter },
+);
+```
+
+This reads the original receipt and never opens another wallet prompt. It works
+with identity scope while new payments are paused. A successful earlier burn
+returns `state: 'recovered'`, `ok: false`, `receiptStatus: 'success'` and its hash.
+Verify that hash on your server and reconcile the **original** benefit
+idempotently. Never reuse it for a different benefit or grant a second reward.
+Pending, unknown, unfulfilled and unavailable recovery block a replacement burn.
+Only `ACTION_NOT_FOUND` permits a fresh explicit review; never widen the saved
+start time to search older burns. If an older SDK lacks `recoverAction`, keep
+the unfinished use blocked and direct the player to Grotto wallet activity.

@@ -1,16 +1,16 @@
 ---
 name: grotto-game-runtime-developer-sdk
-description: "Integrate Grotto host-provided game identity, saves, scores, scoped services and player-reviewed actions without asking Studio creators to paste a game ID."
+description: "Integrate Grotto identity, saves, shared rooms and reviewed actions."
 license: MIT
 metadata:
   display_name: "Runtime SDK"
   category: platform-integration
   stage: connect
-  outcome: "Trusted identity, version-aware cloud saves and player-reviewed Grotto actions."
-  repeat_when: "When a service contract, SDK usage, save schema or capability requirement changes."
-  inputs: "The installed runtime, required services and prior identity/save scenarios."
-  carry_forward: "Service requirements, save-version decisions and contract/recovery cases."
-  version: 1.15.0
+  outcome: "Identity, saves, shared rooms and reviewed actions."
+  repeat_when: "Service contracts, save schemas or capabilities change."
+  inputs: "Runtime, services and prior scenarios."
+  carry_forward: "Service, save-version and recovery decisions."
+  version: 1.16.0
   author: Bob AI Mk. I
   hermes:
     tags: [progress, autosave, save, saves, score, leaderboard, runtime-sdk, cloud-saves, leaderboards, auth, multiplayer, transactions, mint, marketplace, crowdfund, tips, transfers]
@@ -19,36 +19,38 @@ metadata:
 
 # Runtime SDK
 
-Choose browser or Unreal Windows with
-[Grotto Game Setup](../grotto-game-setup/SKILL.md).
+Choose browser or Unreal Windows with [Game Setup](../grotto-game-setup/SKILL.md).
 
-Start gameplay before network readiness. Trust host sessions and keep wallet
-snapshots private. Preserve local progress with version-aware saves.
-For registered-user tips, read [actions](references/actions.md); supply the
-username and exact HERESY amount, letting the host resolve the wallet and
-review the recipient profile. Enforce scopes and expiry. Consume multiplayer tickets once;
-room routing grants no
-authority.
+Start play before network readiness. Trust host sessions; keep wallet snapshots
+private. Preserve progress with version-aware saves. Enforce scopes and expiry.
+`client.joinRoom()` hosts shared state/presence. Separate external-server tickets
+grant no game authority. For registered-user tips, read [actions](references/actions.md);
+supply username and exact HERESY amount. The host resolves and reviews the recipient.
+For run records, NFT consumption or registered game operations, read the same
+action reference and negotiate the exact advertised type. Keep progress and
+reward verification separate from transaction or authorization confirmation.
 
-In Studio, use the installed runtime without asking the creator for a game ID.
-The host binds the game to the session; if game code needs the public ID for an
-external integration, read `client.runtime.gameId` after
-`const client = await window.GrottoRuntime.ready()`. Keep `sessionId` private.
+The host binds runtime identity. For developer configuration before launch, use
+the saved canonical game ID from create/update `game.id` or the owner's Creator
+Hub and editor. Read [draft IDs and startup](references/identity-and-boot.md)
+for authorized lookup and pre-build hosted previews. After browser launch, use
+`client.runtime.gameId` from `await window.GrottoRuntime.ready()`. Keep
+`sessionId` private; a copied game ID does not authenticate a player.
 
-Read only what the decision needs:
+Read selectively:
 
 | When | Read |
 | --- | --- |
-| Planning the next pass | [repeatable workflow](references/workflow.md) |
-| Engine, input and asset capabilities | [studio-capabilities](references/studio-capabilities.md) |
-| Controls, UI, resources, pause/restart | [control and lifecycle foundations](references/control-foundations.md) |
+| Planning | [repeatable workflow](references/workflow.md) |
+| Engine, input, assets | [studio-capabilities](references/studio-capabilities.md) |
+| Controls and lifecycle | [foundations](references/control-foundations.md) |
 | Startup and trusted identity | [identity-and-boot](references/identity-and-boot.md) |
 | Saves, conflicts or leaderboards | [saves-and-scores](references/saves-and-scores.md) |
-| Inventory, events, presence or multiplayer | [capabilities](references/capabilities.md) |
-| Player-reviewed transactions | [player-reviewed actions](references/actions.md) |
+| Inventory, events, multiplayer | [capabilities](references/capabilities.md) |
+| Player transactions | [reviewed actions](references/actions.md) |
 | Standalone or hosted games | [hosting](references/hosting.md) |
 | Raw API and runtime errors | [api-and-errors](references/api-and-errors.md) |
-| Packaging and security | [packaging](references/packaging.md) |
+| Packaging | [packaging](references/packaging.md) |
 
-In Studio, use read_skill {name, resource} and follow nextOffset when needed.
+In Studio, read_skill {name, resource}; follow nextOffset.
 Reads do not authorize builds or publication.
