@@ -260,25 +260,25 @@ Carry forward: The change decision, save migration checks, accepted revision and
 
 Path: `skills/grotto-game-runtime-developer-sdk/SKILL.md`
 
-Integrate Grotto host-provided game identity, saves, scores, scoped services and player-reviewed actions without asking Studio creators to paste a game ID.
+Integrate Grotto identity, saves, shared rooms and reviewed actions.
 
-Outcome: Trusted identity, version-aware cloud saves and player-reviewed Grotto actions.
+Outcome: Identity, saves, shared rooms and reviewed actions.
 
-Repeat: When a service contract, SDK usage, save schema or capability requirement changes.
+Repeat: Service contracts, save schemas or capabilities change.
 
-Carry forward: Service requirements, save-version decisions and contract/recovery cases.
+Carry forward: Service, save-version and recovery decisions.
 
 ### Grotto Game Setup
 
 Path: `skills/grotto-game-setup/SKILL.md`
 
-Connect a game to Grotto player identity, cloud saves and events using the adapter for its engine; use for initial setup or a change of engine or launch target.
+Connect games to Grotto identity, saves and events; use for setup or engine/launch changes.
 
-Outcome: An engine-appropriate runtime connection with explicit offline and session recovery behavior.
+Outcome: An engine-appropriate runtime with offline and session recovery.
 
-Repeat: When the engine, target platform, runtime contract or launch packaging changes.
+Repeat: Engine, platform, runtime or packaging changes.
 
-Carry forward: Adapter choice, exact build identity and tested account/save lifecycle cases.
+Carry forward: Adapter, build identity and account/save verification.
 
 ### Token-gated inventory
 

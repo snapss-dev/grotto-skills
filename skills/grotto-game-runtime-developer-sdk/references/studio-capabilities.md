@@ -29,6 +29,15 @@ dependency, service or successful check. A missing convenience type does not
 mean a normal engine API is prohibited: describe its actual shape rather than
 using `any`, suppression comments or replacement platform declarations.
 
+## Managed multiplayer
+
+Use `client.joinRoom({ onUpdate, onError })` for a Grotto-hosted shared room in the
+published player. It provides a common world seed, shared-state patches, player presence,
+reconnection and conflict handling with free resource limits. The separate
+`getMultiplayerToken` API only bootstraps an external server; its limitation does not mean
+managed multiplayer is unavailable. Read [capabilities](capabilities.md) for the room API.
+Keep Studio's unauthenticated preview playable locally while this connection is absent.
+
 ## Engine choices within the installed project
 
 For 2D, `Grotto2D.boot(factory)` loads Phaser and gives the factory `{ Phaser,

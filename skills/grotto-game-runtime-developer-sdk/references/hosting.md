@@ -125,6 +125,8 @@ Plan new payment flows around the typed action API and its result states.
 
 Every ordinary published game runtime includes `inventory:read` without operator setup.
 Creator-only hosted preview intentionally omits it.
+Published runtimes also include `rooms:join` for the free Grotto-managed room. See
+[managed multiplayer](capabilities.md). It needs no separate server or operator allowlist.
 `multiplayer:join` remains optional and requires platform enablement for the exact game ID.
 
 ## Advanced: GitHub-hosted game client workflow

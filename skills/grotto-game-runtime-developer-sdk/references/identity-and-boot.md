@@ -80,6 +80,49 @@ The backend derives the player and game from the runtime session token. Your gam
 
 ## Finding this game's ID when another integration requires it
 
+### Before launch: saved drafts and developer handoff
+
+Use the canonical ID of the saved game, even while it is private:
+
+- After create or update, read `game.id` from the successful
+  `POST /api/games` or `PUT /api/games/:id` response. Save that exact returned
+  value; do not substitute a proposed `client_game_id`.
+- In Creator Hub, find the game under Games and copy its **Game ID**, or open
+  **Edit details** and copy it in the editor. The draft save confirmation also
+  shows the ID. Updating or publishing that same game keeps its ID.
+- An authorized agent can use the owner's bearer-authenticated
+  `GET /api/games?creator=<canonical-wallet>&include_drafts=true&include_hidden=true`
+  and read each `games[].id`, or use `GET /api/games/:id` to inspect a known
+  record. Follow pagination when looking through the owner's catalog. Use the
+  verified account's canonical Grotto wallet; a query wallet is not proof of
+  ownership. Anonymous and other-account requests cannot discover private drafts.
+
+Give your developer the ID and the engine/configuration step that needs it.
+For example: "Use `game-...` as this saved game's canonical ID in the integration
+configuration. Launch through Grotto for authenticated identity and saves."
+Copy only the game ID, never a bearer token, runtime token or `sessionId`.
+A title, slug, Studio project ID, local form draft or license/token address is
+not the canonical game ID. A local draft that has not created or linked a game
+record may have no game ID yet.
+
+### Before an uploaded build: private hosted preview
+
+When hosted previews are enabled, a verified creator can use **Connect hosted
+game** at `/games/hosted-preview`, or bearer-authenticated
+`POST /api/games/hosted-preview` with `{ "name": "My game", "url": "https://<exact-host>/" }`.
+This returns `gameId` and `previewUrl` and creates a private, review-marked draft
+with no uploaded build. The owner-scoped `GET /api/games/:id/hosted-preview`
+returns that same `gameId`. Keep this record and update/publish it when ready,
+rather than creating a second listing with a different ID.
+
+The creator's hosted preview supports identity and cloud saves only. It grants
+no public play, inventory, scores, rewards or transactions. The exact URL and
+owner checks remain required. This path needs a hosted HTTPS client; it is not
+an empty native-build registration flow. The regular Web upload form still
+requires a game file and thumbnail before saving a platform draft.
+
+### After browser launch: host-scoped runtime identity
+
 Most SDK calls, including saves, events, inventory and `requestAction()`, take
 no game ID. The Grotto host supplies the authoritative game-scoped session. In
 a browser game launched through the Grotto player or connected creator-hosted
