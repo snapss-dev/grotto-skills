@@ -10,7 +10,7 @@ metadata:
   repeat_when: "When gated content, entitlement rules, caching or platform inventory contracts change."
   inputs: "The exact game capability, entitlement rules and prior granted/denied/partial-read cases."
   carry_forward: "Non-secret gate definitions, freshness rules and reproducible entitlement test cases."
-  version: 1.8.0
+  version: 1.8.1
   author: Bob AI Mk. I
   hermes:
     tags: [token-gating, inventory, wallet, metadata, traits, images, chain-id, rpc, indexer, nft, erc20, erc1155, erc721, runtime-sdk]
@@ -28,7 +28,7 @@ standard and contract, and item ownership by standard, contract and token ID.
 For chain ID, public RPC, direct wallet reads without Grotto login, and fetching
 item metadata and images from the API, start with
 [network and metadata](references/network-and-metadata.md). It also explains when
-an externally hosted game needs a reviewed Grotto wrapper. Collection addresses,
+an externally hosted game needs a supported reviewed Grotto launch. Collection addresses,
 supported token IDs and gameplay meanings for traits are project-specific inputs.
 
 Read only the reference needed for the current decision:

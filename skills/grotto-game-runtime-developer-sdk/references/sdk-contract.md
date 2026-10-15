@@ -37,19 +37,22 @@ type GrottoRuntimeConfig = {
   actionTypes?: readonly string[]; // registered-user tips require 'user.tip'
   apiBaseUrl: string;
   gameId: string;
+  playerId?: `0x${string}`; // canonical account; used to isolate local save caches
   sessionId: string;
   expiresAt?: string;
   expiresIn?: number;
   scopes: string[];
   hostOrigin?: string; // exact Grotto top-level host origin, supplied by host
-  actionHost?: 'desktop'; // Desktop reports typed actions unsupported for now
-  actionPreviewMode?: 'review-only'; // creator preview shows review UI without a payment
+  actionHost?: 'desktop' | null; // Desktop reports typed actions unsupported for now
+  actionPreviewMode?: 'review-only' | null; // creator preview shows review UI without a payment
+  previewDiagnosticNonce?: string | null; // host-owned preview diagnostic, not identity proof
 };
 
 type GrottoPlayerSession = {
   sessionId?: string;
   gameId: string;
   authenticated: boolean;
+  purpose?: 'play' | 'hosted_preview' | 'native_preview'; // missing purpose denies private backend writes
   player: {
     id: string;
     walletAddress?: string | null;
@@ -63,8 +66,9 @@ type GrottoPlayerSession = {
 type GrottoSave<T = unknown> = {
   slot: string;
   version: number;
-  updatedAt?: string;
+  updatedAt?: string | null;
   state: T;
+  offline?: true; // cached/default fallback; does not prove cloud persistence
 };
 
 type GrottoInventoryHolding = {
@@ -133,7 +137,16 @@ type GrottoAction =
   | { type: 'marketplace.buyListing'; listingHash: `0x${string}`; maxPriceWei?: string }
   | { type: 'collection.mint'; assetId: string; quantity: number; maxTotalWei?: string }
   | { type: 'crowdfund.buy'; tokenAddress: `0x${string}`; spendWei: string; minTokensOut?: string }
-  | { type: 'user.tip'; username: string; amountWei: string };
+  | { type: 'user.tip'; username: string; amountWei: string }
+  | { type: 'game.notarize'; commitment: `0x${string}` }
+  | { type: 'collection.burn'; assetId: string; quantity: number }
+  | { type: 'bob.redeem'; itemId: string; nonce: string }
+  | { type: 'bob.approve'; purpose: 'moat' | 'swap'; amountWei: string }
+  | { type: 'bob.swap'; direction: 'buy' | 'sell'; amountWei: string; minOutWei: string; deadline: number }
+  | { type: 'bob.commit'; mode: 'stake' | 'burn'; amountWei: string }
+  | { type: 'bob.commit'; mode: 'lock'; amountWei: string; durationSeconds: number }
+  | { type: 'bob.withdraw'; mode: 'unstake'; amountWei: string }
+  | { type: 'bob.withdraw'; mode: 'exitLock' | 'earlyExitLock'; lockIndex: number };
 
 type GrottoActionResultBase = {
   type: 'grotto:action:result';
@@ -152,18 +165,48 @@ type GrottoActionResult = GrottoActionResultBase & (
 
 ## API
 
+Room identity is game-scoped and opaque, distinct from a canonical wallet ID.
+The browser's managed-room and HTTP error shapes are:
+
+```ts
+type GrottoJson = null | boolean | number | string | GrottoJson[] | { [key: string]: GrottoJson };
+type GrottoRoomSnapshot = {
+  contractId: 'GrottoSharedRoom@1';
+  playerId: string;
+  seed: number;
+  version: number;
+  status: 'connecting' | 'connected' | 'limited' | 'reconnecting' | 'closed';
+  state: Record<string, GrottoJson>;
+  players: Array<{ playerId: string; displayName: string; presence: Record<string, GrottoJson>; expiresAt: string; left?: boolean }>;
+};
+type GrottoSharedRoom = {
+  getSnapshot: () => GrottoRoomSnapshot;
+  setPresence: (presence: Record<string, GrottoJson>) => void;
+  patch: (changes: Record<string, GrottoJson>, options?: { baseVersion?: number }) =>
+    Promise<{ conflict: boolean; snapshot: GrottoRoomSnapshot }>;
+  leave: () => Promise<void>;
+};
+type GrottoRuntimeRequestError = Error & {
+  code?: 'SESSION_CHANGED';
+  status?: number;
+  body?: { code?: string; retryAfterSeconds?: number; runtime?: {
+    available: boolean; reason: string; recoveryAction: string; recoverable: boolean;
+  }; [key: string]: unknown };
+};
+```
+
 ```ts
 type GrottoRuntimeClient = {
   runtime: GrottoRuntimeConfig;
   getPlayer: () => Promise<GrottoPlayerSession>;
   loadSave: <T>(slot: string, defaultState: T) => Promise<GrottoSave<T>>;
   save: <T>(slot: string, state: T, options?: { baseVersion?: number }) => Promise<GrottoSave<T>>;
-  deleteSave: (slot: string) => Promise<{ success: true }>;
-  event: (type: string, payload?: Record<string, unknown>) => Promise<{ success: true }>;
+  deleteSave: (slot: string) => Promise<{ success: true; deleted: boolean }>;
+  event: (type: string, payload?: Record<string, unknown>) => Promise<{ success: true; eventId: string }>;
   submitScore: (
     score: number,
     options?: { board?: string; meta?: Record<string, unknown> }
-  ) => Promise<{ success: true }>;
+  ) => Promise<{ success: true; eventId: string }>;
   leaderboard: (
     options?: { board?: string; limit?: number }
   ) => Promise<{ gameId?: string; board: string; entries: GrottoLeaderboardEntry[] }>;
@@ -173,6 +216,14 @@ type GrottoRuntimeClient = {
     options?: { room?: 'public' }
   ) => Promise<GrottoMultiplayerTicket | GrottoMultiplayerUnavailable>;
   requestAction: (action: GrottoAction) => Promise<GrottoActionResult>;
+  joinRoom: (options?: {
+    onUpdate?: (snapshot: GrottoRoomSnapshot) => void;
+    onError?: (error: GrottoRuntimeRequestError) => void;
+  }) => Promise<GrottoSharedRoom>;
+  recoverAction: (
+    action: { type: 'collection.burn'; assetId: string; quantity: 1 },
+    options: { createdAfter: number } // saved positive integer Unix time in milliseconds
+  ) => Promise<GrottoActionResult>;
   createAutosave: <T>(options: GrottoAutosaveOptions<T>) => GrottoAutosave;
 };
 
@@ -182,6 +233,21 @@ type GrottoRuntimeGlobal = {
 ```
 
 ## Capability invariants
+
+- Registered actions must appear in `runtime.actionTypes` and satisfy the exact
+  game/host policy. Bob-specific types do not grant other games access. See
+  [actions](actions.md) for bounds, receipt meanings and item-use recovery.
+- `rooms:join` is automatic for published browser runtimes. `joinRoom()` uses
+  Grotto's managed room and does not require an external multiplayer ticket.
+- `ready()` rejects when no trusted runtime arrives. It does not create an
+  anonymous fallback client; own local gameplay/fallback separately.
+- HTTP failures expose `error.status` and `error.body.code`; account rotation
+  also uses `error.code === 'SESSION_CHANGED'`. Reacquire a client after the new
+  trusted descriptor arrives and stop prior autosave/room owners.
+- `loadSave()` may return cached/default state with `offline: true` after a
+  request failure. Local storage can fail silently; this is not a backup receipt.
+  `submitScore()` rejects on API failure; `leaderboard()` returns an empty board
+  only for HTTP 503 and propagates other errors. Catch these independently.
 
 - `inventory:read` is available to ordinary published game runtimes without operator setup.
   Persisted published-game sessions with older scope lists also receive it on rehydration.

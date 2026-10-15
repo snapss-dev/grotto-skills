@@ -34,9 +34,10 @@ accept an exact `http://127.0.0.1:<port>` fixture server. WinHTTP verifies TLS,
 disables redirects, bounds bodies and uses worker threads. No Privy library,
 general account API or signing interface runs in the game.
 
-Native v1 receives the base `identity:read`, `save:read`, `save:write`,
-`presence:write` and `events:write` scopes. Browser inventory/multiplayer
-allowlists do not add capabilities to this adapter. Desktop and Platform reuse
+Native v1 exposes identity, saves, presence and events through the methods below.
+A published session may advertise additional default platform scopes, but the
+plugin has no browser `getInventory`, `joinRoom` or typed-action method. A scope
+does not implement a missing native adapter method. Desktop and Platform reuse
 the existing authenticated account snapshot and runtime APIs; this is an engine
 transport adapter for base SSO, not a separate identity system.
 
@@ -67,18 +68,15 @@ the plugin deliberately keeps its token out of reflection and response events.
 
 ## Contract harness and acceptance
 
-The monorepo contract harness runs with fixture identity, no real login and
-outbound network denied:
-
-```
-cd services/platform
-node scripts/run-test-tier.js hermetic src/tests/native-game-launch.test.js
-```
-
-Desktop's automatically discovered `tests/native-game-launch.test.ts` exercises
-admission, account rotation, process pipes and cleanup. `assets/example/` has a
-small Unreal project and a local fixture runner for the real compiled plugin.
-The harness is evidence of the adapter contract, not native marketplace approval.
+The public skill includes `assets/example/`: a small Unreal project and a local
+fixture runner for the real compiled plugin. Download the complete
+[Game Setup folder](https://github.com/snapss-dev/grotto-skills/tree/main/skills/grotto-game-setup),
+including the plugin and example; a raw SKILL.md is not the install package.
+The fixture needs Node.js and the project's installed Unreal/MSVC toolchain.
+It uses loopback identity without a real Grotto login. Run the commands below
+from the copied example folder, where `contract-harness.mjs` lives. No private
+Grotto repository or internal Platform test path is required. Fixture execution
+is evidence of the adapter contract, not marketplace approval.
 
 Copy `assets/example` into a local project folder and the plugin into its
 `Plugins/GrottoRuntime`. Build the example with the installed engine's Build

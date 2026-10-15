@@ -27,9 +27,103 @@ window.GrottoControls.create2D(mode, scene, player, actions, options).
 Call controls.update() from the Phaser scene update. It uses Arcade velocity,
 camera follow and grounded jump contacts. Configure scene gravity/colliders for
 platformers; top-down disables player gravity. Space/primary jumps. Options:
-speed, jumpSpeed. Native scene pause/resume clears held input; shutdown/restart
+speed, jumpSpeed. Default bindings include Shift/dash for sprint and E/interact;
+an explicit allowed-action list replaces that default and must name actions the
+game uses. Native scene pause/resume clears held input; shutdown/restart
 disposes controls. setEnabled(false) gates movement for an active-scene menu.
 Keep actions on the same binding used for acceptance.
+
+## Studio player navigation
+
+Current streamed world adapters expose
+`world.registerStudioPlayer({ getStandingPosition, teleport })`. It registers
+one explicit player controller and returns an unsubscribe function. Own that
+function with the app or scene lifecycle, and unregister before replacing the
+player. Both callbacks use local world-unit tuples `[x, y, z]`, relative to the
+adapter's current floating origin. Keep the existing player/camera anchors and
+origin-change handling; never pass absolute coordinates to these callbacks.
+
+The protected `create3D` and `create2D` controls expose `getStandingPosition()`
+and `teleport(position, lookAt)`. Delegate through closures to the current
+controller. Phaser controls convert 32 pixels per world unit and inverted Y
+internally; do not convert a second time. Three terrain controllers must refresh
+their local `groundHeight` from the destination terrain before teleporting.
+Newly selected spatial foundations include this wiring. Custom physics must
+move the real body/controller, clear obsolete velocity and update the camera;
+registering a camera-only move does not implement player travel.
+
+Studio uses the binding for Go to B.O.B. after preparing bounded destination
+residency and verifying complete arrival coverage. The wider neighborhood can
+remain partial; missing or over-budget arrival resources prevent movement.
+Resource failure or a stale source prevents travel. The binding also
+supplies the standing position for pins. The game keeps its own simulation and
+progress. No player is inferred from object names or scene geometry. Without
+the binding, travel is unavailable; games without a capture surface also lack
+Pin. Presence and screenshots are editor features, not gameplay acceptance.
+
+Inspect installed declarations before adding the binding. An older known
+foundation requires its authorized upgrade and an explicit switch to the newly
+compiled Play version; the already running iframe keeps its old runtime.
+Preserve custom controllers and add the opt-in in editable source instead of
+rewriting protected files or resetting the game foundation.
+
+Player navigation and live code replacement are separate bindings. Current
+controllers also expose `captureLiveState` and `restoreLiveState`; streamed
+worlds connect these through `world.registerLivePlayer(lifecycle, controls)`.
+This preserves motion and camera state across compatible compiled updates and
+prepares destination residency. Keep the foundation's terrain-height handling.
+Register authored mechanics separately and read [live session state](live-play-state.md)
+before adding a custom controller or migration. A navigation `teleport` alone
+does not preserve momentum or arbitrary gameplay state.
+
+## Authored player, camera and interface
+
+Player appearance, first-person body or hands, camera presentation and gameplay
+panels belong to editable game source. Replace the foundation's marker with the
+creator's art; preserve the player transform and the existing controller owner.
+Configure eye height, sensitivity, camera distance and collision through the
+installed controller. Add authored camera behavior only when the experience
+needs it, with one owner for each camera transform and lifecycle cleanup.
+
+Choose semantic actions before keyboard keys. The spatial kit supplies
+`axis`, `down` and `consume`; `bindActions(scene, allowed)` and
+`createApp(..., { actions })` select enabled actions. On current spatial kits,
+`actions.setKeyBindings({ KeyI: 'secondary', KeyE: null })` maps physical
+`KeyboardEvent.code` values to enabled button actions; null removes that key's
+binding. Each call replaces overrides on top of the defaults, and
+`setKeyBindings(null)` restores defaults. Include `secondary` in the enabled
+actions, then consume it once with `actions.consume('secondary')` to toggle a
+panel. Use the same transition for an accessible button. A paused Three game
+must consume its menu action in `lifecycle.onFrame`, which still runs.
+
+The mapping rejects disabled or invented actions, axis actions and Tab; it
+accepts at most 128 overrides. Rebinding releases held input. Native controls,
+typing focus, dialogs, composition and browser modifier shortcuts release input;
+repeats never create a new press. Older saved kits may lack this method: inspect
+installed declarations and use the authorized foundation upgrade rather than
+editing protected bytes. UI-only `GrottoUIActions` instead uses `on`/`trigger`;
+additional keys use lifecycle-owned listeners with the same focus and repeat
+rules. Do not add a second movement listener.
+
+Keep a clean playfield. Menus can open on an authored action instead of keeping
+their controls visible. Opening one must release held movement, camera drag and
+pointer lock, move focus into the panel, and disable gameplay input. Closing it
+restores the previous play context and focuses its canvas or focusable game root;
+reacquire pointer lock only from a real player gesture. Use `setEnabled(false)`
+and the lifecycle patterns below.
+
+During a managed Studio session, request
+`window.GrottoLiveSession.requestInputMode('cursor')` for an authored menu and
+`'game'` from a real resume gesture. The parent owns pointer lock through code
+replacements; use semantic actions and protected look controls instead of
+depending on iframe-local locked pointer events or `document.hasFocus()`.
+
+Studio World reserves Tab for B.O.B. chat and Escape for leaving its current
+interaction. Inside chat, Tab remains normal form navigation. Authored game UI
+runs in the game's isolated preview/player, not in the trusted Studio viewport;
+its shortcuts must not replace Studio's escape path. A standalone game may use
+its own pause binding. Test typing, held keys, blur, resize and reopening panels,
+as well as the intended interaction, in the actual game.
 
 ## UI-only games
 
@@ -68,7 +162,9 @@ transitions, not a game design. Add only screens the creator's game needs.
 
 `GrottoLifecycle.forApp(app)` returns one owner for the app. `app.addUpdate`
 callbacks stop while paused; rendering continues. `lifecycle.onFrame` callbacks
-run at the same fixed step even while paused. Use them for pause/restart input,
+run at the same fixed step even while paused. A live code transfer briefly
+suspends both update paths while it captures/restores state; rendering continues.
+Use `onFrame` for pause/restart input,
 not enemies, physics, timers or other gameplay. The protected controller releases
 movement, drag capture and pointer lock on pause. Manual `setEnabled(false)`
 stays disabled after resuming. Resume pointer lock through a real player gesture.

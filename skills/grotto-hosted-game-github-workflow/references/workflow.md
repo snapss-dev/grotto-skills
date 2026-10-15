@@ -20,9 +20,9 @@ mark missing evidence explicitly.
 
 1. Confirm that external hosting is the creator’s requested workflow and that the client has a durable origin. Ordinary Studio builds remain packaged in Studio. Review the current wrapper and previously verified release.
 
-2. Define the client revision and affected identity, message and capability cases. Keep the known hosted origin and trusted parent boundary explicit; a public room name cannot grant multiplayer access.
+2. Define the client revision and affected identity, message and capability cases. Confirm the exact hosted child is a supported recipient for a direct trusted Grotto reply. A public room name does not activate external-server tickets; standard published sessions already include free managed rooms.
 
-3. Test the reviewed client and wrapper together through their normal pipeline. Forward runtime messages only across the trusted parent/known-origin relationship, and keep per-game capabilities server-owned.
+3. Test the reviewed client and supported wrapper in the actual published launch. Verify the public SDK's source and origin checks and direct Grotto-to-child handoff; a generic wrapper relay cannot authenticate the child. Keep per-game capabilities server-owned.
 
 4. Release only within the current authorization and verify the actually delivered client and wrapper revisions. Recheck boot, identity and recovery on the hosted path. For rollback, verify the chosen target and compatible saves rather than relying on a success toast.
 

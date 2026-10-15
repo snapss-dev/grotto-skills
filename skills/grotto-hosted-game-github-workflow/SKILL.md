@@ -10,7 +10,7 @@ metadata:
   repeat_when: "For each authorized external client release, wrapper change or rollback."
   inputs: "The durable hosted origin, reviewed client revision, wrapper contract and rollback target."
   carry_forward: "Client/wrapper revisions, origin decisions, release evidence and verified rollback state."
-  version: 1.5.2
+  version: 1.6.0
   author: Bob AI Mk. I
   hermes:
     tags: [github, version-control, testing, ci, vercel, iframe, wrapper]
@@ -20,7 +20,15 @@ metadata:
 # Grotto Hosted Game GitHub Workflow
 
 
-Use only when the creator requests external hosting and has a durable domain. Ordinary Studio builds stay packaged in Studio. Forward runtime messages only from the trusted parent to the known hosted origin. Inventory is available automatically through the authenticated runtime. Multiplayer authorization remains server-owned.
+Use when the creator requests external hosting and has a durable domain. Verify
+the exact hosted frame receives a direct trusted Grotto runtime handoff.
+Published inventory is automatic; feature authority remains server-owned.
+
+Start with [integration setup](../grotto-game-runtime-developer-sdk/references/integration-setup.md).
+A published wrapper needs a host-recognized hosted frame and a direct trusted-host
+SDK handoff; forwarding alone does not establish support. Read the wrapper
+prerequisites before choosing that launch path. Managed rooms use `rooms:join`
+without an external server; external multiplayer tickets have separate policy.
 
 Read only the reference needed for the current decision:
 

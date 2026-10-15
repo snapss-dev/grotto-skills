@@ -5,7 +5,8 @@
 Before uploading to The Grotto:
 
 - [ ] Game zip has `index.html` at root.
-- [ ] SDK script is included before game boot code.
+- [ ] Custom browser clients include the SDK before game boot code; Studio
+  keeps its installed SDK instead of adding a duplicate.
 - [ ] Game starts while runtime readiness is pending and also when it fails.
 - [ ] Game has local fallback for local dev or runtime failure.
 - [ ] Autosave is enabled for progress games.
@@ -24,10 +25,12 @@ Before uploading to The Grotto:
 - [ ] Do not expose admin/API keys in game files.
 - [ ] Do not put secrets in event payloads or saves.
 - [ ] Do not trust localStorage for competitive/monetized outcomes.
-- [ ] Use server-confirmed events for leaderboards or rewards.
+- [ ] Treat recorded client scores/events as client claims; validate valuable
+  outcomes on the trusted game server before granting a reward.
 - [ ] Keep authoritative multiplayer state on a trusted server.
-- [ ] Treat `roomId=public` only as untrusted routing; authorize party/queue/ranked placement server-side.
-- [ ] Verify the complete strict multiplayer ticket profile and atomically consume each `jti` once.
+- [ ] For external-server tickets, treat `roomId=public` only as untrusted
+  routing, authorize placement server-side and atomically consume each `jti`.
+  Managed `joinRoom()` needs no ticket verifier or signing-key setup.
 - [ ] Refresh JWKS on an unknown `kid` and support current-plus-overlap public keys.
 
 ## Common mistakes
@@ -77,6 +80,7 @@ working engine or delay local gameplay on cloud initialization.
 
 ## When to use lower-level backend work instead
 
-Use the implementation skill `grotto-game-api-save-system` when building or changing the Grotto backend/runtime itself.
+Changing Grotto's platform backend is a separate contributor/operator task;
+the public creator library does not include an implementation skill for it.
 
 Use this skill when building a game that consumes the runtime.
