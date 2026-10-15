@@ -12,6 +12,15 @@ no requirement to load the whole collection.
 
 ## Use skills as recurring workflows
 
+For wallet integration, start with
+[Wallet inventory and metadata](skills/grotto-game-token-gated-inventory/SKILL.md).
+Its [network and metadata reference](skills/grotto-game-token-gated-inventory/references/network-and-metadata.md)
+contains Grotto's chain ID and public RPC, direct wallet ownership reads, API
+metadata and image lookups, and the requirements for externally hosted games.
+Agents can use these shared platform details without asking the creator to find
+them; collection addresses and the game's interpretation of traits remain
+project-specific.
+
 A skill is a development practice you return to as the game evolves. Each
 router states when to repeat it, what context to bring and what to carry forward.
 Its `references/workflow.md` gives a focused cycle with domain-specific decisions,
@@ -280,13 +289,13 @@ Repeat: Engine, platform, runtime or packaging changes.
 
 Carry forward: Adapter, build identity and account/save verification.
 
-### Token-gated inventory
+### Wallet inventory and metadata
 
 Path: `skills/grotto-game-token-gated-inventory/SKILL.md`
 
-Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change.
+Read Grotto wallet inventory, network settings and NFT metadata; maintain ownership gates through entitlement, freshness and failure-case reviews.
 
-Outcome: Ownership gates that handle missing capabilities and stale inventory safely.
+Outcome: Wallet holdings, API metadata and images with ownership gates that handle stale or failed reads safely.
 
 Repeat: When gated content, entitlement rules, caching or platform inventory contracts change.
 

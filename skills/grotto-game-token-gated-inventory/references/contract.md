@@ -104,6 +104,10 @@ one $HOPE is represented as:
 }
 ```
 
+For full item metadata, trait fields, API image URLs and direct wallet reads,
+follow [network and metadata](network-and-metadata.md). The runtime's `resource`
+is a display summary; it does not contain the complete NFT metadata document.
+
 The response covers ERC20 contracts tracked by the platform indexer, alongside ERC1155 and
 ERC721 holdings. Native HERESY is not an ERC20 holding. Unknown decimals must not silently
 default to 18. `summary.totalBalance` is the sum of heterogeneous raw units, not a meaningful

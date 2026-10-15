@@ -3,7 +3,7 @@
   "description": "Public Grotto game creator skills.",
   "visibility": "public",
   "schemaVersion": 2,
-  "revision": "bdb8ab3c6f36ac9c8193e750e03e9d5f8bc8566db347b6c25538645abe91566d",
+  "revision": "b429e4998639d5adede3339ef7db7c1f9eb7075411247312a13807eec3fd229f",
   "skills": [
     {
       "name": "grotto-3d-scene-builder",
@@ -554,20 +554,27 @@
     {
       "name": "grotto-game-token-gated-inventory",
       "path": "skills/grotto-game-token-gated-inventory/SKILL.md",
-      "version": "1.7.0",
-      "revision": "148af1c98141bd96aa618aa2a68760d1befc49023bf280f0f96a70769f0b3d85",
+      "version": "1.8.0",
+      "revision": "2206b1f0248973baf63455d9cbf496e66791d0ca3b74670990e95395c0d4f69b",
       "resources": {
-        "references/contract.md": "sha256:88207a80bcbc8628472c37386c4395a8684eb1e759bf9c37b356dfa31bc82e17",
+        "references/contract.md": "sha256:277d21ec4fcbd6bc4ca8a601ff6c33dfa6ffb93f28b16661531c6b3676d697fe",
         "references/freshness.md": "sha256:bda13bd31e64e8aaa90863abaf030bd447dea80d2151ddca0eb602d6513d723e",
         "references/gates.md": "sha256:1aef36acffd2f9b0c00ee012484c79ebcfcd163cdc2fcf32d7b3b3bdbc34f41e",
+        "references/network-and-metadata.md": "sha256:753344c7a318a570b693edeb31c548005748b0498f6269a41ecc2cd260a1c3c3",
         "references/workflow.md": "sha256:a79d85a277c192a8ce8a26c6da88cdb53f61368522f6743a2cf0df45632543bf",
-        "SKILL.md": "sha256:aebee359a0bb7e385cfc87a97862d56ccefb25a45b608d9567e4b4c4f4841396"
+        "SKILL.md": "sha256:3fb2d7b5298886a36bcc200dcf2b94dddae1fd88d96da7566aec2d1900c824b2"
       },
-      "summary": "Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change.",
-      "inject": "Maintain optional ownership gates through repeated entitlement, freshness and failure-case reviews when game content or inventory requirements change.",
+      "summary": "Read Grotto wallet inventory, network settings and NFT metadata; maintain ownership gates through entitlement, freshness and failure-case reviews.",
+      "inject": "Read Grotto wallet inventory, network settings and NFT metadata; maintain ownership gates through entitlement, freshness and failure-case reviews.",
       "tags": [
         "token-gating",
         "inventory",
+        "wallet",
+        "metadata",
+        "traits",
+        "images",
+        "chain-id",
+        "rpc",
         "indexer",
         "nft",
         "erc20",
@@ -575,10 +582,10 @@
         "erc721",
         "runtime-sdk"
       ],
-      "title": "Token-gated inventory",
+      "title": "Wallet inventory and metadata",
       "category": "platform-integration",
       "stage": "connect",
-      "outcome": "Ownership gates that handle missing capabilities and stale inventory safely.",
+      "outcome": "Wallet holdings, API metadata and images with ownership gates that handle stale or failed reads safely.",
       "repeatWhen": "When gated content, entitlement rules, caching or platform inventory contracts change.",
       "inputs": "The exact game capability, entitlement rules and prior granted/denied/partial-read cases.",
       "carryForward": "Non-secret gate definitions, freshness rules and reproducible entitlement test cases.",
