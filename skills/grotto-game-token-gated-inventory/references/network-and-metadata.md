@@ -31,15 +31,17 @@ bind an entitlement to its network, standard, contract and token ID.
 | Launch | Ownership source | Grotto requirements |
 | --- | --- | --- |
 | Game on its own site, reading a connected wallet directly | On-chain ownership on the collection's network | Public RPC reads and public metadata need no Grotto login or reviewed build. The game owns wallet connection and verification. |
-| Published Grotto game, including an external client inside a wrapper | `grotto.getInventory()` | Authenticated Grotto runtime; `inventory:read` is automatic, with no operator or contract allowlist setup. |
-| Creator-only Connect hosted game preview | Identity and saves only | Inventory is unavailable. Publish a reviewed Grotto build to enable player inventory; the build may be a small wrapper around your hosted client. |
+| Published Grotto game, including a supported external client | `grotto.getInventory()` | Authenticated Grotto runtime; `inventory:read` is automatic. A nested external client requires a recognized frame and direct trusted-host handoff. |
+| Creator-only Connect hosted game preview | Identity and saves only | Inventory is unavailable. Publish a reviewed Grotto build; a hosted wrapper also needs the supported frame handoff. |
 
 For the SDK path, use [the inventory contract](contract.md). The runtime resolves
 the player's private, immutable canonical-plus-verified-linked wallet snapshot.
 It is not a public arbitrary-wallet lookup. Loading the SDK on an independent
 site does not create a Grotto runtime session. See the
 [hosting guide](../../grotto-game-runtime-developer-sdk/references/hosting.md)
-for wrapper setup and session forwarding.
+and [wrapper prerequisites](../../grotto-hosted-game-github-workflow/references/wrapper.md)
+for the required direct trusted-host handoff. Forwarded descriptors alone are
+rejected by the public SDK's origin checks.
 
 For direct wallet integration, obtain the collection address and token standard
 from the project. For known ERC721 token IDs, read `ownerOf(uint256)`; for ERC1155,

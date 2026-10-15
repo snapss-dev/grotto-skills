@@ -1,81 +1,73 @@
-# Building or reviewing the hosted client and wrapper
+# Hosted browser launch and frame requirements
 
-Select the engine adapter with [Grotto Game Setup](../../grotto-game-setup/SKILL.md).
-This guide is the browser-wrapper branch of that setup, using the existing
-Runtime SDK handshake. Unreal Windows uses private Desktop IPC instead of a
-wrapper. Base browser SSO is not limited to founding creators: the existing
-founder/selected-game policy only permits additional credential recipients in
-nested frames. Keep that policy and its exact origin/window checks intact.
+For native games, use [Unreal Windows setup](../../grotto-game-setup/references/unreal-windows.md).
+This guide covers a browser game kept on the developer's own HTTPS host.
 
-## Pattern
+## The trusted handoff is a prerequisite
 
-1. Real game client lives in GitHub.
-2. Client deploys to Railway/Vercel/Netlify/Cloudflare Pages over HTTPS.
-3. Host auto-deploys from `main` or release tags.
-4. Grotto upload is only a tiny `index.html` wrapper.
-5. Wrapper iframes the hosted client and forwards Grotto runtime messages.
+The public SDK accepts descriptors only from a trusted Grotto ancestor window
+with an allowed Grotto origin. Its hostOrigin must match the actual message origin.
+Forwarding through a wrapper changes event.origin to the wrapper origin, so a
+generic relay is rejected.
 
-Benefits: fast updates, PR review, test gates, preview deploys, rollback, and fewer full zip uploads to Grotto.
+The SDK sends hello to ancestor frames. The Grotto player must recognize the
+hosted child as an eligible recipient and reply directly to it. Existing selected
+hosted integrations and first-party compatibility paths do not establish universal
+support for arbitrary hosted URLs. Typed payment actions also need their own exact
+registered origin; an identity handshake does not register an action origin.
 
-## Repo layout
+Before relying on a published wrapper, verify the exact hosted child receives a
+direct trusted reply from the actual Grotto player. This is a platform prerequisite.
+Publishing a relay wrapper or testing message names is insufficient. If this
+launch path is unavailable, submit a self-contained reviewed browser archive.
 
-```text
-my-grotto-game/
-  package.json
-  src/
-  public/
-  tests/
-  wrapper/index.html
-```
+Connect hosted preview opens the submitted URL directly. Its session has at most
+15 minutes of absolute lifetime and provides identity and saves. It does not
+enable inventory, managed rooms or real payments, and does not prove a nested
+published wrapper receives a trusted handoff.
 
-## Hosted client requirements
+## Preparing the hosted game
 
-```html
+Control the client repository and deployments. Use a stable HTTPS origin and an
+index.html entry point. Local gameplay and local progress should work while
+authentication is pending or unavailable.
+
+Load the official SDK in an external client:
+
+~~~html
 <script src="https://api.enterthegrotto.xyz/sdk/grotto-game-runtime.v1.js"></script>
-```
+~~~
 
-Start local rendering and input before runtime readiness, identity or save
-requests. Resolve those services in background work and preserve progress earned
-before hydration. Use the SDK's version-aware autosave contract rather than
-blocking boot on a sequence of network calls.
+Studio already installs the Runtime SDK; do not add a second copy there.
+See [identity and boot](../../grotto-game-runtime-developer-sdk/references/identity-and-boot.md).
 
-The hosted URL must be HTTPS.
+Inspect final response headers after redirects. X-Frame-Options: DENY or SAMEORIGIN
+prevents cross-origin embedding. CSP frame-ancestors must allow every actual
+ancestor, including Grotto and any wrapper. Enumerate the required origins.
 
-Inventory is available automatically through ordinary published game runtimes;
-creator-only hosted preview sessions omit it.
-Optional multiplayer still requires the exact published game ID to be allowlisted by the platform
-operator before a newly launched runtime session receives `multiplayer:join`.
+A sandbox must permit scripts and preserve the child's origin for the SDK's
+exact checks. Removing allow-same-origin gives an opaque origin and prevents the
+handoff. Add other permissions only when a game feature needs them.
 
-## Grotto wrapper
+Never forward the complete parent query into a hosted URL. Keep credentials out
+of navigation URLs, analytics, logs and durable browser storage.
 
-Author a root `index.html` for the agreed external client. It should size the
-iframe to the intended viewport and give it an accessible title. Set an explicit
-sandbox and permissions policy from the client's actual needs; do not grant
-clipboard, popups, forms or pointer lock solely because a generic wrapper did.
+## Messaging and identity
 
-Resolve the configured HTTPS client URL to a known target origin. Build its
-query string from deliberately allowed, nonsecret parameters. Never forward the
-wrapper's complete query string to another host. Keep the host runtime handshake
-separate from navigation and game state.
+Validate event.source and event.origin and use an exact targetOrigin. A supported
+wrapper must preserve the direct Grotto-to-child handshake; a wrapper-authored
+copy cannot substitute for it. Do not modify SDK trusted-origin checks.
 
-For messages, validate the data shape and message type. Accept the client's
-`grotto:runtime:hello` only from that iframe's `contentWindow` and expected origin,
-then request the runtime from the wrapper's parent. Accept `grotto:runtime` only
-from the parent host, and forward it with the known client origin as the exact
-`targetOrigin`. Preserve the SDK protocol; do not create a parallel identity
-system. Check the parent's expected origin where the embedding contract supplies
-it.
+On logout/account switch, stop saves, events, rooms and pending actions for the
+previous owner. Ignore late responses and hydrate the new player's state through
+a fresh client. Cancel stale save loads before applying them. For your own server,
+use [backend verification](../../grotto-game-runtime-developer-sdk/references/private-backend.md);
+CORS is not authentication.
 
-Only forward `grotto:runtime` from the wrapper's parent and only accept
-`grotto:runtime:hello` from the hosted iframe. Never copy the `grs_*` session into the hosted URL,
-query string, logs, analytics, localStorage, or build artifacts.
+## Feature activation
 
-An existing game such as WrathTank may use legacy `bobert:hello` compatibility.
-The separate `bobert:tx` relay requires a verified exact build, frame origin,
-and moderator-approved target and selector policy. Do not infer relay
-eligibility from a working SSO handshake. Preserve exact source, origin and
-descendant checks when updating a wrapper; do not add a general message
-forwarder to new wrappers. When eligible, the relay retains Web Privy
-confirmation.
-It is separate from the typed `GrottoRuntime.requestAction()` API. A `grs_*`
-runtime session and a hosted URL do not grant that legacy transaction policy.
+Published standard sessions provide inventory and managed rooms. External-server
+tickets require operator configuration. Typed payments use a separate reviewed
+action and registered-origin path. Neither legacy hello/transaction messages nor
+hosted preview grants these features. Follow [capabilities.md](capabilities.md)
+and test each feature in the actual launch context.

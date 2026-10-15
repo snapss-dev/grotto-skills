@@ -20,7 +20,7 @@ an unrelated small edit.
 | `src/types/grotto.d.ts` | Protected structural declarations for the installed kit; these are a supported subset, not an engine feature whitelist |
 | `src/types/game.d.ts` | Add precise authored interfaces for legitimate APIs beyond that subset; narrow `unknown` at the integration boundary |
 | `.grotto/build/**` | Studio-owned compiled output, never authored game source |
-| `check_project` | Compile and inspect diagnostics after meaningful edits; a successful compile does not establish playability |
+| `check_project` | Compile and inspect diagnostics after meaningful edits; a complete current-source checkpoint can stage a live code update, but compilation does not establish playability |
 
 Studio builds the authored source without a model-managed package install or
 build system. Preserve the installed protected modules and compiler contract.
@@ -28,6 +28,15 @@ Use only APIs and tools actually available in this run; do not invent an asset,
 dependency, service or successful check. A missing convenience type does not
 mean a normal engine API is prohibited: describe its actual shape rather than
 using `any`, suppression comments or replacement platform declarations.
+
+Supported Three and Phaser games can keep the creator's session through compiled
+code updates when they register their logical gameplay state. New spatial
+foundations include a `gameplay` owner and streamed player/controller bindings;
+extend those owners as mechanics are added. Read [live session state](live-play-state.md)
+for versioned callbacks, migrations, logical timers and managed input. An empty
+registration cannot preserve unregistered variables. Incompatible candidates
+leave the previous game running; legacy games without the contract keep an
+explicit version switch.
 
 ## Managed multiplayer
 
@@ -58,6 +67,11 @@ for camera, physics, picking, geometry and resource ownership.
 
 ## Controls and presentation
 
+For direct World-view operations, B.O.B. travel, creator annotations and editable
+terrain formulas, read [world authoring](world-authoring.md). Discover the actual
+schemas with `world_capabilities` before editing. These first-party tools use
+the same revisioned world and source owners as the viewport.
+
 The semantic input API supports movement axes, held actions, one-shot presses
 and cancellation/release. Map the requested verbs to keyboard, pointer and touch
 with the installed action declarations. Direct manipulation, a first-person
@@ -79,8 +93,9 @@ may use its own layout. A creative world need not have a
 score, timer, collectible quota, forced objective or win/lose screen. Keep
 runtime/account integration available without making it the game's theme.
 
-Register available interaction acceptance hooks against real player state and
-report genuine game signals when relevant. Rendering, model callbacks or a
+Preserve installed acceptance hooks. For Studio builds, publication or
+user-requested tests, register requested interaction scenarios against real player
+state. Report genuine game signals when relevant. Rendering, model callbacks or a
 manually incremented counter cannot stand in for a working player interaction.
 
 ## Assets, animation and physics
@@ -132,8 +147,9 @@ request no game ID. Read [actions](actions.md) for exact units, host capability,
 review and recovery rules. Keep this in the agent's implementation workflow;
 no manual transaction-template panel or persistent player overlay is needed.
 
-Compile, inspect the visible game and exercise the creator's requested actions.
-Check resize, pause/resume, loading failure and applicable recovery paths.
-Independent runtime review must observe the same source revision being delivered.
-An empty rendering surface establishes no playable behavior; document unresolved
-limitations accurately instead of calling it complete.
+Ordinary Worlds authoring saves after source validation; finish once the requested
+change is implemented and blocking source/compiler errors are resolved. Do not add
+a test plan or harness for these edits. Studio builds, publication and
+user-requested playtests retain exact-source runtime review of the requested actions
+and relevant lifecycle/recovery paths. Source checks alone do not prove playability;
+report unresolved limitations accurately.

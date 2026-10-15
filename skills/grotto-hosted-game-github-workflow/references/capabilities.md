@@ -2,6 +2,14 @@
 
 ## Runtime capability rollout
 
+Creator-only hosted previews have identity/save scopes only. For ordinary
+published browser games, managed multiplayer uses
+`await grotto.joinRoom({ onUpdate, onError })` with automatic `rooms:join`.
+It needs no external server, signing key, game allowlist or replay store.
+See [managed rooms and limits](../../grotto-game-runtime-developer-sdk/references/capabilities.md#grotto-hosted-multiplayer).
+The ticket setup below applies only when the project chooses its own
+authoritative realtime server.
+
 Every authenticated game runtime includes `inventory:read` automatically. No game or contract
 allowlist is needed. Call `grotto.getInventory()` and match its holdings to your game's contract/token
 definitions. Persisted sessions with older scope lists receive inventory access on rehydration.
@@ -31,6 +39,15 @@ The default source-staleness bound is 45 seconds (15-second indexer freshness pl
 classified cache), and `checkedAt` is response time rather than chain-read time.
 
 ## Authoritative multiplayer service
+
+The fixed production JWKS URL is
+`https://api.enterthegrotto.xyz/api/game-runtime/v1/multiplayer/keys`.
+Configure the expected issuer as `https://api.enterthegrotto.xyz` for the default
+production contract and audience as `grotto:game:<canonical-game-id>:multiplayer`.
+Only a deliberate operator-provided issuer change replaces that setting;
+do not learn it from an unverified ticket. The creator supplies the game/server
+URL and shared atomic replay storage; platform enrollment/signing is a separate
+operator prerequisite. Request public keys, never signing secrets.
 
 Request a ticket immediately before every initial connection and reconnect:
 

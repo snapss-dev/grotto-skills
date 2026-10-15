@@ -1,57 +1,48 @@
-# Testing, publishing or rolling back an external client
+# Delivering and verifying a hosted game
 
-## Maintenance loop
+Confirm the [supported frame handoff](wrapper.md) and embedding headers first.
 
-1. Branch in GitHub.
-2. Change game client.
-3. Run tests/build locally.
-4. Open PR.
-5. CI runs unit/lint/build/Playwright checks.
-6. Merge to `main`.
-7. Railway/Vercel auto-deploys.
-8. Existing Grotto wrapper loads new client.
-9. Verify optional capability scopes and custom-service health with a newly launched session.
-10. Roll back by reverting Git or rolling back deploy.
+## Delivery sequence
 
-## Minimal CI
+1. Use a branch or isolated worktree. Read the project's setup and use its runtime
+   version, package manager, lockfile and actual test scripts.
+2. Run meaningful checks and a production build. Keep credentials, runtime session
+   tokens and environment files out of Git.
+3. Open a pull request with final behavior and verification evidence. Use existing
+   project CI; Grotto prescribes no universal Node version or test-runner flag.
+4. Deploy the reviewed commit to the intended origin. Verify final URL, redirects,
+   iframe headers and production assets.
+5. Launch through the actual Grotto player. Verify the public SDK handshake,
+   identity, save hydration and a cloud write in that context.
+6. Verify feature admission and failure behavior, including account switches and
+   expiry. Preview results establish only preview support.
+7. Promote the tested build and record commit and URL. Keep a compatible rollback.
 
-```yaml
-name: game-client-ci
-on: [pull_request]
-jobs:
-  test-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: npm }
-      - run: npm ci
-      - run: npm test -- --run
-      - run: npm run build
-```
+For npm projects, npm ci, the project's npm test script and npm run build are common
+starting points. Use documented project commands when different. Deployment secrets
+belong in the host or CI secret store. The SDK requires no private platform key.
 
-## Wrapper regression test
+## What verification must establish
 
-```js
-import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
-const wrapper = readFileSync('wrapper/index.html', 'utf8');
-describe('Grotto wrapper', () => {
-  it('embeds hosted client and forwards runtime', () => {
-    expect(wrapper).toContain('https://my-game.up.railway.app');
-    expect(wrapper).toContain('grotto:runtime:hello');
-    expect(wrapper).toContain('grotto:runtime');
-    expect(wrapper).toContain('postMessage');
-    expect(wrapper).toContain('event.source === parent');
-    expect(wrapper).toContain('event.source === iframe.contentWindow');
-  });
-});
-```
+- Direct descriptors from the trusted Grotto ancestor are accepted; arbitrary
+  wrapper-origin descriptors are rejected.
+- Wrong sources/origins, opaque origins and stale messages after navigation cannot
+  impersonate the host.
+- Local play remains usable while identity is pending or unavailable.
+- Identity and saves work in the real launch, including refresh, conflicts, expired
+  sessions and logout/account switches.
+- CSP, iframe headers and sandbox permissions permit the intended launch without
+  broadening SDK authentication.
+- Preview scope restrictions hold. A private backend rejects preview, expired,
+  revoked, wrong-game and insufficient-scope credentials.
+- Inventory and rooms work in a published standard session. External-server
+  multiplayer verifies all ticket claims and rejects replay.
+- Payment UI handles pending, confirmed, rejected and unavailable outcomes.
+  Fixture responses alone do not establish real payment activation.
 
-## Do not use when
+Test observable SDK/API behavior. A source-string assertion that a wrapper contains
+a message name cannot prove its handshake or origin policy.
 
-- game must be a permanent self-contained archive
-- hosted domain is not durable
-- third-party scripts are unstable
-- wrapper cannot forward runtime messages due sandbox/CSP
-- project cannot provide shared atomic replay storage for authoritative multiplayer
+If the host lacks a stable embedding origin or the published child is not a
+supported recipient, use a self-contained reviewed archive. Free managed rooms
+need no server signing key or replay store; external-server tickets do.

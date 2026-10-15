@@ -78,6 +78,11 @@ runtime readiness, identity and autosave in independent background chains.
 
 The backend derives the player and game from the runtime session token. Your game does not tell the backend who the player is.
 
+To connect an existing game database or server, follow
+[private backend verification](private-backend.md). It supplies the fixed
+verification endpoint, bearer transport, `purpose: play` check, expected game,
+scope/expiry checks and a server example. The opaque `grs_*` is not a JWT.
+
 ## Finding this game's ID when another integration requires it
 
 ### Before launch: saved drafts and developer handoff
@@ -163,11 +168,8 @@ runtime, add this before its game boot code:
 <script src="https://api.enterthegrotto.xyz/sdk/grotto-game-runtime.v1.js"></script>
 ```
 
-The SDK is served by `game-asset-storage` from:
-
-```text
-src/views/sdk/grotto-game-runtime.v1.js
-```
+Use that public SDK URL; the game's project does not need the Grotto server
+repository or its internal SDK source path.
 
 Live Grotto API docs are available at:
 

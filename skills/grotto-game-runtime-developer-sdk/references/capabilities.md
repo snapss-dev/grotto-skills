@@ -17,18 +17,23 @@ Example response from an ordinary published game runtime:
 {
   "authenticated": true,
   "gameId": "game-123",
+  "purpose": "play",
   "player": {
-    "id": "player_abc",
+    "id": "0x40c329d255bc12571c1d91f195fc409f76bce8a1",
     "walletAddress": "0x40c329d255bc12571c1d91f195fc409f76bce8a1",
     "displayName": "@snaps",
     "avatar": "https://..."
   },
-  "scopes": ["identity:read", "inventory:read", "save:read", "save:write", "presence:write", "events:write"],
+  "scopes": ["identity:read", "inventory:read", "save:read", "save:write", "presence:write", "events:write", "rooms:join"],
   "expiresAt": "2026-04-25T16:00:00.000Z"
 }
 ```
 
-Use this for display and personalization. For authoritative progression, still store state through `grotto.save()`.
+Use this for display and personalization. Store ordinary progress through `grotto.save()`.
+
+Cloud saves persist client-authored data; they do not validate a custom economy
+or gameplay outcome. For protected game-server operations, use
+[private backend verification](private-backend.md) and game-owned validation.
 
 Every ordinary published game runtime includes `inventory:read` automatically. Creator-only
 hosted previews have identity and save scopes only. Published players also receive `rooms:join`
@@ -72,7 +77,8 @@ definitions. The former inventory enablement and contract-filter settings are ig
 
 ## Events
 
-Use events for lightweight trusted telemetry or achievements. Do not spam them every frame.
+Use events for lightweight client telemetry or achievement reports. Authentication
+identifies the sender; it does not verify the reported outcome. Do not spam events every frame.
 
 ```js
 await grotto.event('level_complete', {

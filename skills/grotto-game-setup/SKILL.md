@@ -10,7 +10,7 @@ metadata:
   repeat_when: "Engine, platform, runtime or packaging changes."
   inputs: "Engine, platform, project/release and save schema."
   carry_forward: "Adapter, build identity and account/save verification."
-  version: 0.1.3
+  version: 0.1.4
   author: The Grotto
   hermes:
     tags: [grotto, setup, unreal, windows, identity, runtime-sdk, cloud-saves, native]
@@ -18,6 +18,10 @@ metadata:
 ---
 
 # Grotto Game Setup
+
+Use [integration setup](../grotto-game-runtime-developer-sdk/references/integration-setup.md) for the common service/launch
+map and [network and metadata](../grotto-game-token-gated-inventory/references/network-and-metadata.md)
+for chain ID, RPC and public asset lookups.
 
 Choose the adapter from the actual runtime, not the game's marketing label.
 For a new or changed integration, use the [setup pass](references/workflow.md)

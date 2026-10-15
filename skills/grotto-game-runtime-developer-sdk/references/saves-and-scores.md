@@ -53,6 +53,13 @@ The SDK should:
 
 ## Manual save/load and multiple slots
 
+Slots and board names match `[A-Za-z0-9_-]{1,64}`; omitted names use `default`.
+Save state must be a JSON object or array. Platform defaults are 512 KiB of
+UTF-8 serialized state per save and 16 distinct slots per game/player. Events
+use `[A-Za-z0-9_.:-]{1,80}` types and at most 16 KiB of serialized payload.
+Deployment limits can be stricter; handle validation and rate-limit responses.
+Serialize `BigInt` as decimal strings rather than putting it in JSON directly.
+
 Prefer an autosave instance per slot. If you manage saves manually, retain the
 version returned by `loadSave`, send it as `{ baseVersion }` to `save`, and
 replace the tracked version only after success. Serialize writes within each
@@ -61,10 +68,24 @@ never blindly retry with a fresh version and stale data. Initial creation uses
 `baseVersion: 0`. Schema migrations belong in the game state, independently of
 this storage version.
 
+`loadSave()` can return local/default state with `offline: true` when cloud reads
+fail. A 404 uses local/default state without that flag. Neither establishes a
+successful cloud write or that browser storage persisted a backup. Do not grant
+valuable server state from a fallback.
+
+The conflict body contains `serverVersion`, `serverUpdatedAt` and `serverState`.
+An autosave `onConflict` callback observes that body; returning merged state
+does not change the helper's tracked version. Stop that autosave owner, preserve
+local progress, resolve competing state, explicitly save against the verified
+server version, then start one owner from the resolved save. Test another
+conflict during resolution. Call `stop()` on unmount/account change and mark
+dirty after a successful restart. A failed `flush()` returns `false`; even
+`true` can mean nothing needed writing, so use `onSaved` for a cloud-write receipt.
+
 ## Built-in leaderboards
 
-Grotto keeps a server-authoritative leaderboard per game — no Supabase or custom
-backend required. Submit a score and the server records the player's **best** for
+Grotto stores a leaderboard per game — no custom backend is required for a basic
+board. Submit a score and the server records the authenticated player's **best** for
 that board; read the top entries to display a ranking.
 
 ```js
@@ -82,12 +103,19 @@ Notes:
 - Boards are simple string keys (e.g. `default`, `weekly`, `endless`). Same naming
   rules as slots.
 - Scores are higher-is-better; only a player's best per board is kept.
+- Submit finite numeric scores. Read limits default to 50 and are bounded to
+  1–500 integer entries; ties sort by stored update time ascending.
+- The score value comes from the client. Authentication and server storage do
+  not validate the run. Prizes or competitive claims need game-owned server
+  validation; this basic board is not an anti-cheat authority.
 - `submitScore` is shorthand for `grotto.event('score', { score, board, meta })`,
   so you can also emit raw `score` events if you prefer.
 - Reach for Supabase only for needs the built-in board doesn't cover (server-side
   score validation, seasons, complex tie-breakers, analytics joins).
-- Degrade gracefully: when the runtime is unavailable, `leaderboard()` returns an
-  empty board and `submitScore` is a no-op, so the game still runs standalone.
+- `leaderboard()` returns an empty board on HTTP 503. Other failures propagate,
+  and `submitScore()` rejects on API failure. Catch both in background work.
+  `ready()` can reject on a standalone page, where the game owns local play
+  and fallback; the SDK does not supply a no-op authenticated client.
 
 ## Diagnose lost progress
 

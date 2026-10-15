@@ -10,6 +10,12 @@ iteration. Platform integrations cover runtime services, ownership gates and
 explicitly external hosting. Start with the decision you need to make; there is
 no requirement to load the whole collection.
 
+Integrating with Grotto? Start with [integration setup](skills/grotto-game-runtime-developer-sdk/references/integration-setup.md) for
+supported launch paths, the public SDK/API, identity, saves, private backends,
+wallet metadata, multiplayer, payments and deployment prerequisites. Follow the
+linked reference for the feature you need; only project-specific inputs should
+come from the creator.
+
 ## Use skills as recurring workflows
 
 For wallet integration, start with

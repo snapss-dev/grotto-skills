@@ -34,9 +34,10 @@ In Grotto Studio, choose
 enter a title and the exact public HTTPS URL of your game, then open the
 private preview. This reserves the
 game ID without uploading a build. Load the normal Grotto browser SDK in your
-game; the preview supplies a short-lived session when the SDK handshakes with
-the Grotto player. The creator can test Grotto identity, cloud saves and all
-three action review demos at the hosted URL. The demos show game-supplied
+game; the preview supplies a session with at most 15 minutes of absolute
+lifetime when the SDK handshakes with the Grotto player. The creator can test
+Grotto identity, cloud saves and supported action review demos at the hosted URL.
+The demos show game-supplied
 identifiers and bounds; they do not fetch live prices, ownership or gas.
 Saves remain under the same game ID after publication. The page shows
 handshake and identity/save diagnostics. These check the transport and a
@@ -58,7 +59,11 @@ rewards or public play credit.
 To make those features eligible for players, publish a reviewed Grotto build.
 Real game payments also depend on Grotto's separate payment controls and
 real-wallet action canaries.
-For a game kept on your own host, the published build may be a small wrapper.
+For a game kept on your own host, a published wrapper requires the Grotto player
+to recognize the exact hosted child and send it a direct trusted runtime reply.
+An arbitrary message-forwarding wrapper does not satisfy the public SDK's origin
+checks. Verify the [hosted launch prerequisites](../../grotto-hosted-game-github-workflow/references/wrapper.md)
+or submit a self-contained reviewed archive.
 New game payment integrations should use Grotto's typed action review; the
 hosted game cannot choose its calldata or wallet signer through that SDK.
 Approved legacy builds may retain their separate build-bound transaction relay
@@ -75,6 +80,7 @@ The hosted player sends your iframe:
     apiBaseUrl: 'https://api.enterthegrotto.xyz/api/game-runtime/v1',
     gameId: 'game-123',
     sessionId: 'grs_...',
+    playerId: '0x...canonical-wallet-address',
     hostOrigin: 'https://www.enterthegrotto.xyz',
     actionPreviewMode: 'review-only', // creator preview only; no payment scope
     expiresAt: '2026-04-25T16:00:00.000Z',
@@ -94,8 +100,9 @@ Creators using the SDK do not need to implement this manually. When
 readiness to the parent so the integration diagnostics can distinguish a loaded
 frame from a working SDK handshake.
 The trusted host supplies `hostOrigin` for `requestAction()` replies; a game
-must not invent or replace it. Hosted wrappers should forward the runtime
-descriptor unchanged.
+must not invent or replace it. A nested hosted client needs a direct trusted
+reply from the Grotto ancestor; copying a descriptor through a wrapper changes
+the message origin and is rejected by the public SDK.
 
 This base handshake is available to games through the player's validated frame
 boundary. The existing founder/selected-game descendant exception only affects
@@ -137,4 +144,6 @@ For quick updates, version control, CI tests, preview deploys, Railway/Vercel ho
 grotto-hosted-game-github-workflow
 ```
 
-Runtime SDK still handles identity/save/event APIs. The specialist skill explains how to keep the real game client in GitHub and upload only a tiny Grotto wrapper that forwards `grotto:runtime:hello` and `grotto:runtime` between The Grotto player and the hosted iframe.
+The Runtime SDK handles identity/save/event APIs after a valid trusted handoff.
+The specialist skill explains hosted-origin prerequisites, feature activation,
+release verification and rollback for a supported hosted client.
